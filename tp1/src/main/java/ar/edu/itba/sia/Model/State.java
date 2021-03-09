@@ -1,4 +1,4 @@
-package src;
+package ar.edu.itba.sia.Model;
 
 public class State {
     //habria que saber la ubicacion del jugador y de las cajas para saber el estado
