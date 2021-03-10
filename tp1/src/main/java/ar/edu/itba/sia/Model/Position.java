@@ -1,4 +1,4 @@
-package src;
+package tp1.src.main.java.ar.edu.itba.sia.Model;
 
 import java.util.Objects;
 

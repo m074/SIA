@@ -1,4 +1,4 @@
-package src;
+package tp1.src.main.java.ar.edu.itba.sia.Model;
 
 public class Level {
     //clase para almacenar nivel del sokoban
