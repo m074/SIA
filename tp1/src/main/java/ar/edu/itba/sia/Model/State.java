@@ -1,4 +1,4 @@
-package src;
+package ar.edu.itba.sia.Model;
 
 import java.util.HashSet;
 import java.util.Objects;

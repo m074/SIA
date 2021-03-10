@@ -1,4 +1,4 @@
-package src;
+package ar.edu.itba.sia.Model;
 
 public class Node {
     public State state;
