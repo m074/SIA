@@ -19,29 +19,32 @@ public class Level {
     //funcion que calcule posibles acciones dependiendo del estado (moverse, empujar caja)
 
     //funcion que se fije si teniendo un estado se gano (estan las cajas en las goals)
+
     public boolean hasWon(State s){
-        for(Position box : s.boxes){
+        /*
+        for(Position box : s.box_positions){
             if(!goals.contains(box))
                 return false;       //si hay una caja que no esta en goal no se ganó
-        }
-        return true;
+        }*/
+        return goals.equals(s.box_positions);
     }
 
     //funcion que teniendo un estado se fije si hay deadlock
+
     public boolean testDeadlock(State s){
-        for(Position box : s.boxes){
+        for(Position box : s.box_positions){
             int x = box.x;
             int y = box.y;
 
-            /*
+        /*
             habria que checkear cada posible deadlock:
             top left
             top right
             bottom left
             bottom right
             no se si hay otras
+        */
 
-             */
         }
         return false;
     }

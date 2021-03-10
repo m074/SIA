@@ -1,18 +1,18 @@
-package ar.edu.itba.sia.Model;
+package tp1.src.main.java.ar.edu.itba.sia.Model;
 
-import com.sun.tools.javac.util.Pair;
 
+import javafx.util.Pair;
 import java.util.HashSet;
 import java.util.Objects;
 
 
 public class State {
 
-    public Pair<Integer, Integer> player_position;
-    public HashSet<Pair<Integer,Integer>> box_positions;
+    public Position player_position;
+    public HashSet<Position> box_positions;
 
 
-    public State(Pair<Integer, Integer> player_position, HashSet<Pair<Integer,Integer>>  box_positions) {
+    public State(Position player_position, HashSet<Position>  box_positions) {
         this.player_position = player_position;
         this.box_positions = box_positions;
     }
