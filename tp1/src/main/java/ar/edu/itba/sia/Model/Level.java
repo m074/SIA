@@ -6,13 +6,11 @@ public class Level {
     //clase para almacenar nivel del sokoban
     //de alguna forma habria que recibir de un archivo el mapa (con ascii quizas) y
     //guardarse las posiciones
-    HashSet<Position> floor; //no se si guardar el piso vacio o no hace falta
     HashSet<Position> goals;
     HashSet<Position> walls;
     State startingState;    //tendria la posicion inicial del jugador y las cajas
 
-    public Level(HashSet<Position> floor, HashSet<Position> goals, HashSet<Position> walls, State startingState) {
-        this.floor = floor;
+    public Level(HashSet<Position> goals, HashSet<Position> walls, State startingState) {
         this.goals = goals;
         this.walls = walls;
         this.startingState = startingState;
