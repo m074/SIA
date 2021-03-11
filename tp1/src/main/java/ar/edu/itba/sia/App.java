@@ -1,12 +1,11 @@
-package tp1.src.main.java.ar.edu.itba.sia;
+package ar.edu.itba.sia;
 
 
-import tp1.src.main.java.ar.edu.itba.sia.Model.Level;
-import tp1.src.main.java.ar.edu.itba.sia.Model.Position;
-import tp1.src.main.java.ar.edu.itba.sia.Model.State;
+import ar.edu.itba.sia.Model.Level;
+import ar.edu.itba.sia.Model.Position;
+import ar.edu.itba.sia.Model.State;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 

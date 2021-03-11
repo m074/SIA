@@ -1,5 +1,6 @@
-package tp1.src.main.java.ar.edu.itba.sia.Model;
+package ar.edu.itba.sia.Model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Level {
@@ -16,7 +17,101 @@ public class Level {
         this.startingState = startingState;
     }
 
-    //funcion que calcule posibles acciones dependiendo del estado (moverse, empujar caja)
+    //funcion que devuelve posibles movimientos dependiendo del estado
+    //up, down, left, right
+    //cuando se haga la busqueda deberan crearse los nodos con los estados nuevos al moverse
+    public ArrayList<String> possibleMoves(State s){
+        HashSet<Position> boxes = s.box_positions;
+        ArrayList<String> moves = new ArrayList<>();
+        int x = s.player_position.x;
+        int y = s.player_position.y;
+
+        //checkear que cada direccion sea valida, si lo es la agrego
+        //considerar que no hayan dos cajas juntas
+
+        //derecha
+        Position newPlayerPos = new Position(x+1, y);
+        Position otherBox = new Position(x+2, y);   //para la segunda caja
+        if(!walls.contains(newPlayerPos)){
+            if(!(boxes.contains(newPlayerPos) && boxes.contains(otherBox)) && !walls.contains(otherBox))   //si hay caja, que pueda moverla
+                moves.add("r");
+        }
+
+        //izquierda
+        newPlayerPos = new Position(x-1, y);
+        otherBox = new Position(x-2, y);   //para la segunda caja
+        if(!walls.contains(newPlayerPos)){
+            if(!(boxes.contains(newPlayerPos) && boxes.contains(otherBox)) && !walls.contains(otherBox))   //si hay caja, que pueda moverla
+                moves.add("l");
+        }
+
+        //arriba
+        newPlayerPos = new Position(x, y-1);
+        otherBox = new Position(x, y-2);   //para la segunda caja
+        if(!walls.contains(newPlayerPos)){
+            if(!(boxes.contains(newPlayerPos) && boxes.contains(otherBox)) && !walls.contains(otherBox))   //si hay caja, que pueda moverla
+                moves.add("u");
+        }
+
+        newPlayerPos = new Position(x, y+1);
+        otherBox = new Position(x, y+2);   //para la segunda caja
+        if(!walls.contains(newPlayerPos)){
+            if(!(boxes.contains(newPlayerPos) && boxes.contains(otherBox)) && !walls.contains(otherBox))   //si hay caja, que pueda moverla
+                moves.add("d");
+        }
+
+        return moves;
+    }
+
+    //funcion que devuelve un nodo con el estado siguiente al realizar una accion
+    //con esta funcion se expanden los nodos
+    public Node move(Node n, String move){
+        @SuppressWarnings("unchecked") //se queja del casteo si no
+        HashSet<Position> boxes = (HashSet<Position>) n.state.box_positions.clone();
+        int x = n.state.player_position.x;
+        int y = n.state.player_position.y;
+        Position newPlayerPos = n.state.player_position;
+        char m = move.charAt(0);
+        switch(m){
+            case 'u':
+                newPlayerPos = new Position(x, y-1);
+                if(boxes.contains(newPlayerPos)){   //si hay caja la muevo
+                    Position newBoxPos = new Position(x, y-2);
+                    boxes.remove(newPlayerPos); //remuevo la caja de donde esta el jugador
+                    boxes.add(newBoxPos); //y la pongo en su nueva posicion
+                }
+                break;
+
+            case 'd':
+                newPlayerPos = new Position(x, y+1);
+                if(boxes.contains(newPlayerPos)){   //si hay caja la muevo
+                    Position newBoxPos = new Position(x, y+2);
+                    boxes.remove(newPlayerPos); //remuevo la caja de donde esta el jugador
+                    boxes.add(newBoxPos); //y la pongo en su nueva posicion
+                }
+                break;
+
+            case 'l':
+                newPlayerPos = new Position(x-1, y);
+                if(boxes.contains(newPlayerPos)){   //si hay caja la muevo
+                    Position newBoxPos = new Position(x-2, y);
+                    boxes.remove(newPlayerPos); //remuevo la caja de donde esta el jugador
+                    boxes.add(newBoxPos); //y la pongo en su nueva posicion
+                }
+                break;
+            case 'r':
+                newPlayerPos = new Position(x+1, y);
+                if(boxes.contains(newPlayerPos)){   //si hay caja la muevo
+                    Position newBoxPos = new Position(x+2, y);
+                    boxes.remove(newPlayerPos); //remuevo la caja de donde esta el jugador
+                    boxes.add(newBoxPos); //y la pongo en su nueva posicion
+                }
+                break;
+        }
+        return new Node(new State(newPlayerPos, boxes), n);
+    }
+
+
 
     //funcion que se fije si teniendo un estado se gano (estan las cajas en las goals)
 
