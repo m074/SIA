@@ -28,7 +28,8 @@ public class BFS {
             ArrayList<String> posibles_mov = level.possibleMoves(nodo.state);
             for (String s: posibles_mov) {
                 Node new_node = level.move(nodo, s);
-                nodos_a_visitar.add(new_node);
+                if(new_node != null)
+                    nodos_a_visitar.add(new_node);
             }
         }
 
