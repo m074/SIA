@@ -1,7 +1,6 @@
 package ar.edu.itba.sia.Model;
 
 
-import javafx.util.Pair;
 import java.util.HashSet;
 import java.util.Objects;
 

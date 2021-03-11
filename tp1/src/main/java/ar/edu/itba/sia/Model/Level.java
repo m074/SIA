@@ -9,7 +9,7 @@ public class Level {
     //guardarse las posiciones
     HashSet<Position> goals;
     HashSet<Position> walls;
-    State startingState;    //tendria la posicion inicial del jugador y las cajas
+    public State startingState;    //tendria la posicion inicial del jugador y las cajas
 
     public Level(HashSet<Position> goals, HashSet<Position> walls, State startingState) {
         this.goals = goals;
@@ -30,33 +30,33 @@ public class Level {
         //considerar que no hayan dos cajas juntas
 
         //derecha
-        Position newPlayerPos = new Position(x+1, y);
-        Position otherBox = new Position(x+2, y);   //para la segunda caja
+        Position newPlayerPos = new Position(x, y+1);
+        Position otherBox = new Position(x, y+2);   //para la segunda caja
         if(!walls.contains(newPlayerPos)){
-            if(!(boxes.contains(newPlayerPos) && boxes.contains(otherBox)) && !walls.contains(otherBox))   //si hay caja, que pueda moverla
+            if(!(boxes.contains(newPlayerPos) && walls.contains(otherBox))) //TODO ver si otra caja bloquea
                 moves.add("r");
         }
 
         //izquierda
-        newPlayerPos = new Position(x-1, y);
-        otherBox = new Position(x-2, y);   //para la segunda caja
+        newPlayerPos = new Position(x, y-1);
+        otherBox = new Position(x, y-1);   //para la segunda caja
         if(!walls.contains(newPlayerPos)){
-            if(!(boxes.contains(newPlayerPos) && boxes.contains(otherBox)) && !walls.contains(otherBox))   //si hay caja, que pueda moverla
+            if(!(boxes.contains(newPlayerPos) && walls.contains(otherBox)))
                 moves.add("l");
         }
 
         //arriba
-        newPlayerPos = new Position(x, y-1);
-        otherBox = new Position(x, y-2);   //para la segunda caja
+        newPlayerPos = new Position(x-1, y);
+        otherBox = new Position(x-2, y);   //para la segunda caja
         if(!walls.contains(newPlayerPos)){
-            if(!(boxes.contains(newPlayerPos) && boxes.contains(otherBox)) && !walls.contains(otherBox))   //si hay caja, que pueda moverla
+            if(!(boxes.contains(newPlayerPos) && walls.contains(otherBox)))
                 moves.add("u");
         }
 
-        newPlayerPos = new Position(x, y+1);
-        otherBox = new Position(x, y+2);   //para la segunda caja
+        newPlayerPos = new Position(x+1, y);
+        otherBox = new Position(x+2, y);   //para la segunda caja
         if(!walls.contains(newPlayerPos)){
-            if(!(boxes.contains(newPlayerPos) && boxes.contains(otherBox)) && !walls.contains(otherBox))   //si hay caja, que pueda moverla
+            if(!(boxes.contains(newPlayerPos) && walls.contains(otherBox)))
                 moves.add("d");
         }
 
@@ -74,24 +74,6 @@ public class Level {
         char m = move.charAt(0);
         switch(m){
             case 'u':
-                newPlayerPos = new Position(x, y-1);
-                if(boxes.contains(newPlayerPos)){   //si hay caja la muevo
-                    Position newBoxPos = new Position(x, y-2);
-                    boxes.remove(newPlayerPos); //remuevo la caja de donde esta el jugador
-                    boxes.add(newBoxPos); //y la pongo en su nueva posicion
-                }
-                break;
-
-            case 'd':
-                newPlayerPos = new Position(x, y+1);
-                if(boxes.contains(newPlayerPos)){   //si hay caja la muevo
-                    Position newBoxPos = new Position(x, y+2);
-                    boxes.remove(newPlayerPos); //remuevo la caja de donde esta el jugador
-                    boxes.add(newBoxPos); //y la pongo en su nueva posicion
-                }
-                break;
-
-            case 'l':
                 newPlayerPos = new Position(x-1, y);
                 if(boxes.contains(newPlayerPos)){   //si hay caja la muevo
                     Position newBoxPos = new Position(x-2, y);
@@ -99,10 +81,28 @@ public class Level {
                     boxes.add(newBoxPos); //y la pongo en su nueva posicion
                 }
                 break;
-            case 'r':
+
+            case 'd':
                 newPlayerPos = new Position(x+1, y);
                 if(boxes.contains(newPlayerPos)){   //si hay caja la muevo
                     Position newBoxPos = new Position(x+2, y);
+                    boxes.remove(newPlayerPos); //remuevo la caja de donde esta el jugador
+                    boxes.add(newBoxPos); //y la pongo en su nueva posicion
+                }
+                break;
+
+            case 'l':
+                newPlayerPos = new Position(x, y-1);
+                if(boxes.contains(newPlayerPos)){   //si hay caja la muevo
+                    Position newBoxPos = new Position(x, y-2);
+                    boxes.remove(newPlayerPos); //remuevo la caja de donde esta el jugador
+                    boxes.add(newBoxPos); //y la pongo en su nueva posicion
+                }
+                break;
+            case 'r':
+                newPlayerPos = new Position(x, y+1);
+                if(boxes.contains(newPlayerPos)){   //si hay caja la muevo
+                    Position newBoxPos = new Position(x, y+2);
                     boxes.remove(newPlayerPos); //remuevo la caja de donde esta el jugador
                     boxes.add(newBoxPos); //y la pongo en su nueva posicion
                 }

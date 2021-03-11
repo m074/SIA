@@ -1,6 +1,7 @@
 package ar.edu.itba.sia;
 
 
+import ar.edu.itba.sia.Algorithm.BFS;
 import ar.edu.itba.sia.Model.Level;
 import ar.edu.itba.sia.Model.Position;
 import ar.edu.itba.sia.Model.State;
@@ -19,7 +20,7 @@ public class App
         Position playerPos = null;
         State initialState;
 
-        File file = new File("");
+        File file = new File("D:\\primer.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
         int c;
         int x=0; int y=0;
@@ -42,17 +43,21 @@ public class App
                     boxes.add(new Position(x,y));
                     break;
                 case '\n':
-                    y++;
-                    x = 0;
+                    x++;
+                    y = -1;
                     break;
-                default: break;
+                default:
+                    y--;
+                    break;
             }
-            x++;
+            y++;
         }
         if(playerPos == null)
             System.exit(1);
         initialState = new State(playerPos, boxes);
         Level level = new Level(goals, walls, initialState);
+
+        BFS.resolve(level);
 
     }
 
