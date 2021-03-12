@@ -6,8 +6,8 @@ public class Level {
     //clase para almacenar nivel del sokoban
     //de alguna forma habria que recibir de un archivo el mapa (con ascii quizas) y
     //guardarse las posiciones
-    HashSet<Position> goals;
-    HashSet<Position> walls;
+    public HashSet<Position> goals;
+    public HashSet<Position> walls;
     public State startingState;    //tendria la posicion inicial del jugador y las cajas
 
     public Level(HashSet<Position> goals, HashSet<Position> walls, State startingState) {
@@ -40,7 +40,7 @@ public class Level {
         newPlayerPos = new Position(x, y-1);
         otherBox = new Position(x, y-1);   //para la segunda caja
         if(!walls.contains(newPlayerPos)){
-            if(!(boxes.contains(newPlayerPos) && walls.contains(otherBox)))
+            if(!(boxes.contains(newPlayerPos) && walls.contains(otherBox))) //TODO ver si otra caja bloquea
                 moves.add("l");
         }
 
@@ -48,14 +48,14 @@ public class Level {
         newPlayerPos = new Position(x-1, y);
         otherBox = new Position(x-2, y);   //para la segunda caja
         if(!walls.contains(newPlayerPos)){
-            if(!(boxes.contains(newPlayerPos) && walls.contains(otherBox)))
+            if(!(boxes.contains(newPlayerPos) && walls.contains(otherBox)))//TODO ver si otra caja bloquea
                 moves.add("u");
         }
 
         newPlayerPos = new Position(x+1, y);
         otherBox = new Position(x+2, y);   //para la segunda caja
         if(!walls.contains(newPlayerPos)){
-            if(!(boxes.contains(newPlayerPos) && walls.contains(otherBox)))
+            if(!(boxes.contains(newPlayerPos) && walls.contains(otherBox)))//TODO ver si otra caja bloquea
                 moves.add("d");
         }
 

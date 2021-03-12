@@ -4,8 +4,10 @@ package ar.edu.itba.sia;
 import ar.edu.itba.sia.Algorithm.BFS;
 import ar.edu.itba.sia.Algorithm.DFS;
 import ar.edu.itba.sia.Model.Level;
+import ar.edu.itba.sia.Model.Node;
 import ar.edu.itba.sia.Model.Position;
 import ar.edu.itba.sia.Model.State;
+import ar.edu.itba.sia.utils.OvitoGenerator;
 
 import java.io.*;
 import java.net.URL;
@@ -59,7 +61,18 @@ public class App
         initialState = new State(playerPos, boxes);
         Level level = new Level(goals, walls, initialState);
 
-        DFS.resolve(level);
+//        Node solution_node = BFS.resolve(level);
+//        Node node = solution_node;
+//        int frame =0;
+//        while(node!=null){
+//            node = node.parent;
+//            frame++;
+//        }
+//        node = solution_node;
+//        while(node!=null){
+//            OvitoGenerator.saveDynamicFile(frame--,level,node.state);
+//            node = node.parent;
+//        }
 
     }
 
