@@ -1,7 +1,6 @@
 package ar.edu.itba.sia.Model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 public class Level {
     //clase para almacenar nivel del sokoban
@@ -144,5 +143,44 @@ public class Level {
         return false;
     }
 
+    public void printSolution(Node n){
+        if(n == null){
+            System.out.println("No solution found.\n");
+            return;
+        }
+        Stack<Node> nodeQueue = new Stack<>();
+        while(n.parent != null){
+            nodeQueue.push(n);
+            n = n.parent;
+        }
+        int maxX = 0;
+        int maxY = 0;
+        for(Position p : walls){
+            if(p.getX() > maxX)
+                maxX = p.getX();
+            if(p.getY() > maxY)
+                maxY = p.getY();
+        }
 
+        while(!nodeQueue.isEmpty()){
+            State s = nodeQueue.pop().state;
+            for(int i = 0; i<= maxX; i++){
+                for(int j = 0; j<=maxY; j++){
+                    Position pos = new Position(i, j);
+                    if(walls.contains(pos))
+                        System.out.print("*");
+                    else if(s.box_positions.contains(pos))
+                        System.out.print("o");
+                    else if(s.player_position.equals(pos))
+                        System.out.print("p");
+                    else if(goals.contains(pos))
+                        System.out.print("x");
+                    else
+                        System.out.print(" ");
+                }
+                System.out.print("\n");
+            }
+            System.out.println("\n");
+        }
+    }
 }

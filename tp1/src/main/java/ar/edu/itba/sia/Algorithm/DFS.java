@@ -22,6 +22,7 @@ public class DFS {
             }
             if(level.hasWon(node.state)) {
                 System.out.println("gane");
+                level.printSolution(node);
                 return;
             }
             visited.add(node.state);

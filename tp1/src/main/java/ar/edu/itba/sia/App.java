@@ -2,11 +2,13 @@ package ar.edu.itba.sia;
 
 
 import ar.edu.itba.sia.Algorithm.BFS;
+import ar.edu.itba.sia.Algorithm.DFS;
 import ar.edu.itba.sia.Model.Level;
 import ar.edu.itba.sia.Model.Position;
 import ar.edu.itba.sia.Model.State;
 
 import java.io.*;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 
@@ -20,8 +22,8 @@ public class App
         Position playerPos = null;
         State initialState;
 
-        File file = new File("D:\\primer.txt");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
+        File filePath = new File("");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8));
         int c;
         int x=0; int y=0;
 

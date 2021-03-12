@@ -23,6 +23,7 @@ public class BFS {
             estados_anteriores.add(nodo.state);
             if(level.hasWon(nodo.state)) {
                 System.out.println("gane");
+                level.printSolution(nodo);
                 return;
             }
             ArrayList<String> posibles_mov = level.possibleMoves(nodo.state);
