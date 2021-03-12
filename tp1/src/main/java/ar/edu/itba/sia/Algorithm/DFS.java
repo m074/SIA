@@ -21,7 +21,7 @@ public class DFS {
                 continue;
             }
             if(level.hasWon(node.state)) {
-                System.out.println("gane");
+                System.out.println("Solución hallada:");
                 level.printSolution(node);
                 return;
             }
@@ -33,6 +33,7 @@ public class DFS {
                     stack.push(newNode);
             }
         }
+        System.out.println("No se halló solución.");
     }
 
 }

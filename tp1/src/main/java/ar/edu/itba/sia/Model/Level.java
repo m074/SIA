@@ -144,6 +144,7 @@ public class Level {
     }
 
     public void printSolution(Node n){
+
         if(n == null){
             System.out.println("No solution found.\n");
             return;

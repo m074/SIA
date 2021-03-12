@@ -22,7 +22,7 @@ public class BFS {
             }
             estados_anteriores.add(nodo.state);
             if(level.hasWon(nodo.state)) {
-                System.out.println("gane");
+                System.out.println("Solución hallada:");
                 level.printSolution(nodo);
                 return;
             }
@@ -33,6 +33,7 @@ public class BFS {
                     nodos_a_visitar.add(new_node);
             }
         }
+        System.out.println("No se halló solución.");
 
     }
 }

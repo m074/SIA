@@ -22,7 +22,7 @@ public class App
         Position playerPos = null;
         State initialState;
 
-        File filePath = new File("");
+        File filePath = new File("C:/Users/guigo/SIA/tp1/src/main/java/ar/edu/itba/sia/maze.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8));
         int c;
         int x=0; int y=0;
@@ -59,7 +59,7 @@ public class App
         initialState = new State(playerPos, boxes);
         Level level = new Level(goals, walls, initialState);
 
-        BFS.resolve(level);
+        DFS.resolve(level);
 
     }
 
