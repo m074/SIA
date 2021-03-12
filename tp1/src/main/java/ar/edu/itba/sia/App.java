@@ -24,7 +24,7 @@ public class App
         Position playerPos = null;
         State initialState;
 
-        File filePath = new File("C:/Users/guigo/SIA/tp1/src/main/java/ar/edu/itba/sia/maze.txt");
+        File filePath = new File("");
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8));
         int c;
         int x=0; int y=0;
