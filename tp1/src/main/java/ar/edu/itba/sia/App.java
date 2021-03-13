@@ -8,6 +8,7 @@ import ar.edu.itba.sia.Model.Node;
 import ar.edu.itba.sia.Model.Position;
 import ar.edu.itba.sia.Model.State;
 import ar.edu.itba.sia.utils.OvitoGenerator;
+import ar.edu.itba.sia.utils.TimeMetric;
 
 import java.io.*;
 import java.net.URL;
@@ -18,13 +19,14 @@ public class App
 {
     //habria que leer de un archivo
     public static void main(String[] args) throws IOException {
+        TimeMetric m = new TimeMetric();
         HashSet<Position> walls = new HashSet<>();
         HashSet<Position> goals = new HashSet<>();
         HashSet<Position> boxes = new HashSet<>();
         Position playerPos = null;
         State initialState;
 
-        File filePath = new File("C:/Users/guigo/SIA/tp1/src/main/java/ar/edu/itba/sia/maze.txt");
+        File filePath = new File("D:\\dos.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), StandardCharsets.UTF_8));
         int c;
         int x=0; int y=0;
@@ -61,18 +63,23 @@ public class App
         initialState = new State(playerPos, boxes);
         Level level = new Level(goals, walls, initialState);
 
-//        Node solution_node = BFS.resolve(level);
-//        Node node = solution_node;
-//        int frame =0;
-//        while(node!=null){
-//            node = node.parent;
-//            frame++;
-//        }
-//        node = solution_node;
-//        while(node!=null){
-//            OvitoGenerator.saveDynamicFile(frame--,level,node.state);
-//            node = node.parent;
-//        }
+        m.startTime();
+        Node solution_node = BFS.resolve(level);
+        Node node = solution_node;
+
+        m.stopTime();
+
+        System.out.println(m.getTime());
+        int frame =0;
+        while(node!=null){
+            node = node.parent;
+            frame++;
+        }
+        node = solution_node;
+        while(node!=null){
+            OvitoGenerator.saveDynamicFile(frame--,level,node.state);
+            node = node.parent;
+        }
 
     }
 

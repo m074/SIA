@@ -9,11 +9,17 @@ public class Node {
     public State state;
     public Node parent;
     public Integer id; // identificador unico ya que no podemos calcular el hashCode a partir del padre o el state
+    public Integer depth;
 
     public Node(State state, Node parent) {
         this.state = state;
         this.parent = parent; //null if root
         this.id = id_count++;
+        if(parent==null){
+            this.depth = 0;
+        }else{
+            this.depth = parent.depth + 1;
+        }
     }
 
     @Override

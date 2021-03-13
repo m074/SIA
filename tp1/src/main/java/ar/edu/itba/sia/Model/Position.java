@@ -49,4 +49,8 @@ public class Position {
                 ", y=" + y +
                 '}';
     }
+
+    public int distance(Position p){
+        return Math.abs(this.x + p.getX())+ Math.abs(this.y + p.getY());
+    }
 }

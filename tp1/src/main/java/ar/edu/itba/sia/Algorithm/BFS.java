@@ -9,31 +9,33 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 public class BFS {
-    public static void resolve(Level level){
-        LinkedList<Node> nodos_a_visitar = new LinkedList<>();
-        HashSet<State> estados_anteriores = new HashSet<>();
-        nodos_a_visitar.add(new Node(level.startingState, null));
-//        estados_anteriores.add(level.startingState);
+    public static Node resolve(Level level){
+        LinkedList<Node> nodes_to_visit = new LinkedList<>();
+        HashSet<State> old_states = new HashSet<>();
+        nodes_to_visit.add(new Node(level.startingState, null));
 
-        while(!nodos_a_visitar.isEmpty()){
-            Node nodo = nodos_a_visitar.poll();
-            if(estados_anteriores.contains(nodo.state)){
+        while(!nodes_to_visit.isEmpty()){
+            Node node = nodes_to_visit.poll();
+            if(old_states.contains(node.state)){
                 continue;
             }
-            estados_anteriores.add(nodo.state);
-            if(level.hasWon(nodo.state)) {
+            old_states.add(node.state);
+            if(level.hasWon(node.state)) {
                 System.out.println("Solución hallada:");
-                level.printSolution(nodo);
-                return;
+                System.out.println("Nodos creados:" + Node.id_count);
+                System.out.println("Nodos frontera:" + nodes_to_visit.size());
+                level.printSolution(node);
+                return node;
             }
-            ArrayList<String> posibles_mov = level.possibleMoves(nodo.state);
-            for (String s: posibles_mov) {
-                Node new_node = level.move(nodo, s);
+            ArrayList<String> pausibles_moves = level.possibleMoves(node.state);
+            for (String s: pausibles_moves) {
+                Node new_node = level.move(node, s);
                 if(new_node != null)
-                    nodos_a_visitar.add(new_node);
+                    nodes_to_visit.add(new_node);
             }
         }
         System.out.println("No se halló solución.");
+        return null;
 
     }
 }
