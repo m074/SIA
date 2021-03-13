@@ -19,7 +19,7 @@ public class Level {
     //funcion que devuelve posibles movimientos dependiendo del estado
     //up, down, left, right
     //cuando se haga la busqueda deberan crearse los nodos con los estados nuevos al moverse
-    public ArrayList<String> possibleMoves(State s){
+    public ArrayList<String> possibleMoves(State s) {
         HashSet<Position> boxes = s.box_positions;
         ArrayList<String> moves = new ArrayList<>();
         int x = s.player_position.x;
@@ -29,13 +29,13 @@ public class Level {
         //considerar que no hayan dos cajas juntas
 
         //derecha
-        Position newPlayerPos = new Position(x, y+1);
-        Position otherBox = new Position(x, y+2);   //para la segunda caja
-        if(!walls.contains(newPlayerPos)){
-            if(!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox) )))
+        Position newPlayerPos = new Position(x, y + 1);
+        Position otherBox = new Position(x, y + 2);   //para la segunda caja
+        if (!walls.contains(newPlayerPos)) {
+            if (!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox))))
                 moves.add("r");
-            }
         }
+
 
         //izquierda
         newPlayerPos = new Position(x, y-1);
@@ -44,7 +44,6 @@ public class Level {
 
             if(!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox) )))
                 moves.add("l");
-            }
         }
 
         //arriba
@@ -53,7 +52,7 @@ public class Level {
         if(!walls.contains(newPlayerPos)){
             if(!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox) )))
                 moves.add("u");
-            }
+
         }
 
         newPlayerPos = new Position(x+1, y);
@@ -61,7 +60,7 @@ public class Level {
         if(!walls.contains(newPlayerPos)){
             if(!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox) )))
                 moves.add("d");
-            }
+
         }
 
         return moves;
