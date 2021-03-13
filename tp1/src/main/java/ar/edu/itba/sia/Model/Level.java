@@ -34,14 +34,17 @@ public class Level {
         if(!walls.contains(newPlayerPos)){
             if(!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox) )))
                 moves.add("r");
+            }
         }
 
         //izquierda
         newPlayerPos = new Position(x, y-1);
         otherBox = new Position(x, y-2);   //para la segunda caja
         if(!walls.contains(newPlayerPos)){
+
             if(!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox) )))
                 moves.add("l");
+            }
         }
 
         //arriba
@@ -50,6 +53,7 @@ public class Level {
         if(!walls.contains(newPlayerPos)){
             if(!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox) )))
                 moves.add("u");
+            }
         }
 
         newPlayerPos = new Position(x+1, y);
@@ -57,6 +61,7 @@ public class Level {
         if(!walls.contains(newPlayerPos)){
             if(!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox) )))
                 moves.add("d");
+            }
         }
 
         return moves;
