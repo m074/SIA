@@ -15,21 +15,21 @@ public class IDDFS {
 
         HashSet<State> visited = new HashSet<>();
 
-        int targetDepth = 50;
-        int currentDepth = -1;
+        int targetDepth = 20;
+
 
     Node root = new Node(level.startingState, null);
 
     HashSet<Node> borderNodes = new HashSet<Node>();
-    boolean finish =  iddfs(root, level, visited, currentDepth, targetDepth, borderNodes);
+    boolean finish =  iddfs(root, level, visited, targetDepth, borderNodes);
+
 
     while(!finish){
         HashSet<Node> newBorderNodes = new HashSet<Node>();
-        currentDepth = targetDepth;
-        targetDepth += 2*targetDepth;
-        System.out.println(targetDepth);
+        targetDepth = 2*targetDepth;
+
         for(Node node : borderNodes){
-            finish = iddfs(node, level, visited, currentDepth, targetDepth, newBorderNodes);
+            finish = iddfs(node, level, visited, targetDepth, newBorderNodes);
             if(finish)
                 break;
         }
@@ -40,10 +40,9 @@ public class IDDFS {
 
 
 
-    public static boolean iddfs(Node node, Level level, HashSet<State> visited, int currentDepth, int targetDepth, HashSet<Node> borderNodes ){
-        currentDepth += 1;
+    public static boolean iddfs(Node node, Level level, HashSet<State> visited, int targetDepth, HashSet<Node> borderNodes ){
 
-        if(currentDepth == targetDepth){
+        if(node.depth == targetDepth){
             borderNodes.add(node);
             return false;
         }
@@ -64,12 +63,12 @@ public class IDDFS {
         ArrayList<String> moves = level.possibleMoves(node.state);
         for(String s : moves){
             newNode = level.move(node, s);
-            if (iddfs(newNode, level, visited, currentDepth, targetDepth, borderNodes))
+            if (iddfs(newNode, level, visited, targetDepth, borderNodes))
                 return true;
 
         }
 
-        return iddfs(newNode, level, visited, currentDepth, targetDepth, borderNodes);
+        return iddfs(newNode, level, visited, targetDepth, borderNodes);
     }
 
 
