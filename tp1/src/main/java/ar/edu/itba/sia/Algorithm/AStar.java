@@ -1,5 +1,7 @@
 package ar.edu.itba.sia.Algorithm;
 
+import ar.edu.itba.sia.Algorithm.Heuristic.AStarValueF;
+import ar.edu.itba.sia.Algorithm.Heuristic.BoxDistanceHeuristic;
 import ar.edu.itba.sia.Model.Level;
 import ar.edu.itba.sia.Model.Node;
 import ar.edu.itba.sia.Model.State;
@@ -7,15 +9,26 @@ import ar.edu.itba.sia.Model.State;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
-public class BFS {
-    public static Node resolve(Level level){
-        LinkedList<Node> nodes_to_visit = new LinkedList<>();
+public class AStar {
+    BoxDistanceHeuristic h;
+
+    public AStar(Level level, BoxDistanceHeuristic h){
+        this.h = h;
+    }
+
+    public Node resolve(Level level){
+        PriorityQueue<AStarValueF> nodes_to_visit = new PriorityQueue<>();
         HashSet<State> old_states = new HashSet<>();
-        nodes_to_visit.add(new Node(level.startingState, null));
-        int veces = 0;
+        Node initial_node = new Node(level.startingState, null);
+        nodes_to_visit.add(new AStarValueF(0,0, initial_node));
+        int veces =0;
         while(!nodes_to_visit.isEmpty()){
-            Node node = nodes_to_visit.poll();
+            AStarValueF asf = nodes_to_visit.poll();
+            Node node = asf.node;
+
+
             veces++;
             if(veces==100000){
                 veces=0;
@@ -23,6 +36,7 @@ public class BFS {
                 System.out.println(old_states.size());
                 System.out.println(node.depth);
             }
+
             if(old_states.contains(node.state)){
                 continue;
             }
@@ -37,8 +51,13 @@ public class BFS {
             ArrayList<String> pausibles_moves = level.possibleMoves(node.state);
             for (String s: pausibles_moves) {
                 Node new_node = level.move(node, s);
-                if(new_node != null)
-                    nodes_to_visit.add(new_node);
+                if(new_node != null){
+                    int node_h = h.calculate_h(new_node);
+                    nodes_to_visit.add(new AStarValueF(new_node.depth + node_h, node_h, new_node));
+                }
+//                    nodes_to_visit.add(new_node);
+
+
             }
         }
         System.out.println("No se halló solución.");

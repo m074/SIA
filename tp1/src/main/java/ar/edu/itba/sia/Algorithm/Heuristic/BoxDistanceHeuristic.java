@@ -26,10 +26,21 @@ public class BoxDistanceHeuristic implements Heuristic{
             for (Position goal_postion: level.goals) {
                 int distance = box_position.distance(goal_postion);
                 if(min > distance){
-                    total += min;
+                    min = distance;
                 }
             }
+            total += min;
         }
+        int min = Integer.MAX_VALUE;
+        for (Position box_position: state.box_positions) {
+            int distance = state.player_position.distance(box_position);
+            if(min > distance){
+                min = distance;
+            }
+
+        }
+        total += min;
+//        System.out.println(total);
         return total;
     }
 }
