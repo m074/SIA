@@ -32,11 +32,7 @@ public class Level {
         Position newPlayerPos = new Position(x, y+1);
         Position otherBox = new Position(x, y+2);   //para la segunda caja
         if(!walls.contains(newPlayerPos)){
-            if(boxes.contains(newPlayerPos)) {
-                if(!(walls.contains(otherBox) || boxes.contains(otherBox)))
-                    moves.add("r");
-            }
-            else {
+            if(!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox) )))
                 moves.add("r");
             }
         }
@@ -45,11 +41,8 @@ public class Level {
         newPlayerPos = new Position(x, y-1);
         otherBox = new Position(x, y-2);   //para la segunda caja
         if(!walls.contains(newPlayerPos)){
-            if(boxes.contains(newPlayerPos)) {
-                if(!(walls.contains(otherBox) || boxes.contains(otherBox)))
-                    moves.add("l");
-            }
-            else {
+
+            if(!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox) )))
                 moves.add("l");
             }
         }
@@ -58,11 +51,7 @@ public class Level {
         newPlayerPos = new Position(x-1, y);
         otherBox = new Position(x-2, y);   //para la segunda caja
         if(!walls.contains(newPlayerPos)){
-            if(boxes.contains(newPlayerPos)) {
-                if(!(walls.contains(otherBox) || boxes.contains(otherBox)))
-                    moves.add("u");
-            }
-            else {
+            if(!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox) )))
                 moves.add("u");
             }
         }
@@ -70,11 +59,7 @@ public class Level {
         newPlayerPos = new Position(x+1, y);
         otherBox = new Position(x+2, y);   //para la segunda caja
         if(!walls.contains(newPlayerPos)){
-            if(boxes.contains(newPlayerPos)) {
-                if(!(walls.contains(otherBox) || boxes.contains(otherBox)))
-                    moves.add("d");
-            }
-            else {
+            if(!(boxes.contains(newPlayerPos) && (walls.contains(otherBox) || boxes.contains(otherBox) )))
                 moves.add("d");
             }
         }
