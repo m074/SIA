@@ -5,7 +5,7 @@ import ar.edu.itba.sia.Model.Node;
 import ar.edu.itba.sia.Model.Position;
 import ar.edu.itba.sia.Model.State;
 
-public class BoxDistanceHeuristic implements Heuristic{
+public class BoxDistanceHeuristic extends Heuristic{
     private Level level;
 
 
@@ -41,7 +41,6 @@ public class BoxDistanceHeuristic implements Heuristic{
 
         }
         total += min;
-//        System.out.println(total);
         return total;
     }
 }
