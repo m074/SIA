@@ -23,20 +23,9 @@ public class AStar {
         HashSet<State> old_states = new HashSet<>();
         Node initial_node = new Node(level.startingState, null);
         nodes_to_visit.add(new AStarValueF(0,0, initial_node));
-        int veces =0;
         while(!nodes_to_visit.isEmpty()){
             AStarValueF asf = nodes_to_visit.poll();
             Node node = asf.node;
-
-
-            veces++;
-            if(veces==100000){
-                veces=0;
-                level.printSolution(node);
-                System.out.println(old_states.size());
-                System.out.println(node.depth);
-            }
-
             if(old_states.contains(node.state)){
                 continue;
             }
