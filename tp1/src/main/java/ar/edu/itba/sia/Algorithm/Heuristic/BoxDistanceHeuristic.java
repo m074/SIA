@@ -8,6 +8,7 @@ import ar.edu.itba.sia.Model.State;
 public class BoxDistanceHeuristic implements Heuristic{
     private Level level;
 
+
     public BoxDistanceHeuristic(Level level){
         this.level = level;
     }
