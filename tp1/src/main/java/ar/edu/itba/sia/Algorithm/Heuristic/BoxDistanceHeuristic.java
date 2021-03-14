@@ -15,11 +15,6 @@ public class BoxDistanceHeuristic extends Heuristic {
 
 
     @Override
-    public int calculate_h(Node node) {
-        return calculate_h(node.state);
-    }
-
-    @Override
     public int calculate_h(State state) {
         int total = 0;
         for (Position box_position: state.box_positions) {
