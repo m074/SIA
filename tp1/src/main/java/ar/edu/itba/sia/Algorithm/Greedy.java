@@ -2,6 +2,7 @@ package ar.edu.itba.sia.Algorithm;
 
 import ar.edu.itba.sia.Algorithm.Heuristic.AStarValueF;
 import ar.edu.itba.sia.Algorithm.Heuristic.BoxDistanceHeuristic;
+import ar.edu.itba.sia.Algorithm.Heuristic.Heuristic;
 import ar.edu.itba.sia.Model.Level;
 import ar.edu.itba.sia.Model.Node;
 import ar.edu.itba.sia.Model.State;
@@ -11,9 +12,9 @@ import java.util.HashSet;
 import java.util.PriorityQueue;
 
 public class Greedy {
-    BoxDistanceHeuristic h;
+    Heuristic h;
 
-    public Greedy(Level level, BoxDistanceHeuristic h){
+    public Greedy(Level level, Heuristic h){
         this.h = h;
     }
 

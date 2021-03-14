@@ -1,20 +1,19 @@
 package ar.edu.itba.sia.Algorithm;
 
 import ar.edu.itba.sia.Algorithm.Heuristic.AStarValueF;
-import ar.edu.itba.sia.Algorithm.Heuristic.BoxDistanceHeuristic;
+import ar.edu.itba.sia.Algorithm.Heuristic.Heuristic;
 import ar.edu.itba.sia.Model.Level;
 import ar.edu.itba.sia.Model.Node;
 import ar.edu.itba.sia.Model.State;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 public class AStar {
-    BoxDistanceHeuristic h;
+    Heuristic h;
 
-    public AStar(Level level, BoxDistanceHeuristic h){
+    public AStar(Level level, Heuristic h){
         this.h = h;
     }
 

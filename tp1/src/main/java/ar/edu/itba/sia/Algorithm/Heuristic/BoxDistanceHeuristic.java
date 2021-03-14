@@ -5,7 +5,7 @@ import ar.edu.itba.sia.Model.Node;
 import ar.edu.itba.sia.Model.Position;
 import ar.edu.itba.sia.Model.State;
 
-public class BoxDistanceHeuristic extends Heuristic{
+public class BoxDistanceHeuristic extends Heuristic {
     private Level level;
 
 
