@@ -4,12 +4,20 @@ import ar.edu.itba.sia.Model.Level;
 import ar.edu.itba.sia.Model.Node;
 import ar.edu.itba.sia.Model.State;
 
+import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Stack;
 
-public class DFS {
-    public static void resolve(Level level){
+public class DFS extends Algorithm{
+    Level level;
+
+    public DFS(Level level){
+        this.level = level;
+    }
+
+    @Override
+    public Node resolve() {
         Stack<Node> stack = new Stack<>();
         Node node = new Node(level.startingState, null);
         stack.push(node);
@@ -23,7 +31,7 @@ public class DFS {
             if(level.hasWon(node.state)) {
                 System.out.println("Solución hallada:");
                 level.printSolution(node);
-                return;
+                return node;
             }
             visited.add(node.state);
             ArrayList<String> moves = level.possibleMoves(node.state);
@@ -34,6 +42,6 @@ public class DFS {
             }
         }
         System.out.println("No se halló solución.");
+        return null;
     }
-
 }

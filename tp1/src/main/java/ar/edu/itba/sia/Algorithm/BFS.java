@@ -8,21 +8,28 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-public class BFS {
-    public static Node resolve(Level level){
+public class BFS extends Algorithm {
+    Level level;
+
+    public BFS(Level level){
+        this.level = level;
+    }
+
+    @Override
+    public Node resolve() {
         LinkedList<Node> nodes_to_visit = new LinkedList<>();
         HashSet<State> old_states = new HashSet<>();
         nodes_to_visit.add(new Node(level.startingState, null));
-        int veces = 0;
+//        int veces = 0;
         while(!nodes_to_visit.isEmpty()){
             Node node = nodes_to_visit.poll();
-            veces++;
-            if(veces==100000){
-                veces=0;
-                level.printSolution(node);
-                System.out.println(old_states.size());
-                System.out.println(node.depth);
-            }
+//            veces++;
+//            if(veces==100000){
+//                veces=0;
+//                level.printSolution(node);
+//                System.out.println(old_states.size());
+//                System.out.println(node.depth);
+//            }
             if(old_states.contains(node.state)){
                 continue;
             }
