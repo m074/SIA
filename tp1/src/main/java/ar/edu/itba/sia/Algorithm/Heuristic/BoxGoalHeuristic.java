@@ -16,14 +16,11 @@ public class BoxGoalHeuristic extends Heuristic {
     @Override
     public int calculate_h(State state) {
         int total = 0;
-        int min = Integer.MAX_VALUE;
         for (Position box_position: state.box_positions) {
             if (level.goals.contains(box_position)){
                 total += 1;
             }
-
         }
-        total += min;
         return total;
     }
 }
