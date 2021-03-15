@@ -1,6 +1,7 @@
 package ar.edu.itba.sia.utils;
 
 import ar.edu.itba.sia.Model.Level;
+import ar.edu.itba.sia.Model.Node;
 import ar.edu.itba.sia.Model.Position;
 import ar.edu.itba.sia.Model.State;
 
@@ -10,8 +11,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class OvitoGenerator {
-    public static void saveDynamicFile(int frame, Level level, State state) {
-        try(FileWriter fw = new FileWriter("D:\\frame-" + frame + ".xyz", false);
+    public static void saveDynamicFile(int frame, Level level, State state, String path) {
+        try(FileWriter fw = new FileWriter(path + "frame-" + frame + ".xyz", false);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw))
         {
@@ -38,4 +39,18 @@ public class OvitoGenerator {
         }
     }
 
+    public static void saveSolution(String path, Level level, Node solution_node){
+        Node node = solution_node;
+        int frame = 0;
+        while(node!=null){
+            node = node.parent;
+            frame++;
+        }
+        node = solution_node;
+        while(node!=null){
+            OvitoGenerator.saveDynamicFile(frame--,level,node.state, path);
+            node = node.parent;
+        }
+
+    }
 }
