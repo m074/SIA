@@ -129,23 +129,6 @@ public class Level {
 
     //funcion que teniendo un estado se fije si hay deadlock
 
-    public boolean testDeadlock(State s){
-        for(Position box : s.box_positions){
-            int x = box.x;
-            int y = box.y;
-
-        /*
-            habria que checkear cada posible deadlock:
-            top left
-            top right
-            bottom left
-            bottom right
-            no se si hay otras
-        */
-
-        }
-        return false;
-    }
 
     public void printSolution(Node n){
 
