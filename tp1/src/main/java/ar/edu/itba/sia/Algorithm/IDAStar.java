@@ -17,6 +17,9 @@ public class IDAStar extends Algorithm{
     Level level;
     Node solutionNode;
 
+
+    int totalBorders = 0;
+
     public IDAStar(Level level, Heuristic heuristic){
         this.level = level;
         this.h = heuristic;
@@ -47,8 +50,14 @@ public class IDAStar extends Algorithm{
                     AStarValueF asv = borders.poll();
                     target = asv.getF_value();
 
-                    if (idastar(asv.node, level, visitedStates, target, newBorders, h))
+                    if (idastar(asv.node, level, visitedStates, target, newBorders, h)){
+                        totalBorders = borders.size() + newBorders.size();
+                        System.out.println("IDA*:");
+                        System.out.println("Nodos creados:" + Node.id_count);
+                        System.out.println("Nodos frontera: " + totalBorders);
                         return solutionNode;
+                    }
+
                     first = false;
                 }
                 else{
@@ -56,8 +65,13 @@ public class IDAStar extends Algorithm{
                     AStarValueF asv = borders.poll();
                     int t = asv.getF_value() + asv.getH_value();
 
-                    if (idastar(asv.node, level, visitedStates, target, newBorders, h))
+                    if (idastar(asv.node, level, visitedStates, target, newBorders, h)){
+                        totalBorders = borders.size() + newBorders.size();
+                        System.out.println("IDA*:");
+                        System.out.println("Nodos creados:" + Node.id_count);
+                        System.out.println("Nodos frontera: " + totalBorders);
                         return solutionNode;
+                    }
                 }
             }
             borders = newBorders;
