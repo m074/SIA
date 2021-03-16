@@ -10,104 +10,105 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
-public class IDAStar {
-    Heuristic h;
+public class IDAStar extends Algorithm{
 
-    public IDAStar(Level level, Heuristic h){
-        this.h = h;
+
+    Heuristic h;
+    Level level;
+    Node solutionNode;
+
+    public IDAStar(Level level, Heuristic heuristic){
+        this.level = level;
+        this.h = heuristic;
     }
 
-    public void resolve(Level level){
 
+    public Node resolve() {
 
-    HashMap<State, AStarValueF> visitedStates = new HashMap<>();
-    PriorityQueue<AStarValueF> borders = new PriorityQueue<>();
+        HashMap<State, Integer> visitedStates = new HashMap<>();
+        PriorityQueue<AStarValueF> borders = new PriorityQueue<>();
 
         Node initial_node = new Node(level.startingState, null);
         int node_h = h.calculate_h(initial_node);
-        AStarValueF as= new AStarValueF(initial_node.depth,node_h, initial_node);
+        AStarValueF as= new AStarValueF(initial_node.depth+node_h,node_h, initial_node);
 
-        int target = as.getF_value() + as.getH_value();
+        int target = as.getF_value();
 
-    boolean finish =  idastar(initial_node, level, visitedStates, target, borders, h);
+        boolean finish =  idastar(initial_node, level, visitedStates, target, borders, h);
 
-    while(!finish){
+        while(!finish){
 
-        PriorityQueue<AStarValueF> newBorders = new PriorityQueue<>();
-        boolean first = true;
+            PriorityQueue<AStarValueF> newBorders = new PriorityQueue<>();
+            boolean first = true;
 
-        while(!borders.isEmpty()){
+            while(!borders.isEmpty()){
 
-            if(first){
-                AStarValueF asv = borders.poll();
-                target = asv.getF_value() + asv.getH_value();
-                if (idastar(asv.node, level, visitedStates, target, newBorders, h))
-                    return;
-                first = false;
+                if(first){
+                    AStarValueF asv = borders.poll();
+                    target = asv.getF_value();
+
+                    if (idastar(asv.node, level, visitedStates, target, newBorders, h))
+                        return solutionNode;
+                    first = false;
+                }
+                else{
+
+                    AStarValueF asv = borders.poll();
+                    int t = asv.getF_value() + asv.getH_value();
+
+                    if (idastar(asv.node, level, visitedStates, target, newBorders, h))
+                        return solutionNode;
+                }
             }
-            else{
-                if (idastar(borders.poll().node, level, visitedStates, target, newBorders, h))
-                    return;
+            borders = newBorders;
+
+            if(newBorders.isEmpty()){
+                return solutionNode;
             }
         }
-        borders = newBorders;
+        return solutionNode;
     }
-        return;
-}
 
+    public boolean idastar(Node node, Level level, HashMap<State, Integer>  visitedStates, int targetF, PriorityQueue<AStarValueF> borders, Heuristic h ){
 
-
-
-
-
-    public static boolean idastar(Node node, Level level, HashMap<State, AStarValueF>  visitedStates, int targetF, PriorityQueue<AStarValueF> borders, Heuristic h ){
-
+        if(level.hasWon(node.state)) {
+            level.printSolution(node);
+            solutionNode = node;
+            return true;
+        }
 
         int node_h = h.calculate_h(node);
-        AStarValueF as= new AStarValueF(node.depth,node_h, node);
-        int F = as.getF_value() + as.getH_value();
+        AStarValueF as= new AStarValueF(node.depth+node_h,node_h, node);
+        int F = as.getF_value();
 
         if(F > targetF){
             borders.add(as);
             return false;
         }
 
-        if(node == null){
-            return true;
-        }
-        if(level.hasWon(node.state)) {
-            level.printSolution(node);
-            return true;
-        }
-
         State currSt = node.state;
         if(visitedStates.containsKey(currSt)){
-            AStarValueF asv = visitedStates.get(currSt);
-
-            if(node.depth >= asv.node.depth) {
+            if(node.depth >= visitedStates.get(currSt)) {
                 return false;
             }
         }
-        visitedStates.put(currSt, as);
-
+        visitedStates.put(currSt, node.depth);
 
 
         ArrayList<String> moves = level.possibleMoves(node.state);
-        Node newNode = null;
             PriorityQueue<AStarValueF> pq = new PriorityQueue<>();
             for(String s : moves){
 
-                newNode = level.move(node, s);
+                Node newNode = level.move(node, s);
                 node_h = h.calculate_h(newNode);
-                pq.add(new AStarValueF(newNode.depth, node_h, newNode));
+                pq.add(new AStarValueF(newNode.depth+node_h, node_h, newNode));
 
             }
             while(!pq.isEmpty()) {
                 if (idastar(pq.poll().node, level, visitedStates, targetF, borders, h))
                     return true;
             }
-
-        return idastar(newNode, level, visitedStates, targetF, borders, h);
+        return false;
     }
 
 

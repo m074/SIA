@@ -9,55 +9,70 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class IDDFS{
+public class IDDFS extends Algorithm{
 
-    //analize the choice of targetdepth and how increase
-    public static void resolve(Level level, int initial_depth){
+    Level level;
+    int depth = 0;
+
+    Node solutionNode = null;
+
+    public IDDFS(Level level, int depth){
+        this.level = level;
+        this.depth = depth;
+    }
+
+    public  IDDFS(Level level){
+        this.level = level;
+    }
+
+    public void setInitialDepth(int depth){
+        this.depth = depth;
+    }
+
+
+    public Node resolve() {
+
+        if(depth == 0){
+            System.out.println("depth need to be setted first");
+            return null;
+        }
 
         HashMap<State, Integer> visitedStates = new HashMap<>();
+        int targetDepth = this.depth;
 
-        int targetDepth = initial_depth;
+        Node root = new Node(level.startingState, null);
 
+        HashSet<Node> borderNodes = new HashSet<Node>();
+        boolean finish =  iddfs(root, level, visitedStates, targetDepth, borderNodes);
 
-    Node root = new Node(level.startingState, null);
+        while(!finish){
+            HashSet<Node> newBorderNodes = new HashSet<Node>();
+            targetDepth += this.depth;
 
-    HashSet<Node> borderNodes = new HashSet<Node>();
-    boolean finish =  iddfs(root, level, visitedStates, targetDepth, borderNodes);
+            for(Node node : borderNodes){
+                finish = iddfs(node, level, visitedStates, targetDepth, newBorderNodes);
+                if(finish)
+                    break;
+            }
+            borderNodes = newBorderNodes;
 
-    while(!finish){
-        HashSet<Node> newBorderNodes = new HashSet<Node>();
-
-
-        targetDepth += initial_depth;
-
-        System.out.println("td " + targetDepth);
-
-        for(Node node : borderNodes){
-            finish = iddfs(node, level, visitedStates, targetDepth, newBorderNodes);
-            if(finish)
-                break;
+            if (newBorderNodes.size() == 0){
+                finish=true;
+            }
         }
-        borderNodes = newBorderNodes;
-
-        if (newBorderNodes.size() == 0){
-            finish=true;
-        }
+        return solutionNode;
     }
-
-    }
-
-
 
     public static boolean iddfs(Node node, Level level, HashMap<State, Integer> visitedStates, int targetDepth, HashSet<Node> borderNodes ){
-
-        if(node.depth == targetDepth){
-            borderNodes.add(node);
-            return false;
-        }
 
         if(level.hasWon(node.state)) {
             level.printSolution(node);
             return true;
+        }
+
+        if(node.depth == targetDepth){
+            borderNodes.add(node);
+            return false;
         }
 
         State currSt = node.state;
@@ -77,5 +92,6 @@ public class IDDFS{
         }
         return false;
     }
+
 
 }
