@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class IDDFS {
+public class IDDFS{
 
     //analize the choice of targetdepth and how increase
-    public static void resolve(Level level){
+    public static void resolve(Level level, int initial_depth){
 
         HashMap<State, Integer> visitedStates = new HashMap<>();
 
-        int targetDepth = 20;
+        int targetDepth = initial_depth;
 
 
     Node root = new Node(level.startingState, null);
@@ -27,9 +27,9 @@ public class IDDFS {
 
     while(!finish){
         HashSet<Node> newBorderNodes = new HashSet<Node>();
-        targetDepth = 2*targetDepth;
+        targetDepth += initial_depth;
 
-        System.out.println(targetDepth);
+        System.out.println("depth: " + targetDepth);
 
         for(Node node : borderNodes){
             finish = iddfs(node, level, visitedStates, targetDepth, newBorderNodes);

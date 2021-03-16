@@ -83,13 +83,9 @@ public class IDAStar {
         State currSt = node.state;
         if(visitedStates.containsKey(currSt)){
             AStarValueF asv = visitedStates.get(currSt);
-            if(F > (asv.getF_value() + asv.getH_value())){
+
+            if(node.depth >= asv.node.depth) {
                 return false;
-            }
-            else if (F == (asv.getF_value() + asv.getH_value())){
-                if(node.depth >= asv.getF_value()){
-                    return false;
-                }
             }
         }
         visitedStates.put(currSt, as);
