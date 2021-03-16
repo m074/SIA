@@ -24,12 +24,13 @@ public class IDDFS{
     HashSet<Node> borderNodes = new HashSet<Node>();
     boolean finish =  iddfs(root, level, visitedStates, targetDepth, borderNodes);
 
-
     while(!finish){
         HashSet<Node> newBorderNodes = new HashSet<Node>();
+
+
         targetDepth += initial_depth;
 
-        System.out.println("depth: " + targetDepth);
+        System.out.println("td " + targetDepth);
 
         for(Node node : borderNodes){
             finish = iddfs(node, level, visitedStates, targetDepth, newBorderNodes);
@@ -37,6 +38,10 @@ public class IDDFS{
                 break;
         }
         borderNodes = newBorderNodes;
+
+        if (newBorderNodes.size() == 0){
+            finish=true;
+        }
     }
 
     }
@@ -50,11 +55,7 @@ public class IDDFS{
             return false;
         }
 
-        if(node == null){
-            return true;
-        }
         if(level.hasWon(node.state)) {
-
             level.printSolution(node);
             return true;
         }
@@ -68,18 +69,13 @@ public class IDDFS{
         }
         visitedStates.put(currSt, node.depth);
 
-
-        Node newNode = null;
         ArrayList<String> moves = level.possibleMoves(node.state);
         for(String s : moves){
-            newNode = level.move(node, s);
+            Node newNode = level.move(node, s);
             if (iddfs(newNode, level, visitedStates, targetDepth, borderNodes))
                 return true;
-
         }
-
-        return iddfs(newNode, level, visitedStates, targetDepth, borderNodes);
+        return false;
     }
-
 
 }
