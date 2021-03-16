@@ -21,6 +21,6 @@ public class BoxGoalHeuristic extends Heuristic {
                 total += 1;
             }
         }
-        return total;
+        return state.box_positions.size() - total;
     }
 }
