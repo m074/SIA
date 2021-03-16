@@ -63,9 +63,10 @@ public class IDDFS extends Algorithm{
         return solutionNode;
     }
 
-    public static boolean iddfs(Node node, Level level, HashMap<State, Integer> visitedStates, int targetDepth, HashSet<Node> borderNodes ){
+    public boolean iddfs(Node node, Level level, HashMap<State, Integer> visitedStates, int targetDepth, HashSet<Node> borderNodes ){
 
         if(level.hasWon(node.state)) {
+            solutionNode = node;
             level.printSolution(node);
             return true;
         }
