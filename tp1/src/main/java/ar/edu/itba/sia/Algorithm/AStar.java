@@ -10,14 +10,17 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
-public class AStar {
+public class AStar extends Algorithm {
+    Level level;
     Heuristic h;
 
     public AStar(Level level, Heuristic h){
+        this.level = level;
         this.h = h;
     }
 
-    public Node resolve(Level level){
+    @Override
+    public Node resolve(){
         PriorityQueue<AStarValueF> nodes_to_visit = new PriorityQueue<>();
         HashSet<State> old_states = new HashSet<>();
         Node initial_node = new Node(level.startingState, null);
@@ -43,9 +46,6 @@ public class AStar {
                     int node_h = h.calculate_h(new_node);
                     nodes_to_visit.add(new AStarValueF(new_node.depth + node_h, node_h, new_node));
                 }
-//                    nodes_to_visit.add(new_node);
-
-
             }
         }
         System.out.println("No se halló solución.");

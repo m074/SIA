@@ -11,14 +11,17 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
-public class Greedy {
+public class Greedy extends Algorithm{
+    Level level;
     Heuristic h;
 
     public Greedy(Level level, Heuristic h){
+        this.level = level;
         this.h = h;
     }
 
-    public Node resolve(Level level){
+    @Override
+    public Node resolve() {
         PriorityQueue<AStarValueF> nodes_to_visit = new PriorityQueue<>(); //le pongo 0 en f_value y lo puedo usar igual
         HashSet<State> old_states = new HashSet<>();
         Node initial_node = new Node(level.startingState, null);
