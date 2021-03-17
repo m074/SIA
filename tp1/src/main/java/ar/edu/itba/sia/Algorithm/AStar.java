@@ -35,7 +35,7 @@ public class AStar extends Algorithm {
             if(level.hasWon(node.state)) {
                 System.out.println("Solución hallada:");
                 //System.out.println("Nodos creados:" + Node.id_count);
-                System.out.println("Nodos creados:" + (Node.id_count - nodes_to_visit.size()));
+                System.out.println("Nodos expandidos:" + (Node.id_count - nodes_to_visit.size()));
                 System.out.println("Nodos frontera:" + nodes_to_visit.size());
                 level.printSolution(node);
                 return node;

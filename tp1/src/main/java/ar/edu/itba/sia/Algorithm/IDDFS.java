@@ -54,7 +54,7 @@ public class IDDFS extends Algorithm{
                 if(finish){
                     System.out.println("IDDFS*:");
                     //System.out.println("Nodos creados:" + Node.id_count);
-                    System.out.println("Nodos creados:" + (Node.id_count - borderNodes.size()));
+                    System.out.println("Nodos expandidos:" + (Node.id_count - borderNodes.size()));
                     System.out.println("Nodos frontera: " + borderNodes.size());
                     break;
                 }
