@@ -20,16 +20,8 @@ public class BFS extends Algorithm {
         LinkedList<Node> nodes_to_visit = new LinkedList<>();
         HashSet<State> old_states = new HashSet<>();
         nodes_to_visit.add(new Node(level.startingState, null));
-//        int veces = 0;
         while(!nodes_to_visit.isEmpty()){
             Node node = nodes_to_visit.poll();
-//            veces++;
-//            if(veces==100000){
-//                veces=0;
-//                level.printSolution(node);
-//                System.out.println(old_states.size());
-//                System.out.println(node.depth);
-//            }
             if(old_states.contains(node.state)){
                 continue;
             }
@@ -38,7 +30,7 @@ public class BFS extends Algorithm {
                 System.out.println("Solución hallada:");
                 System.out.println("Nodos creados:" + Node.id_count);
                 System.out.println("Nodos frontera:" + nodes_to_visit.size());
-                level.printSolution(node);
+//                level.printSolution(node);
                 return node;
             }
             ArrayList<String> pausibles_moves = level.possibleMoves(node.state);

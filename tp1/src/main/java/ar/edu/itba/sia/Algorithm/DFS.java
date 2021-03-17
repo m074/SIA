@@ -30,7 +30,9 @@ public class DFS extends Algorithm{
             }
             if(level.hasWon(node.state)) {
                 System.out.println("Solución hallada:");
-                level.printSolution(node);
+                System.out.println("Nodos creados:" + Node.id_count);
+                System.out.println("Nodos frontera:" + stack.size());
+//                level.printSolution(node);
                 return node;
             }
             visited.add(node.state);

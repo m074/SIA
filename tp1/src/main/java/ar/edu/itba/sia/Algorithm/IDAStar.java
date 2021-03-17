@@ -86,7 +86,7 @@ public class IDAStar extends Algorithm{
     public boolean idastar(Node node, Level level, HashMap<State, Integer>  visitedStates, int targetF, PriorityQueue<AStarValueF> borders, Heuristic h ){
 
         if(level.hasWon(node.state)) {
-            level.printSolution(node);
+//            level.printSolution(node);
             solutionNode = node;
             return true;
         }
