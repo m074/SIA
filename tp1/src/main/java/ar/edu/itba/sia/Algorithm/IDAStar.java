@@ -53,7 +53,8 @@ public class IDAStar extends Algorithm{
                     if (idastar(asv.node, level, visitedStates, target, newBorders, h)){
                         totalBorders = borders.size() + newBorders.size();
                         System.out.println("IDA*:");
-                        System.out.println("Nodos creados:" + Node.id_count);
+                        //System.out.println("Nodos creados:" + Node.id_count);
+                        System.out.println("Nodos creados:" + (Node.id_count - totalBorders));
                         System.out.println("Nodos frontera: " + totalBorders);
                         return solutionNode;
                     }
@@ -68,7 +69,8 @@ public class IDAStar extends Algorithm{
                     if (idastar(asv.node, level, visitedStates, target, newBorders, h)){
                         totalBorders = borders.size() + newBorders.size();
                         System.out.println("IDA*:");
-                        System.out.println("Nodos creados:" + Node.id_count);
+                        //System.out.println("Nodos creados:" + Node.id_count);
+                        System.out.println("Nodos creados:" + (Node.id_count - totalBorders));
                         System.out.println("Nodos frontera: " + totalBorders);
                         return solutionNode;
                     }

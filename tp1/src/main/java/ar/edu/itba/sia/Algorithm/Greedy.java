@@ -37,7 +37,8 @@ public class Greedy extends Algorithm{
             old_states.add(node.state);
             if(level.hasWon(node.state)) {
                 System.out.println("Greedy:");
-                System.out.println("Nodos creados:" + Node.id_count);
+                //System.out.println("Nodos creados:" + Node.id_count);
+                System.out.println("Nodos creados:" + (Node.id_count - nodes_to_visit.size()));
                 System.out.println("Nodos frontera:" + nodes_to_visit.size());
 //                level.printSolution(node);
                 return node;

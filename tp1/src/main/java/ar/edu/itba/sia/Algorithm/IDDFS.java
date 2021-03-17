@@ -53,7 +53,8 @@ public class IDDFS extends Algorithm{
                 finish = iddfs(node, level, visitedStates, targetDepth, newBorderNodes);
                 if(finish){
                     System.out.println("IDDFS*:");
-                    System.out.println("Nodos creados:" + Node.id_count);
+                    //System.out.println("Nodos creados:" + Node.id_count);
+                    System.out.println("Nodos creados:" + (Node.id_count - borderNodes.size()));
                     System.out.println("Nodos frontera: " + borderNodes.size());
                     break;
                 }
