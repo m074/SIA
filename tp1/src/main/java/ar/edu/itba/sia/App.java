@@ -120,8 +120,6 @@ public class App
         }
 
 
-
-
         Node solution_node = algo.resolve();
 
         m.stopTime();
