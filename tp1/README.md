@@ -25,10 +25,10 @@ Donde:
 * heuristic:
   * _boxingoal_: La heurística que toma en consideración la cantidad de cajas que faltan en el objetivo.
   * _boxdistance_: La heurística que toma en consideración la distancia de las cajas a los objetivos.
-  * _goaldistance_: La heurística que toma en consideración la distancia de las objetivos a las cajas.
   * _deadlock_: La heurística que considera si una caja esta bloqueda.
   * _merge_: La heurística que es el conjutno de la de deadlock y boxdistance.
-
-
-
 * depth: el numero de profundidad que iterara IDDFS si este fuese elegido
+
+Para la ejecucion solamente se debe hacer un:
+
+```java -jar tp1-1.0-SNAPSHOT.jar```
