@@ -12,9 +12,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GeneticAlgorithm {
 
-    //
 
-    public static LinkedList<Character> initialize(HashMap<ItemType, ArrayList<Item>> items, Config config){
+    public static Character calculate(Config config, HashMap<ItemType, ArrayList<Item>> items){
+        LinkedList<Character> population = initialize(items, config);
+        return population.getFirst(); //eliminar esto y desarrollar algoritmos vvv
+    }
+
+    //inicializa la poblacion con initialPopulation obtenido del archivo de config
+    private static LinkedList<Character> initialize(HashMap<ItemType, ArrayList<Item>> items, Config config){
         LinkedList<Character> population = new LinkedList<>();
         ThreadLocalRandom random = ThreadLocalRandom.current();
         int weaponAmount = items.get(ItemType.WEAPON).size();

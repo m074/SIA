@@ -14,12 +14,17 @@ import java.util.*;
 
 public class App {
     public static void main(String args[]) throws IOException {
+
+        //carga de propiedades del archivo de config
+
         Properties props = new Properties();
         Reader input;
         input = new InputStreamReader(Objects.requireNonNull(ItemLoader.class.getClassLoader().getResourceAsStream("config.properties")));
         props.load(input);
         Config config = new Config(props);
+
+        //calculo del mejor personaje
         HashMap<ItemType, ArrayList<Item>> items = ItemLoader.loadItems(props);
-        LinkedList<Character> population = GeneticAlgorithm.initialize(items, config);
+        GeneticAlgorithm.calculate(config, items);
     }
 }
