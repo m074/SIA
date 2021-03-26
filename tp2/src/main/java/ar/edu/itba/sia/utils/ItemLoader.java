@@ -12,14 +12,14 @@ import java.io.Reader;
 import java.util.*;
 
 public class ItemLoader {
-    public static HashMap<ItemType, ArrayList<Item>> loadItems() throws IOException{
+    public static HashMap<ItemType, ArrayList<Item>> loadItems(Properties props) throws IOException{
         return new HashMap<ItemType, ArrayList<Item>>(){
             {
-                put(ItemType.WEAPON, loadFile("armas2.tsv", ItemType.WEAPON));
-                put(ItemType.BOOTS, loadFile("botas2.tsv", ItemType.BOOTS));
-                put(ItemType.HELMET, loadFile("cascos2.tsv", ItemType.HELMET));
-                put(ItemType.GLOVES, loadFile("guantes2.tsv", ItemType.GLOVES));
-                put(ItemType.VEST, loadFile("pecheras2.tsv", ItemType.VEST));
+                put(ItemType.WEAPON, loadFile(props.getProperty("weaponPath"), ItemType.WEAPON));
+                put(ItemType.BOOTS, loadFile(props.getProperty("bootsPath"), ItemType.BOOTS));
+                put(ItemType.HELMET, loadFile(props.getProperty("helmetPath"), ItemType.HELMET));
+                put(ItemType.GLOVES, loadFile(props.getProperty("glovesPath"), ItemType.GLOVES));
+                put(ItemType.VEST, loadFile(props.getProperty("vestPath"), ItemType.VEST));
             }
 
         };

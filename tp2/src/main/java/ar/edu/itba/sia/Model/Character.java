@@ -1,4 +1,6 @@
 package ar.edu.itba.sia.Model;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Character {
     private Item weapon;
@@ -11,13 +13,14 @@ public class Character {
     private double ATM;
     private double DEM;
 
-    public Character(Item weapon, Item boots, Item helmet, Item gloves, Item vest, double height, CharacterClass characterClass) {
+    public Character(Item weapon, Item boots, Item helmet, Item gloves, Item vest, CharacterClass characterClass) {
         this.weapon = weapon;
         this.boots = boots;
         this.helmet = helmet;
         this.gloves = gloves;
         this.vest = vest;
-        this.height = height;
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        this.height = random.nextDouble(1.3, 2.0);
         this.characterClass = characterClass;
         ATM = getATM();
         DEM = getDEM();
