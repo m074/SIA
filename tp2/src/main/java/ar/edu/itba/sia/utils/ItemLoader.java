@@ -12,14 +12,14 @@ import java.io.Reader;
 import java.util.*;
 
 public class ItemLoader {
-    public static Map<ItemType, ArrayList<Item>> loadItems() throws IOException{
+    public static HashMap<ItemType, ArrayList<Item>> loadItems() throws IOException{
         return new HashMap<ItemType, ArrayList<Item>>(){
             {
-                put(ItemType.WEAPON, loadFile(".", ItemType.WEAPON));
-                put(ItemType.BOOTS, loadFile(".", ItemType.BOOTS));
-                put(ItemType.HELMET, loadFile(".", ItemType.HELMET));
-                put(ItemType.GLOVES, loadFile(".", ItemType.GLOVES));
-                put(ItemType.VEST, loadFile(".", ItemType.VEST));
+                put(ItemType.WEAPON, loadFile("armas2.tsv", ItemType.WEAPON));
+                put(ItemType.BOOTS, loadFile("botas2.tsv", ItemType.BOOTS));
+                put(ItemType.HELMET, loadFile("cascos2.tsv", ItemType.HELMET));
+                put(ItemType.GLOVES, loadFile("guantes2.tsv", ItemType.GLOVES));
+                put(ItemType.VEST, loadFile("pecheras2.tsv", ItemType.VEST));
             }
 
         };
@@ -28,7 +28,6 @@ public class ItemLoader {
     private static ArrayList<Item> loadFile(String path, ItemType type) throws IOException {
         ArrayList<Item> list = new ArrayList<>();
         Reader input;
-
         input = new InputStreamReader(Objects.requireNonNull(ItemLoader.class.getClassLoader().getResourceAsStream(path)));
 
 
@@ -40,7 +39,8 @@ public class ItemLoader {
                 Double.parseDouble(r.get("Ex")),
                 Double.parseDouble(r.get("Re")),
                 Double.parseDouble(r.get("Vi")),
-                    type
+                type,
+                Long.parseLong(r.get("id"))
             );
             list.add(i);
         }
