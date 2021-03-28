@@ -102,4 +102,63 @@ public class Character implements Comparable<Character> {
             return Double.compare(this.getFitness(), ((Character) o).getFitness());
         return -1;
     }
+
+    public Character clone(){
+        return new Character(weapon, boots, helmet, gloves, vest, characterClass);
+    }
+
+    public Item getItem(ItemType item){
+        switch (item){
+            case BOOTS: return boots;
+            case VEST: return vest;
+            case GLOVES: return gloves;
+            case HELMET: return helmet;
+            case WEAPON: return weapon;
+        }
+        return null;
+    }
+
+    public void setItem(Item item){
+        switch (item.getType()){
+            case BOOTS: setBoots(item);
+                break;
+            case VEST: setVest(item);
+                break;
+            case GLOVES: setGloves(item);
+                break;
+            case HELMET: setHelmet(item);
+                break;
+            case WEAPON: setWeapon(item);
+                break;
+            default:break;
+        }
+    }
+
+    public void setWeapon(Item weapon) {
+        this.weapon = weapon;
+    }
+
+    public void setBoots(Item boots) {
+        this.boots = boots;
+    }
+
+    public void setHelmet(Item helmet) {
+        this.helmet = helmet;
+    }
+
+    public void setGloves(Item gloves) {
+        this.gloves = gloves;
+    }
+
+    public void setVest(Item vest) {
+        this.vest = vest;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
 }

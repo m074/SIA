@@ -9,10 +9,12 @@ public class Config {
     private long initialPopulation;
     private CharacterClass characterClass;
     private long maxGenerations;
+    private double crossOverProbability;
     public Config(Properties props){
         this.initialPopulation = Long.parseLong(props.getProperty("initialPopulation"));
         this.characterClass = getCharClass(props.getProperty("characterClass"));
         this.maxGenerations = Long.parseLong(props.getProperty("maxGenerations"));
+        this.crossOverProbability = Double.parseDouble(props.getProperty("crossOverProbability"));
     }
 
     public CharacterClass getCharClass(String charClass){
@@ -37,5 +39,9 @@ public class Config {
 
     public long getMaxGenerations(){
         return maxGenerations;
+    }
+
+    public double getCrossOverProbability(){
+        return crossOverProbability;
     }
 }
