@@ -8,9 +8,11 @@ import java.util.Properties;
 public class Config {
     private long initialPopulation;
     private CharacterClass characterClass;
+    private long maxGenerations;
     public Config(Properties props){
         this.initialPopulation = Long.parseLong(props.getProperty("initialPopulation"));
         this.characterClass = getCharClass(props.getProperty("characterClass"));
+        this.maxGenerations = Long.parseLong(props.getProperty("maxGenerations"));
     }
 
     public CharacterClass getCharClass(String charClass){
@@ -31,5 +33,9 @@ public class Config {
 
     public CharacterClass getCharacterClass() {
         return characterClass;
+    }
+
+    public long getMaxGenerations(){
+        return maxGenerations;
     }
 }

@@ -4,17 +4,20 @@ import ar.edu.itba.sia.Model.Item;
 import ar.edu.itba.sia.Model.ItemType;
 import ar.edu.itba.sia.utils.Config;
 import ar.edu.itba.sia.Model.Character;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GeneticAlgorithm {
 
 
     public static Character calculate(Config config, HashMap<ItemType, ArrayList<Item>> items){
+        long generation= 0;
         LinkedList<Character> population = initialize(items, config);
+        System.out.println("Initializing with best fitness " + Collections.max(population).getFitness());
+        while(!isFinished(generation, config)) {
+
+        }
         return population.getFirst(); //eliminar esto y desarrollar algoritmos vvv
     }
 
@@ -41,5 +44,9 @@ public class GeneticAlgorithm {
             );
         }
         return population;
+    }
+
+    public static boolean isFinished(long generation, Config config){
+        return generation >= config.getMaxGenerations();
     }
 }

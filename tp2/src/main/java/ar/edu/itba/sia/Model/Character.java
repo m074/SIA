@@ -3,7 +3,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Character implements Comparable {
+public class Character implements Comparable<Character> {
     private Item weapon;
     private Item boots;
     private Item helmet;
@@ -97,8 +97,8 @@ public class Character implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o){
-        if(o instanceof Character)
+    public int compareTo(Character  o){
+        if(o != null)
             return Double.compare(this.getFitness(), ((Character) o).getFitness());
         return -1;
     }
