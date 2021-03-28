@@ -1,8 +1,9 @@
 package ar.edu.itba.sia.Model;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Character {
+public class Character implements Comparable {
     private Item weapon;
     private Item boots;
     private Item helmet;
@@ -74,5 +75,31 @@ public class Character {
                 return 0.8*getAttack() + 0.3*getDefense();
             default:return 0.0;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Character character = (Character) o;
+        return Double.compare(character.height, height) == 0 &&
+                Objects.equals(weapon, character.weapon) &&
+                Objects.equals(boots, character.boots) &&
+                Objects.equals(helmet, character.helmet) &&
+                Objects.equals(gloves, character.gloves) &&
+                Objects.equals(vest, character.vest) &&
+                characterClass == character.characterClass;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(weapon, boots, helmet, gloves, vest, height, characterClass, ATM, DEM);
+    }
+
+    @Override
+    public int compareTo(Object o){
+        if(o instanceof Character)
+            return Double.compare(this.getFitness(), ((Character) o).getFitness());
+        return -1;
     }
 }
