@@ -19,7 +19,7 @@ public class AnularCross extends Cross {
         Character child1 = ch1.clone();
         Character child2 = ch2.clone();
 
-        for (int i = point; i <= point+length; i++) {
+        for (int i = point; i < point+length; i++) {
             if(i%(LOCUS_QTY) != LOCUS_QTY-1)
                 swapItem(child1, child2, itemTypes[i]);
             else

@@ -18,7 +18,7 @@ public class UniformCross extends Cross {
         Character child1 = ch1.clone();
         Character child2 = ch2.clone();
 
-        for(int i=0; i<=itemTypes.length; i++) {
+        for(int i=0; i<itemTypes.length; i++) {
             if (rand.nextDouble(0, 1) >= 0.5) {
                 swapItem(child1, child2, itemTypes[i]);
             }

@@ -17,7 +17,7 @@ public class OnePointCross extends Cross {
         Character child1 = ch1.clone();
         Character child2 = ch2.clone();
 
-        for(int i=0; i<=point; i++){
+        for(int i=0; i<point; i++){
             if(i == LOCUS_QTY)
                 swapHeight(child1, child2);
             else
