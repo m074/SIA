@@ -4,7 +4,9 @@ import ar.edu.itba.sia.Model.Item;
 import ar.edu.itba.sia.Model.ItemType;
 import ar.edu.itba.sia.utils.Config;
 import ar.edu.itba.sia.Model.Character;
+import com.sun.org.apache.bcel.internal.generic.Select;
 
+import javax.security.auth.login.Configuration;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -48,5 +50,15 @@ public class GeneticAlgorithm {
 
     public static boolean isFinished(long generation, Config config){
         return generation >= config.getMaxGenerations();
+    }
+
+    public LinkedList<Character> newGeneration(Config config, LinkedList<Character> population){
+        //selecciono padres
+        SelectionMethod methodA = config.getSelectionMethodA();
+        SelectionMethod methodB = config.getReplacementMethodB();
+        //cruzo con crossover
+        //muto
+        //selecciono hijos (reemplazo)
+        return null; //cuando termine saco esto
     }
 }
