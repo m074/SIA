@@ -21,6 +21,8 @@ public class Config {
     private String mutationType;
     private String implementation;
     private long maxTime;
+    private double itemVariation;
+    private double heightVariation;
 
     public Config(Properties props){
         this.initialPopulation = Long.parseLong(props.getProperty("initialPopulation"));
@@ -37,6 +39,8 @@ public class Config {
         this.mutationType = props.getProperty("mutation");
         this.implementation = props.getProperty("implementation");
         this.maxTime = Long.parseLong(props.getProperty("time"));
+        this.itemVariation = Double.parseDouble(props.getProperty("itemVariation"));
+        this.heightVariation = Double.parseDouble(props.getProperty("heightVariation"));
     }
 
     public CharacterClass getCharClass(String charClass){
@@ -133,6 +137,14 @@ public class Config {
             case "complete": return MutationType.COMPLETE;
             default:return null;
         }
+    }
+
+    public double getItemVariation(){
+        return itemVariation;
+    }
+
+    public double getHeightVariation(){
+        return heightVariation;
     }
 
     public ImplementationOption getImplementationOption(){

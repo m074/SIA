@@ -11,7 +11,11 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Mutation {
-    public static void mutate(LinkedList<Character> population, double probability, long generations, MutationType type){
+
+
+
+    public static void mutate(LinkedList<Character> population, double probability, double itemVariation, double heightVariation, MutationType type){
+
 
         for(Character c: population){
             ArrayList genes = new ArrayList();
@@ -22,14 +26,14 @@ public class Mutation {
             genes.add(c.getItem(ItemType.VEST));
             genes.add(new Double(c.getHeight()));
 
-            mutate(genes, type, probability, c);
+            mutate(genes, type, probability, c, itemVariation, heightVariation);
         }
         return;
     }
 
 
 
-    private static void mutate(ArrayList genes, MutationType type, double probability, Character c){
+    private static void mutate(ArrayList genes, MutationType type, double probability, Character c, double itemVar, double heightVar){
 
         if (type == MutationType.GEN){
             Collections.shuffle(genes);
@@ -39,13 +43,11 @@ public class Mutation {
             if(rand <= probability) {
                 if (genes.get(0).getClass() == Double.class) {
                     Double oldH = new Double((Double) genes.get(0));
-                    c.setHeight(getRandomHeight(oldH));
+                    c.setHeight(getRandomHeight(oldH, heightVar));
                 } else {
                     Item item = (Item) genes.get(0);
-                    //System.out.println(item.getStrength());
-                    c.setItem(getRandomItem(item));
-                    //System.out.println(c.getItem(item.getType()).getStrength());
-                    //System.out.println("    ");
+                    c.setItem(getRandomItem(item, itemVar));
+
                 }
             }
         }
@@ -58,10 +60,10 @@ public class Mutation {
                 if(rand <= probability) {
                     if (genes.get(i).getClass() == Double.class) {
                         Double oldH = new Double((Double) genes.get(i));
-                        c.setHeight(getRandomHeight(oldH));
+                        c.setHeight(getRandomHeight(oldH, heightVar));
                     } else {
                         Item item = (Item) genes.get(i);
-                        c.setItem(getRandomItem(item));
+                        c.setItem(getRandomItem(item, itemVar));
                     }
                 }
             }
@@ -73,10 +75,10 @@ public class Mutation {
                 if(rand <= probability) {
                     if (genes.get(i).getClass() == Double.class) {
                         Double oldH = new Double((Double) genes.get(i));
-                        c.setHeight(getRandomHeight(oldH));
+                        c.setHeight(getRandomHeight(oldH, heightVar));
                     } else {
                         Item item = (Item) genes.get(i);
-                        c.setItem(getRandomItem(item));
+                        c.setItem(getRandomItem(item, itemVar));
                     }
                 }
             }
@@ -87,10 +89,10 @@ public class Mutation {
                 for(int i = 0; i< genes.size(); i++){
                         if (genes.get(i).getClass() == Double.class) {
                             Double oldH = new Double((Double) genes.get(i));
-                            c.setHeight(getRandomHeight(oldH));
+                            c.setHeight(getRandomHeight(oldH, heightVar));
                         } else {
                             Item item = (Item) genes.get(i);
-                            c.setItem(getRandomItem(item));
+                            c.setItem(getRandomItem(item, itemVar));
                         }
                 }
             }
@@ -100,26 +102,9 @@ public class Mutation {
 
 
 
-    //values ∈ [0 − limit]
-    public static Item getRandomItem(ItemType type, long id){
-        double limit = 50;
-        Random r = new Random();
-        Item newItem = new Item(r.nextDouble()*limit,r.nextDouble()*limit,r.nextDouble()*limit,r.nextDouble()*limit,r.nextDouble()*limit,type, id);
-
-        return newItem;
-    }
-    //h ∈ [1,3m − 2,0m]
-    public static Double getRandomHeight(){
-        Random r = new Random();
-        double newHeight = r.nextDouble()*0.7 + 1.3;
-        return newHeight;
-    }
-
-
     //+- variation mutation
-    public static Item getRandomItem(Item oldItem){
+    public static Item getRandomItem(Item oldItem, double variation){
         Random r = new Random();
-        double variation = 5;
         double str = oldItem.getStrength()-variation + ((oldItem.getStrength()+variation) - (oldItem.getStrength()-variation)) * r.nextDouble();
         double agi = oldItem.getAgility()-variation + ((oldItem.getAgility()+variation) - (oldItem.getAgility()-variation)) * r.nextDouble();
         double exp = oldItem.getExpertise()-variation + ((oldItem.getExpertise()+variation) - (oldItem.getExpertise()-variation)) * r.nextDouble();
@@ -132,9 +117,8 @@ public class Mutation {
     }
 
     //+- variation mutation
-    public static Double getRandomHeight(double oldHeight){
+    public static Double getRandomHeight(double oldHeight, double variation){
         Random r = new Random();
-        double variation = 0.2;
         double min = oldHeight - variation;
         double max = oldHeight + variation;
         double newHeight = min + (max - min) * r.nextDouble();
