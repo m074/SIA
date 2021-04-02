@@ -24,6 +24,8 @@ public class Config {
     private double itemVariation;
     private double heightVariation;
     private double mutationProbability;
+    private double acceptableFitness;
+    private double fitnessMargin;
 
     public Config(Properties props){
         this.initialPopulation = Long.parseLong(props.getProperty("initialPopulation"));
@@ -43,6 +45,8 @@ public class Config {
         this.itemVariation = Double.parseDouble(props.getProperty("itemVariation"));
         this.heightVariation = Double.parseDouble(props.getProperty("heightVariation"));
         this.mutationProbability = Double.parseDouble(props.getProperty("mutationProbability"));
+        this.acceptableFitness = Double.parseDouble(props.getProperty("acceptableFitness"));
+        this.fitnessMargin = Double.parseDouble(props.getProperty("fitnessMargin"));
     }
 
     public CharacterClass getCharClass(String charClass){
@@ -167,5 +171,13 @@ public class Config {
 
     public double getReplacementMethodAPercentage(){
         return this.replacementMethodAPercentage;
+    }
+
+    public double getAcceptableFitness() {
+        return acceptableFitness;
+    }
+
+    public double getFitnessMargin() {
+        return fitnessMargin;
     }
 }

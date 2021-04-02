@@ -4,6 +4,7 @@ import ar.edu.itba.sia.Model.Item;
 import ar.edu.itba.sia.Model.ItemType;
 import ar.edu.itba.sia.utils.Config;
 import ar.edu.itba.sia.Model.Character;
+import ar.edu.itba.sia.utils.TimeMetric;
 import com.sun.org.apache.bcel.internal.generic.Select;
 
 import javax.security.auth.login.Configuration;
@@ -18,7 +19,8 @@ public class GeneticAlgorithm {
     public static Character calculate(Config config, HashMap<ItemType, ArrayList<Item>> items){
         long generation= 0;
         LinkedList<Character> population = initialize(items, config);
-        System.out.println("Initializing with best fitness " + Collections.max(population).getFitness());
+        double bestFitness = Collections.max(population).getFitness();
+        System.out.println("Initializing with best fitness " + bestFitness);
 
         //
         //
@@ -42,8 +44,10 @@ public class GeneticAlgorithm {
         int repB = population.size() - repA;
 
 
-
-        while(!isFinished(generation, config)) {
+        TimeMetric m = new TimeMetric();
+        long totalTime = 0L;
+        while(!isFinished(generation, totalTime, bestFitness, config)) {
+            m.startTime();
             //cross
             LinkedList<Character> childs = crossOverMethod.crossOver(population, config);
             //mutate childs
@@ -73,8 +77,10 @@ public class GeneticAlgorithm {
             }
             population = newGen;
             generation +=1;
-
-            System.out.println(Collections.max(population).getFitness());
+            bestFitness = Collections.max(population).getFitness();
+            System.out.println(bestFitness);
+            m.stopTime();
+            totalTime += m.getTime();
         }
         return population.getFirst(); //eliminar esto y desarrollar algoritmos vvv
     }
@@ -104,17 +110,9 @@ public class GeneticAlgorithm {
         return population;
     }
 
-    public static boolean isFinished(long generation, Config config){
-        return generation >= config.getMaxGenerations();
+    public static boolean isFinished(long generation, long time, double bestFitness, Config config){
+        return generation >= config.getMaxGenerations() || time > config.getMaxTime()
+                || Math.abs(config.getAcceptableFitness() - bestFitness) < config.getFitnessMargin();
     }
 
-    public LinkedList<Character> newGeneration(Config config, LinkedList<Character> population){
-        //selecciono padres
-        SelectionMethod methodA = config.getSelectionMethodA();
-        SelectionMethod methodB = config.getReplacementMethodB();
-        //cruzo con crossover
-        //muto
-        //selecciono hijos (reemplazo)
-        return null; //cuando termine saco esto
-    }
 }
