@@ -17,6 +17,24 @@ public class GeneticAlgorithm {
         long generation= 0;
         LinkedList<Character> population = initialize(items, config);
         System.out.println("Initializing with best fitness " + Collections.max(population).getFitness());
+
+        //
+        //
+        double selectionPerc = config.getSelectionMethodAPercentage();
+        double replacePerc = config.getReplacementMethodAPercentage();
+
+        SelectionMethod selectionA = config.getSelectionMethodA();
+        SelectionMethod selectionB = config.getSelectionMethodA();
+
+        SelectionMethod replaceA = config.getReplacementMethodA();
+        SelectionMethod replaceB = config.getReplacementMethodB();
+
+        Cross crossOverMethod= config.getCrossOverMethod();
+
+        MutationType mutationType = config.getMutationType();
+        ImplementationOption implementationOption = config.getImplementationOption();
+        
+
         while(!isFinished(generation, config)) {
 
         }

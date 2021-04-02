@@ -38,12 +38,14 @@ public class Mutation {
 
             if(rand <= probability) {
                 if (genes.get(0).getClass() == Double.class) {
-                    c.setHeight(getRandoHeight());
-
+                    Double oldH = new Double((Double) genes.get(0));
+                    c.setHeight(getRandomHeight(oldH));
                 } else {
                     Item item = (Item) genes.get(0);
-                    c.setItem(getRandomItem(item.getType(), item.getId()));
-
+                    //System.out.println(item.getStrength());
+                    c.setItem(getRandomItem(item));
+                    //System.out.println(c.getItem(item.getType()).getStrength());
+                    //System.out.println("    ");
                 }
             }
         }
@@ -51,28 +53,30 @@ public class Mutation {
             Collections.shuffle(genes);
             int limitMut = ThreadLocalRandom.current().nextInt(1, genes.size() + 1);
 
-            for(int i = 1; i<= limitMut; i++){
+            for(int i = 0; i< limitMut; i++){
                 double rand = Math.random();
                 if(rand <= probability) {
-                    if (genes.get(0).getClass() == Double.class) {
-                        c.setHeight(getRandoHeight());
+                    if (genes.get(i).getClass() == Double.class) {
+                        Double oldH = new Double((Double) genes.get(i));
+                        c.setHeight(getRandomHeight(oldH));
                     } else {
-                        Item item = (Item) genes.get(0);
-                        c.setItem(getRandomItem(item.getType(), item.getId()));
+                        Item item = (Item) genes.get(i);
+                        c.setItem(getRandomItem(item));
                     }
                 }
             }
 
         }
         if (type == MutationType.UNIFORMMULTI) {
-            for(int i = 1; i<= genes.size(); i++){
+            for(int i = 0; i< genes.size(); i++){
                 double rand = Math.random();
                 if(rand <= probability) {
-                    if (genes.get(0).getClass() == Double.class) {
-                        c.setHeight(getRandoHeight());
+                    if (genes.get(i).getClass() == Double.class) {
+                        Double oldH = new Double((Double) genes.get(i));
+                        c.setHeight(getRandomHeight(oldH));
                     } else {
-                        Item item = (Item) genes.get(0);
-                        c.setItem(getRandomItem(item.getType(), item.getId()));
+                        Item item = (Item) genes.get(i);
+                        c.setItem(getRandomItem(item));
                     }
                 }
             }
@@ -80,12 +84,13 @@ public class Mutation {
         if (type == MutationType.COMPLETE) {
             double rand = Math.random();
             if(rand <= probability) {
-                for(int i = 1; i<= genes.size(); i++){
-                        if (genes.get(0).getClass() == Double.class) {
-                            c.setHeight(getRandoHeight());
+                for(int i = 0; i< genes.size(); i++){
+                        if (genes.get(i).getClass() == Double.class) {
+                            Double oldH = new Double((Double) genes.get(i));
+                            c.setHeight(getRandomHeight(oldH));
                         } else {
-                            Item item = (Item) genes.get(0);
-                            c.setItem(getRandomItem(item.getType(), item.getId()));
+                            Item item = (Item) genes.get(i);
+                            c.setItem(getRandomItem(item));
                         }
                 }
             }
@@ -95,21 +100,54 @@ public class Mutation {
 
 
 
-    //values ∈ [0 − 50] ??
+    //values ∈ [0 − limit]
     public static Item getRandomItem(ItemType type, long id){
-
+        double limit = 50;
         Random r = new Random();
-        Item newItem = new Item(r.nextDouble()*50,r.nextDouble()*50,r.nextDouble()*50,r.nextDouble()*50,r.nextDouble()*50,type, id);
+        Item newItem = new Item(r.nextDouble()*limit,r.nextDouble()*limit,r.nextDouble()*limit,r.nextDouble()*limit,r.nextDouble()*limit,type, id);
 
         return newItem;
     }
-
     //h ∈ [1,3m − 2,0m]
-    public static Double getRandoHeight(){
+    public static Double getRandomHeight(){
         Random r = new Random();
         double newHeight = r.nextDouble()*0.7 + 1.3;
         return newHeight;
     }
+
+
+    //+- variation mutation
+    public static Item getRandomItem(Item oldItem){
+        Random r = new Random();
+        double variation = 5;
+        double str = oldItem.getStrength()-variation + ((oldItem.getStrength()+variation) - (oldItem.getStrength()-variation)) * r.nextDouble();
+        double agi = oldItem.getAgility()-variation + ((oldItem.getAgility()+variation) - (oldItem.getAgility()-variation)) * r.nextDouble();
+        double exp = oldItem.getExpertise()-variation + ((oldItem.getExpertise()+variation) - (oldItem.getExpertise()-variation)) * r.nextDouble();
+        double res = oldItem.getResistance()-variation + ((oldItem.getResistance()+variation) - (oldItem.getResistance()-variation)) * r.nextDouble();
+        double vit = oldItem.getVitality()-variation + ((oldItem.getVitality()+variation) - (oldItem.getVitality()-variation)) * r.nextDouble();
+
+        Item newItem = new Item(str>0?str:0,agi>0?str:0,exp>0?str:0,res>0?str:0,vit>0?str:0,oldItem.getType(), oldItem.getId());
+
+        return newItem;
+    }
+
+    //+- variation mutation
+    public static Double getRandomHeight(double oldHeight){
+        Random r = new Random();
+        double variation = 0.2;
+        double min = oldHeight - variation;
+        double max = oldHeight + variation;
+        double newHeight = min + (max - min) * r.nextDouble();
+
+        if(newHeight < 1.3)
+            newHeight = 1.3;
+        if(newHeight > 2.0)
+            newHeight = 2.0;
+
+        return newHeight;
+    }
+
+
 
 
 }
