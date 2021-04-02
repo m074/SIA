@@ -10,6 +10,8 @@ import javax.security.auth.login.Configuration;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static java.lang.Math.floor;
+
 public class GeneticAlgorithm {
 
 
@@ -20,8 +22,8 @@ public class GeneticAlgorithm {
 
         //
         //
-        double selectionPerc = config.getSelectionMethodAPercentage();
-        double replacePerc = config.getReplacementMethodAPercentage();
+        double selectionAPerc = config.getSelectionMethodAPercentage();
+        double replaceAPerc = config.getReplacementMethodAPercentage();
 
         SelectionMethod selectionA = config.getSelectionMethodA();
         SelectionMethod selectionB = config.getSelectionMethodA();
@@ -33,10 +35,46 @@ public class GeneticAlgorithm {
 
         MutationType mutationType = config.getMutationType();
         ImplementationOption implementationOption = config.getImplementationOption();
-        
+
+        int selA =(int) floor(population.size()*selectionAPerc);
+        int selB = population.size() - selA;
+        int repA =(int) floor(population.size()*replaceAPerc);
+        int repB = population.size() - repA;
+
+
 
         while(!isFinished(generation, config)) {
+            //cross
+            LinkedList<Character> childs = crossOverMethod.crossOver(population, config);
+            //mutate childs
+            Mutation.mutate(childs,config.getCrossOverProbability(), config.getItemVariation(), config.getHeightVariation(), mutationType);
 
+            LinkedList<Character> newGen = new LinkedList<>();
+
+            if(implementationOption == ImplementationOption.FILLALL){
+                //selected fathers
+                LinkedList<Character> selected = new LinkedList<>();
+                selected.addAll(selectionA.select(population, selA, generation));
+                selected.addAll(selectionB.select(population, selB, generation));
+
+                //add all childs
+                selected.addAll(childs);
+
+                //select replacements
+                newGen.addAll(replaceA.select(selected, repA, generation));
+                newGen.addAll(replaceB.select(selected, repB, generation));
+
+                population = newGen;
+            }
+            else{
+                population = childs;
+                newGen.addAll(replaceA.select(population, repA, generation));
+                newGen.addAll(replaceB.select(population, repB, generation));
+            }
+            population = newGen;
+            generation +=1;
+
+            System.out.println(Collections.max(population).getFitness());
         }
         return population.getFirst(); //eliminar esto y desarrollar algoritmos vvv
     }
