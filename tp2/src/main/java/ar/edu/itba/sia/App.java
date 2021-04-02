@@ -25,6 +25,7 @@ public class App {
 
         //calculo del mejor personaje
         HashMap<ItemType, ArrayList<Item>> items = ItemLoader.loadItems(props);
-        GeneticAlgorithm.calculate(config, items);
+        GeneticAlgorithm genAlgo = new GeneticAlgorithm();
+        genAlgo.calculate(config, items);
     }
 }

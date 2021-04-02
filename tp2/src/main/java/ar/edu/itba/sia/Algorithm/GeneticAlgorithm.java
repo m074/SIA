@@ -15,8 +15,12 @@ import static java.lang.Math.floor;
 
 public class GeneticAlgorithm {
 
+    double lastFitness = 0.0;
+    long unchangedFitnessGens = 0;
+    long unchangedPopulationGens = 0;
+    LinkedList<Character> lastPopulation;
+    public Character calculate(Config config, HashMap<ItemType, ArrayList<Item>> items){
 
-    public static Character calculate(Config config, HashMap<ItemType, ArrayList<Item>> items){
         long generation= 0;
         LinkedList<Character> population = initialize(items, config);
         double bestFitness = Collections.max(population).getFitness();
@@ -46,7 +50,9 @@ public class GeneticAlgorithm {
 
         TimeMetric m = new TimeMetric();
         long totalTime = 0L;
-        while(!isFinished(generation, totalTime, bestFitness, config)) {
+
+
+        while(!isFinished(generation, totalTime, bestFitness, population, config)) {
             m.startTime();
             //cross
             LinkedList<Character> childs = crossOverMethod.crossOver(population, config);
@@ -81,12 +87,13 @@ public class GeneticAlgorithm {
             System.out.println(bestFitness);
             m.stopTime();
             totalTime += m.getTime();
+            lastPopulation = population;
         }
         return population.getFirst(); //eliminar esto y desarrollar algoritmos vvv
     }
 
     //inicializa la poblacion con initialPopulation obtenido del archivo de config
-    private static LinkedList<Character> initialize(HashMap<ItemType, ArrayList<Item>> items, Config config){
+    private LinkedList<Character> initialize(HashMap<ItemType, ArrayList<Item>> items, Config config){
         LinkedList<Character> population = new LinkedList<>();
         ThreadLocalRandom random = ThreadLocalRandom.current();
         int weaponAmount = items.get(ItemType.WEAPON).size();
@@ -110,9 +117,43 @@ public class GeneticAlgorithm {
         return population;
     }
 
-    public static boolean isFinished(long generation, long time, double bestFitness, Config config){
+    private boolean isFinished(long generation, long time, double bestFitness, LinkedList<Character> population, Config config){
         return generation >= config.getMaxGenerations() || time > config.getMaxTime()
-                || Math.abs(config.getAcceptableFitness() - bestFitness) < config.getFitnessMargin();
+                || Math.abs(config.getAcceptableFitness() - bestFitness) < config.getFitnessMargin()
+                || fitnessUnchanged(bestFitness, config)
+                || populationUnchanged(population, config);
+    }
+
+    private boolean fitnessUnchanged(double bestFitness, Config config){
+        if(bestFitness > this.lastFitness){
+            lastFitness = bestFitness;
+            this.unchangedFitnessGens = 0;
+        }else{
+            this.unchangedFitnessGens++;
+        }
+
+        if(unchangedFitnessGens > config.getGensWithoutFitnessChange()){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean populationUnchanged(LinkedList<Character> population, Config config){
+        LinkedList<Character> repeated = new LinkedList<>(this.lastPopulation);
+        repeated.retainAll(population); //mantengo los que se repitan
+        double unchangedPercentage = 1.0 - ((double)repeated.size()/population.size());
+        if(config.getUnchangedPopulationMargin() > unchangedPercentage){
+            this.unchangedPopulationGens++;
+            if(unchangedPopulationGens > config.getGensWithoutPopulationChange()){
+                return true;
+            }
+        }
+        else
+        {
+            this.unchangedPopulationGens = 0;
+        }
+        this.lastPopulation = new LinkedList<>(population);
+        return false;
     }
 
 }

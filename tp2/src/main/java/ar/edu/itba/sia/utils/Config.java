@@ -26,7 +26,9 @@ public class Config {
     private double mutationProbability;
     private double acceptableFitness;
     private double fitnessMargin;
-
+    private long gensWithoutFitnessChange;
+    private double unchangedPopulationMargin;
+    private long gensWithoutPopulationChange;
     public Config(Properties props){
         this.initialPopulation = Long.parseLong(props.getProperty("initialPopulation"));
         this.characterClass = getCharClass(props.getProperty("characterClass"));
@@ -47,6 +49,9 @@ public class Config {
         this.mutationProbability = Double.parseDouble(props.getProperty("mutationProbability"));
         this.acceptableFitness = Double.parseDouble(props.getProperty("acceptableFitness"));
         this.fitnessMargin = Double.parseDouble(props.getProperty("fitnessMargin"));
+        this.gensWithoutFitnessChange = Long.parseLong(props.getProperty("gensWithoutFitnessChange"));
+        this.unchangedPopulationMargin = Double.parseDouble(props.getProperty("unchangedPopulationMargin"));
+        this.gensWithoutPopulationChange = Long.parseLong(props.getProperty("gensWithoutPopulationChange"));
     }
 
     public CharacterClass getCharClass(String charClass){
@@ -179,5 +184,17 @@ public class Config {
 
     public double getFitnessMargin() {
         return fitnessMargin;
+    }
+
+    public long getGensWithoutFitnessChange() {
+        return gensWithoutFitnessChange;
+    }
+
+    public double getUnchangedPopulationMargin() {
+        return unchangedPopulationMargin;
+    }
+
+    public long getGensWithoutPopulationChange() {
+        return gensWithoutPopulationChange;
     }
 }
