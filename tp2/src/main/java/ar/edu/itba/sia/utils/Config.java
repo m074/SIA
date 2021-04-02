@@ -23,6 +23,7 @@ public class Config {
     private long maxTime;
     private double itemVariation;
     private double heightVariation;
+    private double mutationProbability;
 
     public Config(Properties props){
         this.initialPopulation = Long.parseLong(props.getProperty("initialPopulation"));
@@ -41,6 +42,7 @@ public class Config {
         this.maxTime = Long.parseLong(props.getProperty("time"));
         this.itemVariation = Double.parseDouble(props.getProperty("itemVariation"));
         this.heightVariation = Double.parseDouble(props.getProperty("heightVariation"));
+        this.mutationProbability = Double.parseDouble(props.getProperty("mutationProbability"));
     }
 
     public CharacterClass getCharClass(String charClass){
@@ -73,6 +75,10 @@ public class Config {
 
     public double getCrossOverProbability(){
         return crossOverProbability;
+    }
+
+    public double getMutationProbability(){
+        return mutationProbability;
     }
 
     public SelectionMethod getSelectionMethodA(){
