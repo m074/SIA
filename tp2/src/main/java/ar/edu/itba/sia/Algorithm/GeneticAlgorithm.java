@@ -18,7 +18,7 @@ public class GeneticAlgorithm {
     double lastFitness = 0.0;
     long unchangedFitnessGens = 0;
     long unchangedPopulationGens = 0;
-    LinkedList<Character> lastPopulation;
+    LinkedList<Character> lastPopulation = new LinkedList<Character>();
     public Character calculate(Config config, HashMap<ItemType, ArrayList<Item>> items){
 
         long generation= 0;
