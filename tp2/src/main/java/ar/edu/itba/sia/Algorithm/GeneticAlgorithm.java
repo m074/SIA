@@ -6,7 +6,6 @@ import ar.edu.itba.sia.utils.Config;
 import ar.edu.itba.sia.Model.Character;
 import ar.edu.itba.sia.utils.TimeMetric;
 
-import javax.security.auth.login.Configuration;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -17,7 +16,9 @@ public class GeneticAlgorithm {
     double lastFitness = 0.0;
     long unchangedFitnessGens = 0;
     long unchangedPopulationGens = 0;
-    LinkedList<Character> lastPopulation = new LinkedList<>();
+
+    LinkedList<Character> lastPopulation = new LinkedList<Character>();
+
     public Character calculate(Config config, HashMap<ItemType, ArrayList<Item>> items){
 
         long generation= 0;
