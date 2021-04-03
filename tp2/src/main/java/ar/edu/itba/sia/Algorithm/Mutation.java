@@ -34,11 +34,11 @@ public class Mutation {
 
 
     private static void mutate(ArrayList genes, MutationType type, double probability, Character c, double itemVar, double heightVar){
-
+        Random random_generator = ThreadLocalRandom.current();
         if (type == MutationType.GEN){
             Collections.shuffle(genes);
 
-            double rand = Math.random();
+            double rand = random_generator.nextDouble();
 
             if(rand <= probability) {
                 if (genes.get(0).getClass() == Double.class) {
@@ -56,7 +56,7 @@ public class Mutation {
             int limitMut = ThreadLocalRandom.current().nextInt(1, genes.size() + 1);
 
             for(int i = 0; i< limitMut; i++){
-                double rand = Math.random();
+                double rand = random_generator.nextDouble();
                 if(rand <= probability) {
                     if (genes.get(i).getClass() == Double.class) {
                         Double oldH = new Double((Double) genes.get(i));
@@ -71,7 +71,7 @@ public class Mutation {
         }
         if (type == MutationType.UNIFORMMULTI) {
             for(int i = 0; i< genes.size(); i++){
-                double rand = Math.random();
+                double rand = random_generator.nextDouble();
                 if(rand <= probability) {
                     if (genes.get(i).getClass() == Double.class) {
                         Double oldH = new Double((Double) genes.get(i));
@@ -84,7 +84,7 @@ public class Mutation {
             }
         }
         if (type == MutationType.COMPLETE) {
-            double rand = Math.random();
+            double rand = random_generator.nextDouble();
             if(rand <= probability) {
                 for(int i = 0; i< genes.size(); i++){
                         if (genes.get(i).getClass() == Double.class) {
@@ -104,12 +104,12 @@ public class Mutation {
 
     //+- variation mutation
     public static Item getRandomItem(Item oldItem, double variation){
-        Random r = new Random();
-        double str = oldItem.getStrength()-variation + ((oldItem.getStrength()+variation) - (oldItem.getStrength()-variation)) * r.nextDouble();
-        double agi = oldItem.getAgility()-variation + ((oldItem.getAgility()+variation) - (oldItem.getAgility()-variation)) * r.nextDouble();
-        double exp = oldItem.getExpertise()-variation + ((oldItem.getExpertise()+variation) - (oldItem.getExpertise()-variation)) * r.nextDouble();
-        double res = oldItem.getResistance()-variation + ((oldItem.getResistance()+variation) - (oldItem.getResistance()-variation)) * r.nextDouble();
-        double vit = oldItem.getVitality()-variation + ((oldItem.getVitality()+variation) - (oldItem.getVitality()-variation)) * r.nextDouble();
+        Random rand = ThreadLocalRandom.current();
+        double str = oldItem.getStrength()-variation + ((oldItem.getStrength()+variation) - (oldItem.getStrength()-variation)) * rand.nextDouble();
+        double agi = oldItem.getAgility()-variation + ((oldItem.getAgility()+variation) - (oldItem.getAgility()-variation)) * rand.nextDouble();
+        double exp = oldItem.getExpertise()-variation + ((oldItem.getExpertise()+variation) - (oldItem.getExpertise()-variation)) * rand.nextDouble();
+        double res = oldItem.getResistance()-variation + ((oldItem.getResistance()+variation) - (oldItem.getResistance()-variation)) * rand.nextDouble();
+        double vit = oldItem.getVitality()-variation + ((oldItem.getVitality()+variation) - (oldItem.getVitality()-variation)) * rand.nextDouble();
 
         Item newItem = new Item(str>0?str:0,agi>0?str:0,exp>0?str:0,res>0?str:0,vit>0?str:0,oldItem.getType(), oldItem.getId());
 
@@ -118,10 +118,10 @@ public class Mutation {
 
     //+- variation mutation
     public static Double getRandomHeight(double oldHeight, double variation){
-        Random r = new Random();
+        Random rand = ThreadLocalRandom.current();
         double min = oldHeight - variation;
         double max = oldHeight + variation;
-        double newHeight = min + (max - min) * r.nextDouble();
+        double newHeight = min + (max - min) * rand.nextDouble();
 
         if(newHeight < 1.3)
             newHeight = 1.3;
