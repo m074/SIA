@@ -4,14 +4,22 @@ import ar.edu.itba.sia.Model.Item;
 import ar.edu.itba.sia.Model.ItemType;
 import ar.edu.itba.sia.utils.Config;
 import ar.edu.itba.sia.Model.Character;
+import ar.edu.itba.sia.utils.SaveData;
 import ar.edu.itba.sia.utils.TimeMetric;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.Math.floor;
 
 public class GeneticAlgorithm {
+
+
+
 
     double lastFitness = 0.0;
     long unchangedFitnessGens = 0;
@@ -52,6 +60,13 @@ public class GeneticAlgorithm {
         long totalTime = 0L;
 
 
+        try{
+            SaveData.createFile("data.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         while(!isFinished(generation, totalTime, bestFitness, population, config)) {
             m.startTime();
             //cross
@@ -85,6 +100,14 @@ public class GeneticAlgorithm {
             generation +=1;
             bestFitness = Collections.max(population).getFitness();
             System.out.println(bestFitness);
+
+            try{
+                SaveData.writeFile("data.csv", String.valueOf(generation-1), String.valueOf(bestFitness),String.valueOf(Collections.min(population).getFitness()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
             m.stopTime();
             totalTime += m.getTime();
             lastPopulation = population;
