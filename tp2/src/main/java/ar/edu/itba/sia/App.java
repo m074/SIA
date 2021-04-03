@@ -7,6 +7,7 @@ import ar.edu.itba.sia.Model.ItemType;
 import ar.edu.itba.sia.utils.Config;
 import ar.edu.itba.sia.utils.ItemLoader;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -18,9 +19,8 @@ public class App {
         //carga de propiedades del archivo de config
 
         Properties props = new Properties();
-        Reader input;
-        input = new InputStreamReader(Objects.requireNonNull(ItemLoader.class.getClassLoader().getResourceAsStream("config.properties")));
-        props.load(input);
+        FileInputStream in = new FileInputStream("config.properties");
+        props.load(in);
         Config config = new Config(props);
 
         //calculo del mejor personaje

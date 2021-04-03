@@ -6,9 +6,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.util.*;
 
 public class ItemLoader {
@@ -28,8 +26,7 @@ public class ItemLoader {
     private static ArrayList<Item> loadFile(String path, ItemType type) throws IOException {
         ArrayList<Item> list = new ArrayList<>();
         Reader input;
-        input = new InputStreamReader(Objects.requireNonNull(ItemLoader.class.getClassLoader().getResourceAsStream(path)));
-
+        input = new FileReader(path);
 
         CSVParser parser = CSVFormat.TDF.withFirstRecordAsHeader().parse(input);
         for(CSVRecord r : parser){
