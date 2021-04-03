@@ -32,7 +32,7 @@ public class GeneticAlgorithm {
         double replaceAPerc = config.getReplacementMethodAPercentage();
 
         SelectionMethod selectionA = config.getSelectionMethodA();
-        SelectionMethod selectionB = config.getSelectionMethodA();
+        SelectionMethod selectionB = config.getSelectionMethodB();
 
         SelectionMethod replaceA = config.getReplacementMethodA();
         SelectionMethod replaceB = config.getReplacementMethodB();
