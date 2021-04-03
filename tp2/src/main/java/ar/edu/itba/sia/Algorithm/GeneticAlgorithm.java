@@ -5,7 +5,6 @@ import ar.edu.itba.sia.Model.ItemType;
 import ar.edu.itba.sia.utils.Config;
 import ar.edu.itba.sia.Model.Character;
 import ar.edu.itba.sia.utils.TimeMetric;
-import com.sun.org.apache.bcel.internal.generic.Select;
 
 import javax.security.auth.login.Configuration;
 import java.util.*;
@@ -18,7 +17,7 @@ public class GeneticAlgorithm {
     double lastFitness = 0.0;
     long unchangedFitnessGens = 0;
     long unchangedPopulationGens = 0;
-    LinkedList<Character> lastPopulation;
+    LinkedList<Character> lastPopulation = new LinkedList<>();
     public Character calculate(Config config, HashMap<ItemType, ArrayList<Item>> items){
 
         long generation= 0;

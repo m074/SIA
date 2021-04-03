@@ -29,6 +29,7 @@ public class Config {
     private long gensWithoutFitnessChange;
     private double unchangedPopulationMargin;
     private long gensWithoutPopulationChange;
+    private double tournamentThreshold;
     public Config(Properties props){
         this.initialPopulation = Long.parseLong(props.getProperty("initialPopulation"));
         this.characterClass = getCharClass(props.getProperty("characterClass"));
@@ -52,6 +53,7 @@ public class Config {
         this.gensWithoutFitnessChange = Long.parseLong(props.getProperty("gensWithoutFitnessChange"));
         this.unchangedPopulationMargin = Double.parseDouble(props.getProperty("unchangedPopulationMargin"));
         this.gensWithoutPopulationChange = Long.parseLong(props.getProperty("gensWithoutPopulationChange"));
+        this.tournamentThreshold = Double.parseDouble(props.getProperty("tournamentThreshold"));
     }
 
     public CharacterClass getCharClass(String charClass){
@@ -97,6 +99,7 @@ public class Config {
             case "universal": return new Universal();
             case "ranking": return new Ranking();
             case "boltzmann": return new Boltzmann();
+            case "tournament": return new Tournament(this.tournamentThreshold);
             default:return null;
         }
     }
@@ -108,6 +111,7 @@ public class Config {
             case "universal": return new Universal();
             case "ranking": return new Ranking();
             case "boltzmann": return new Boltzmann();
+            case "tournament": return new Tournament(this.tournamentThreshold);
             default:return null;
         }
     }
@@ -119,6 +123,7 @@ public class Config {
             case "universal": return new Universal();
             case "ranking": return new Ranking();
             case "boltzmann": return new Boltzmann();
+            case "tournament": return new Tournament(this.tournamentThreshold);
             default:return null;
         }
     }
@@ -130,6 +135,7 @@ public class Config {
             case "universal": return new Universal();
             case "ranking": return new Ranking();
             case "boltzmann": return new Boltzmann();
+            case "tournament": return new Tournament(this.tournamentThreshold);
             default:return null;
         }
     }
