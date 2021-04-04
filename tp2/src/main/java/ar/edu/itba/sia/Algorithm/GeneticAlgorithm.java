@@ -209,7 +209,6 @@ public class GeneticAlgorithm {
         LinkedList<Character> repeated = new LinkedList<>(this.lastPopulation);
         repeated.retainAll(population); //mantengo los que se repitan
         double unchangedPercentage =  ((double)repeated.size()/(double) population.size());
-        System.out.println("Unchanged: " + unchangedPercentage + '\n');
         if(config.getUnchangedPopulationMargin() < unchangedPercentage){
             this.unchangedPopulationGens++;
             if(unchangedPopulationGens > config.getGensWithoutPopulationChange()){
