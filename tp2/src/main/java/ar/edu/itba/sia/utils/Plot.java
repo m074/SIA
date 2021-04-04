@@ -23,7 +23,7 @@ public class Plot extends ApplicationFrame {
         XYSeriesCollection d = new XYSeriesCollection(series);
         JFreeChart chart = ChartFactory.createXYLineChart(title, "Generations", "Fitness", d, PlotOrientation.VERTICAL, true, true, false);
         final ChartPanel panel = new ChartPanel(chart);
-        panel.setPreferredSize(new java.awt.Dimension(500,450));
+        panel.setPreferredSize(new java.awt.Dimension(500,350));
         setContentPane(panel);
     }
 }

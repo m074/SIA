@@ -101,6 +101,7 @@ public class GeneticAlgorithm {
             population = newGen;
             generation +=1;
             bestFitness = Collections.max(population).getFitness();
+            System.out.println("Best fitness: " + bestFitness + '\n');
             this.maxFitnesses.add(bestFitness);
             this.averageFitnesses.add(population.stream().map(Character::getFitness).reduce(Double::sum).get()/population.size());
             try{
@@ -121,6 +122,7 @@ public class GeneticAlgorithm {
             m.stopTime();
             totalTime += m.getTime();
             m.restartTime();
+
 
         }
         plot(maxFitnesses, "Max Fitness Through Generations");
@@ -190,7 +192,7 @@ public class GeneticAlgorithm {
     }
 
     private boolean fitnessUnchanged(double bestFitness, Config config){
-        if(bestFitness > this.lastFitness){
+        if(Math.abs(bestFitness - this.lastFitness) > config.getFitnessMargin()){
             lastFitness = bestFitness;
             this.unchangedFitnessGens = 0;
         }else{
