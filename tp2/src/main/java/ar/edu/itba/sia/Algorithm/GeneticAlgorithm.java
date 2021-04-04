@@ -102,7 +102,15 @@ public class GeneticAlgorithm {
             System.out.println(bestFitness);
 
             try{
-                SaveData.writeFile("data.csv", String.valueOf(generation-1), String.valueOf(bestFitness),String.valueOf(Collections.min(population).getFitness()));
+                double mean = get_mean_characters(population);
+                double std = get_std_characters(population, mean);
+                SaveData.writeFile("data.csv",
+                        String.valueOf(generation-1),
+                        String.valueOf(bestFitness),
+                        String.valueOf(Collections.min(population).getFitness()),
+                        String.valueOf(mean),
+                        String.valueOf(std)
+                );
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -179,4 +187,20 @@ public class GeneticAlgorithm {
         return false;
     }
 
+
+    private static double get_mean_characters(LinkedList<Character> population){
+        double sum = 0;
+        for(Character c: population){
+            sum += c.getFitness();
+        }
+        return sum / population.size();
+    }
+
+    private static double get_std_characters(LinkedList<Character> population, double mean){
+        double sum = 0;
+        for(Character c: population){
+            sum += Math.pow(c.getFitness() - mean, 2) ;
+        }
+        return Math.sqrt(sum / population.size());
+    }
 }
