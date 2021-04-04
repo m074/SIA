@@ -123,7 +123,6 @@ public class GeneticAlgorithm {
             totalTime += m.getTime();
             m.restartTime();
 
-            lastPopulation = population;
         }
         plot(maxFitnesses, "Max Fitness Through Generations");
         plot(averageFitnesses, "Average Fitness Through Generations");
@@ -209,7 +208,8 @@ public class GeneticAlgorithm {
     private boolean populationUnchanged(LinkedList<Character> population, Config config){
         LinkedList<Character> repeated = new LinkedList<>(this.lastPopulation);
         repeated.retainAll(population); //mantengo los que se repitan
-        double unchangedPercentage =  ((double)repeated.size()/population.size());
+        double unchangedPercentage =  ((double)repeated.size()/(double) population.size());
+        System.out.println("Unchanged: " + unchangedPercentage + '\n');
         if(config.getUnchangedPopulationMargin() < unchangedPercentage){
             this.unchangedPopulationGens++;
             if(unchangedPopulationGens > config.getGensWithoutPopulationChange()){
