@@ -26,6 +26,9 @@ public class App {
         //calculo del mejor personaje
         HashMap<ItemType, ArrayList<Item>> items = ItemLoader.loadItems(props);
         GeneticAlgorithm genAlgo = new GeneticAlgorithm();
-        genAlgo.calculate(config, items);
+        Character best = genAlgo.calculate(config, items);
+        System.out.println("Best character combination found for required finish conditions with fitness: " + best.getFitness() + '\n');
+        System.out.println(best);
+
     }
 }

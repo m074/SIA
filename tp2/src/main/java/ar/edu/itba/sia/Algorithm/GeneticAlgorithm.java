@@ -4,6 +4,7 @@ import ar.edu.itba.sia.Model.Item;
 import ar.edu.itba.sia.Model.ItemType;
 import ar.edu.itba.sia.utils.Config;
 import ar.edu.itba.sia.Model.Character;
+import ar.edu.itba.sia.utils.Plot;
 import ar.edu.itba.sia.utils.SaveData;
 import ar.edu.itba.sia.utils.TimeMetric;
 
@@ -24,7 +25,8 @@ public class GeneticAlgorithm {
     double lastFitness = 0.0;
     long unchangedFitnessGens = 0;
     long unchangedPopulationGens = 0;
-
+    LinkedList<Double> maxFitnesses = new LinkedList<>();
+    LinkedList<Double> averageFitnesses = new LinkedList<>();
     LinkedList<Character> lastPopulation = new LinkedList<Character>();
 
     public Character calculate(Config config, HashMap<ItemType, ArrayList<Item>> items){
@@ -100,7 +102,8 @@ public class GeneticAlgorithm {
             generation +=1;
             bestFitness = Collections.max(population).getFitness();
             System.out.println(bestFitness);
-
+            this.maxFitnesses.add(bestFitness);
+            this.averageFitnesses.add(population.stream().map(Character::getFitness).reduce(Double::sum).get()/population.size());
             try{
                 double mean = get_mean_characters(population);
                 double std = get_std_characters(population, mean);
@@ -118,9 +121,12 @@ public class GeneticAlgorithm {
 
             m.stopTime();
             totalTime += m.getTime();
-            lastPopulation = population;
+            m.restartTime();
+
         }
-        return population.getFirst(); //eliminar esto y desarrollar algoritmos vvv
+        plot(maxFitnesses, "Max Fitness Through Generations");
+        plot(averageFitnesses, "Average Fitness Through Generations");
+        return Collections.max(population);
     }
 
     //inicializa la poblacion con initialPopulation obtenido del archivo de config
@@ -147,12 +153,41 @@ public class GeneticAlgorithm {
         }
         return population;
     }
-
+    private void plot(List<Double> fitnessValues, String title){
+        Plot plot = new Plot(title);
+        plot.plotValues(fitnessValues, title);
+        plot.pack();
+        plot.setVisible(true);
+    }
     private boolean isFinished(long generation, long time, double bestFitness, LinkedList<Character> population, Config config){
-        return generation >= config.getMaxGenerations() || time > config.getMaxTime()
-                || Math.abs(config.getAcceptableFitness() - bestFitness) < config.getFitnessMargin()
+        return maxGenerations(generation, config) || maxTime(time, config)
+                || optimalFitness(config, bestFitness)
                 || fitnessUnchanged(bestFitness, config)
                 || populationUnchanged(population, config);
+    }
+
+    private boolean maxGenerations(long generation, Config config){
+        if(generation >= config.getMaxGenerations()){
+            System.out.println("Max generations limit reached.\n");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean maxTime(long time, Config config){
+        if(time > config.getMaxTime()){
+            System.out.println("Max time limit reached.\n");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean optimalFitness(Config config, double bestFitness){
+        if(Math.abs(config.getAcceptableFitness() - bestFitness) < config.getFitnessMargin() || config.getAcceptableFitness() < bestFitness){
+            System.out.println("Optimal fitness limit reached.\n");
+            return true;
+        }
+        return false;
     }
 
     private boolean fitnessUnchanged(double bestFitness, Config config){
@@ -164,6 +199,7 @@ public class GeneticAlgorithm {
         }
 
         if(unchangedFitnessGens > config.getGensWithoutFitnessChange()){
+            System.out.println("Limit of generations without fitness change reached.\n");
             return true;
         }
         return false;
@@ -172,10 +208,11 @@ public class GeneticAlgorithm {
     private boolean populationUnchanged(LinkedList<Character> population, Config config){
         LinkedList<Character> repeated = new LinkedList<>(this.lastPopulation);
         repeated.retainAll(population); //mantengo los que se repitan
-        double unchangedPercentage = 1.0 - ((double)repeated.size()/population.size());
-        if(config.getUnchangedPopulationMargin() > unchangedPercentage){
+        double unchangedPercentage =  ((double)repeated.size()/(double) population.size());
+        if(config.getUnchangedPopulationMargin() < unchangedPercentage){
             this.unchangedPopulationGens++;
             if(unchangedPopulationGens > config.getGensWithoutPopulationChange()){
+                System.out.println("Limit of unchanged population reached.\n");
                 return true;
             }
         }

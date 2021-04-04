@@ -6,3 +6,4 @@ public enum CharacterClass {
     DEFENDER,
     INFILTRATOR
 }
+
