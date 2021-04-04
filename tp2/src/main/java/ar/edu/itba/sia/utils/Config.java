@@ -30,6 +30,7 @@ public class Config {
     private double unchangedPopulationMargin;
     private long gensWithoutPopulationChange;
     private double tournamentThreshold;
+    private long tournamentKValue;
     public Config(Properties props){
         this.initialPopulation = Long.parseLong(props.getProperty("initialPopulation"));
         this.characterClass = getCharClass(props.getProperty("characterClass"));
@@ -54,6 +55,7 @@ public class Config {
         this.unchangedPopulationMargin = Double.parseDouble(props.getProperty("unchangedPopulationMargin"));
         this.gensWithoutPopulationChange = Long.parseLong(props.getProperty("gensWithoutPopulationChange"));
         this.tournamentThreshold = Double.parseDouble(props.getProperty("tournamentThreshold"));
+        this.tournamentKValue = Long.parseLong(props.getProperty("tournamentKValue"));
     }
 
     public CharacterClass getCharClass(String charClass){
@@ -100,6 +102,7 @@ public class Config {
             case "ranking": return new Ranking();
             case "boltzmann": return new Boltzmann();
             case "tournament": return new Tournament(this.tournamentThreshold);
+            case "deterministictournament": return new DeterministicTournament(this.tournamentKValue);
             default:return null;
         }
     }
@@ -112,6 +115,7 @@ public class Config {
             case "ranking": return new Ranking();
             case "boltzmann": return new Boltzmann();
             case "tournament": return new Tournament(this.tournamentThreshold);
+            case "deterministictournament": return new DeterministicTournament(this.tournamentKValue);
             default:return null;
         }
     }
@@ -124,6 +128,7 @@ public class Config {
             case "ranking": return new Ranking();
             case "boltzmann": return new Boltzmann();
             case "tournament": return new Tournament(this.tournamentThreshold);
+            case "deterministictournament": return new DeterministicTournament(this.tournamentKValue);
             default:return null;
         }
     }
@@ -136,6 +141,7 @@ public class Config {
             case "ranking": return new Ranking();
             case "boltzmann": return new Boltzmann();
             case "tournament": return new Tournament(this.tournamentThreshold);
+            case "deterministictournament": return new DeterministicTournament(this.tournamentKValue);
             default:return null;
         }
     }
