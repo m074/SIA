@@ -46,4 +46,10 @@ public class Item {
     public long getId() {
         return id;
     }
+
+    @Override
+    public String toString(){
+        return type + "{\nID: " + getId() + "\nStrength: " + getStrength() + "\nAgility: " + getAgility() + "\nExpertise: "+
+                getExpertise() + "\nResistance: " + getResistance() + "\nVitality: " + getVitality() + "\n}\n";
+    }
 }

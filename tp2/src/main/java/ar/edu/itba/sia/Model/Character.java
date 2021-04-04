@@ -77,6 +77,10 @@ public class Character implements Comparable<Character> {
         }
     }
 
+    public CharacterClass getCharacterClass() {
+        return characterClass;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -160,5 +164,11 @@ public class Character implements Comparable<Character> {
 
     public void setHeight(double height) {
         this.height = height;
+    }
+
+    @Override
+    public String toString(){
+        return getCharacterClass() + " Character{\n" + "Height: " + getHeight() + '\n' + weapon + '\n' + boots + '\n' + helmet + '\n'
+                + gloves + '\n' + vest + '\n' + '}';
     }
 }

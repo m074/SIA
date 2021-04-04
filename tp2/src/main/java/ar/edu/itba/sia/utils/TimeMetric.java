@@ -7,15 +7,15 @@ public class TimeMetric {
     private Long stop;
 
     public TimeMetric() {
-        this.start = 0L;
-        this.stop = 0L;
+        this.start = null;
+        this.stop = null;
     }
 
-
+    public void restartTime(){
+        this.start = null;
+        this.stop = null;
+    }
     public void startTime() {
-        if(this.start != null) {
-            return;
-        }
         this.start = System.currentTimeMillis();
     }
 
@@ -28,7 +28,7 @@ public class TimeMetric {
 
     public long getTime() {
         if(this.start == null || this.stop == null) {
-            return 0;
+            return 0L;
         }
         return this.stop - this.start;
     }

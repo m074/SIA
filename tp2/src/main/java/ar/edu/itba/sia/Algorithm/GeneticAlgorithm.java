@@ -118,9 +118,11 @@ public class GeneticAlgorithm {
 
             m.stopTime();
             totalTime += m.getTime();
+            m.restartTime();
+
             lastPopulation = population;
         }
-        return population.getFirst(); //eliminar esto y desarrollar algoritmos vvv
+        return Collections.max(population);
     }
 
     //inicializa la poblacion con initialPopulation obtenido del archivo de config
@@ -150,7 +152,7 @@ public class GeneticAlgorithm {
 
     private boolean isFinished(long generation, long time, double bestFitness, LinkedList<Character> population, Config config){
         return generation >= config.getMaxGenerations() || time > config.getMaxTime()
-                || Math.abs(config.getAcceptableFitness() - bestFitness) < config.getFitnessMargin()
+                || Math.abs(config.getAcceptableFitness() - bestFitness) < config.getFitnessMargin() || config.getAcceptableFitness() < bestFitness
                 || fitnessUnchanged(bestFitness, config)
                 || populationUnchanged(population, config);
     }
