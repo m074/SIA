@@ -21,6 +21,7 @@ public class App {
         Reader input;
         input = new InputStreamReader(Objects.requireNonNull(ItemLoader.class.getClassLoader().getResourceAsStream("config.properties")));
         props.load(input);
+        System.out.println("Loading items into database..\n");
         Config config = new Config(props);
 
         //calculo del mejor personaje

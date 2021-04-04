@@ -101,7 +101,6 @@ public class GeneticAlgorithm {
             population = newGen;
             generation +=1;
             bestFitness = Collections.max(population).getFitness();
-            System.out.println(bestFitness);
             this.maxFitnesses.add(bestFitness);
             this.averageFitnesses.add(population.stream().map(Character::getFitness).reduce(Double::sum).get()/population.size());
             try{
