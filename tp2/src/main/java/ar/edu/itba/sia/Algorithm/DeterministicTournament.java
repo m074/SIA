@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DeterministicTournament extends SelectionMethod{
     private long m_value;
 
-    public DeterministicTournament(long k_value) {
+    public DeterministicTournament(long m_value) {
         this.m_value = m_value;
     }
 
