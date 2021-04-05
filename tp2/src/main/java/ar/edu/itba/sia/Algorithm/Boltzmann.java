@@ -5,13 +5,16 @@ import ar.edu.itba.sia.Model.Character;
 import java.util.LinkedList;
 
 public class Boltzmann extends SelectionMethod{
+
+    double k = 0.1;
+
     @Override
     public LinkedList<Character> select(LinkedList<Character> population, int size, long generations) {
 
-        //tc 1 - to 1000
-        double temp = 1+(1000-1)*Math.exp((-0.001)*generations);
+        //tc 1 - to 100
+        double temp = 1+(100-1)*Math.exp((-k*1)*generations);
         double avgPop = 0.0;
-
+      
         for(Character c: population){
             avgPop += Math.exp(c.getFitness()/temp);
         }
