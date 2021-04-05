@@ -21,7 +21,7 @@ public class Config {
     private String mutationType;
     private String implementation;
     private long maxTime;
-    private double itemVariation;
+    private int itemVariation;
     private double heightVariation;
     private double mutationProbability;
     private double acceptableFitness;
@@ -46,7 +46,7 @@ public class Config {
         this.mutationType = props.getProperty("mutation");
         this.implementation = props.getProperty("implementation");
         this.maxTime = Long.parseLong(props.getProperty("time"));
-        this.itemVariation = Double.parseDouble(props.getProperty("itemVariation"));
+        this.itemVariation = Integer.parseInt(props.getProperty("itemVariation"));
         this.heightVariation = Double.parseDouble(props.getProperty("heightVariation"));
         this.mutationProbability = Double.parseDouble(props.getProperty("mutationProbability"));
         this.acceptableFitness = Double.parseDouble(props.getProperty("acceptableFitness"));
@@ -166,7 +166,7 @@ public class Config {
         }
     }
 
-    public double getItemVariation(){
+    public int getItemVariation(){
         return itemVariation;
     }
 

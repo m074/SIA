@@ -74,7 +74,7 @@ public class GeneticAlgorithm {
             //cross
             LinkedList<Character> childs = crossOverMethod.crossOver(population, config);
             //mutate childs
-            Mutation.mutate(childs,config.getMutationProbability(), config.getItemVariation(), config.getHeightVariation(), mutationType);
+            Mutation.mutate(childs,config.getMutationProbability(), config.getItemVariation(), config.getHeightVariation(), mutationType, items);
 
             LinkedList<Character> newGen = new LinkedList<>();
 

@@ -50,6 +50,6 @@ public class Item {
     @Override
     public String toString(){
         return type + "{\nID: " + getId() + "\nStrength: " + getStrength() + "\nAgility: " + getAgility() + "\nExpertise: "+
-                getExpertise() + "\nResistance: " + getResistance() + "\nVitality: " + getVitality() + "\n}\n";
+                getExpertise() + "\nResistance: " + getResistance() + "\nVitality: " + getVitality() + "}\n";
     }
 }
