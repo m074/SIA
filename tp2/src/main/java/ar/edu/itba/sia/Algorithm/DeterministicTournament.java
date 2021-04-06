@@ -10,12 +10,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public class DeterministicTournament extends SelectionMethod{
     private long m_value;
 
-    public DeterministicTournament(long k_value) {
+    public DeterministicTournament(long m_value) {
         this.m_value = m_value;
     }
 
     @Override
     public LinkedList<Character> select(LinkedList<Character> population, int size, long generations) {
+        /*
         if(m_value >= size)
             m_value = size - 1;
         LinkedList<Character> selected = new LinkedList<>();
@@ -40,6 +41,19 @@ public class DeterministicTournament extends SelectionMethod{
             population.remove(pos_max_fitness);
         }
 
+        return selected;
+        */
+        LinkedList<Character> selected = new LinkedList<>();
+        if(m_value >= size)
+            m_value = size;
+        for(int i =0; i<size; i++){
+            LinkedList<Character> tournament = new LinkedList<>();
+            for(int j =0; j <  m_value; j++){
+                tournament.add(population.get(ThreadLocalRandom.current().nextInt(population.size())));
+            }
+            tournament.sort(Collections.reverseOrder());
+            selected.add(tournament.get(0));
+        }
         return selected;
     }
 
