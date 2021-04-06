@@ -163,3 +163,7 @@ characterClass=infiltrator
 Para la ejecucion solamente se debe hacer un:
 
 ```java -jar tp1-2.0-SNAPSHOT.jar```
+
+Este generara un archivo _data.csv_, donde almacena el estado de las fitness durante cada generacion .Para la generacion de los graficos se debera ejecutar:
+
+```python showdata.py```
