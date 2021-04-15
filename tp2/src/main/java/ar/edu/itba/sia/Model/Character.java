@@ -168,7 +168,7 @@ public class Character implements Comparable<Character> {
 
     @Override
     public String toString(){
-        return getCharacterClass() + " Character{\n" + "Height: " + getHeight() + '\n' + weapon + '\n' + boots + '\n' + helmet + '\n'
+        return getCharacterClass() + " Character{\n" + "Height: " + getHeight() +'\n' + "Attack: " + getAttack() + '\n' + "Defense: " + getDefense() +'\n' + weapon + '\n' + boots + '\n' + helmet + '\n'
                 + gloves + '\n' + vest + '\n' + '}';
     }
 }
