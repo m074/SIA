@@ -38,7 +38,7 @@ public class SimplePerceptron {
         int i = 0;
         int n = 0;
         double error = 1.0;
-        while(error > 0.0 && i < limit){
+        while(error > error_eps && i < limit){
             if(n>sameBiasIterations*inputData.length){
                 reset();
             }
