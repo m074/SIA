@@ -31,4 +31,14 @@ public class Neuron {
         }
         this.bias += bias_correction;
     }
+
+    public double calculateError(double[][] inputData, double[] outputData){
+        double error = 0;
+        int i = 0;
+        for(double[] data : inputData){
+            error += Math.abs(activation(data) - outputData[i]);
+            i++;
+        }
+        return error;
+    }
 }
