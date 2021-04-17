@@ -2,6 +2,7 @@ package ar.edu.itba.sia;
 
 import ar.edu.itba.sia.Activation.Linear;
 import ar.edu.itba.sia.Activation.Sign;
+import ar.edu.itba.sia.Activation.TanH;
 import ar.edu.itba.sia.Model.Neuron;
 import ar.edu.itba.sia.Model.SimplePerceptron;
 import org.apache.commons.csv.CSVFormat;
@@ -48,14 +49,14 @@ public class Ej2 {
             outputData[i] = l2.get(i);
         }
 
-        SimplePerceptron linearPerceptron = new SimplePerceptron(0.01 ,0.01, inputData, outputData, new Linear());
+        SimplePerceptron linearPerceptron = new SimplePerceptron(0.01 ,0.01, inputData, outputData, new TanH());
         boolean flag=true;
         while(flag){
             System.out.println("Teach or predict?");
             Scanner sc = new Scanner(System.in);
             String choice = sc.nextLine();
             switch(choice){
-                case "teach": linearPerceptron.train(1000000, 1000); break;
+                case "teach": linearPerceptron.train(100000, 1000); break;
                 case "predict": Neuron n = linearPerceptron.getBest();
                     System.out.println("[4.4793,-4.0765,4.4558]: " + n.activation(new double[]{4.4793,-4.0765,4.4558}));
                     break;
