@@ -37,6 +37,7 @@ public class Ej2 {
             for (int i = 0; i < arr.length; i++){
                 inputData[j][i] = arr[i];
             }
+            j++;
         }
 
         s = new Scanner(Objects.requireNonNull(Ej2.class.getClassLoader().getResourceAsStream("./output.tsv")));
