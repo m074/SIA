@@ -37,16 +37,22 @@ public class SimplePerceptron {
     public void train(int limit, int sameBiasIterations){
         int i = 0;
         int n = 0;
-        double error = 1.0;
-        while(error > 0.0 && i < limit){
-            if(n>sameBiasIterations*inputData.length){
+        double error;
+        reset();
+        do{
+            error=0.0;
+
+            if(n>sameBiasIterations*inputData[0].length){
+                n=0;
                 reset();
             }
             int random_idx =ThreadLocalRandom.current().nextInt(0, inputData.length);
-            double[] randInput = inputData[random_idx];
-            double randOutput = outputData[random_idx];
-            double activation = neuron.activation(randInput);
-            neuron.correct(learningRate, randOutput, activation, randInput);
+            for(int k=random_idx; k<inputData.length; k++){
+                double[] randInput = inputData[k];
+                double randOutput = outputData[k];
+                double activation = neuron.activation(randInput);
+                neuron.correct(learningRate, randOutput, activation, randInput);
+            }
             error = neuron.calculateError(inputData, outputData);
             if(error < min_error){
                 min_error = error;
@@ -55,7 +61,8 @@ public class SimplePerceptron {
             }
             System.out.println("Step " + i + ": " + "error " + error + " weights " + Arrays.toString(weights));
             i++; n++;
-        }
+        }while((error > error_eps && i < limit));
+        System.out.println("Min error: " + min_error);
     }
 
     public Neuron getBest(){
