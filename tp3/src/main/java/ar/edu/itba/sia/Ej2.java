@@ -50,15 +50,14 @@ public class Ej2 {
         for(int i=0; i<l2.size(); i++){
             outputData[i] = l2.get(i);
         }
-
-        SimplePerceptron linearPerceptron = new SimplePerceptron(0.01 ,0.01, inputData, outputData, new TanH());
+        SimplePerceptron linearPerceptron = new SimplePerceptron(0.01 ,0.01, inputData, outputData, new Linear());
         boolean flag=true;
         while(flag){
             System.out.println("Teach or predict?");
             Scanner sc = new Scanner(System.in);
             String choice = sc.nextLine();
             switch(choice){
-                case "teach": linearPerceptron.train(100000, 1000); break;
+                case "teach": linearPerceptron.train(10000, 1000); break;
                 case "predict": Neuron n = linearPerceptron.getBest();
                     System.out.println("[4.4793,-4.0765,4.4558]: " + n.activation(new double[]{4.4793,-4.0765,4.4558}));
                     break;
