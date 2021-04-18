@@ -4,6 +4,7 @@ public class TanH extends ActivationFunction {
 
     @Override
     public double evaluate(double value) {
-        return Math.tanh(value);
+        double beta = 1.5;
+        return Math.tanh(beta*value);
     }
 }

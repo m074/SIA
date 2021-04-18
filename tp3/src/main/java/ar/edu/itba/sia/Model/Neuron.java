@@ -21,15 +21,14 @@ public class Neuron {
 
     public void correct(double learningRate, double expected, double result, double[] input){
         double correction = learningRate * (expected - result); //a chequear
-        double[] weight_correction = input;
-        for(double v : weight_correction){
-            v*=correction;
+        double[] weight_correction = input.clone();
+        for(int j = 0; j<weight_correction.length; j++){
+            weight_correction[j] *= correction;
         }
-        double bias_correction = correction;
         for(int i = 0; i < weights.length; i++){
             this.weights[i] += weight_correction[i];
         }
-        this.bias += bias_correction;
+        this.bias += correction;
     }
 
     public double calculateError(double[][] inputData, double[] outputData){

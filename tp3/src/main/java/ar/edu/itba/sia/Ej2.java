@@ -1,6 +1,7 @@
 package ar.edu.itba.sia;
 
 import ar.edu.itba.sia.Activation.Linear;
+import ar.edu.itba.sia.Activation.Sigmoid;
 import ar.edu.itba.sia.Activation.Sign;
 import ar.edu.itba.sia.Activation.TanH;
 import ar.edu.itba.sia.Model.Neuron;
@@ -49,14 +50,14 @@ public class Ej2 {
             outputData[i] = l2.get(i);
         }
 
-        SimplePerceptron linearPerceptron = new SimplePerceptron(0.01 ,0.01, inputData, outputData, new TanH());
+        SimplePerceptron linearPerceptron = new SimplePerceptron(0.01 ,0.02, inputData, outputData, new Linear());
         boolean flag=true;
         while(flag){
             System.out.println("Teach or predict?");
             Scanner sc = new Scanner(System.in);
             String choice = sc.nextLine();
             switch(choice){
-                case "teach": linearPerceptron.train(100000, 1000); break;
+                case "teach": linearPerceptron.train(10000, 100); break;
                 case "predict": Neuron n = linearPerceptron.getBest();
                     System.out.println("[4.4793,-4.0765,4.4558]: " + n.activation(new double[]{4.4793,-4.0765,4.4558}));
                     break;
