@@ -23,7 +23,7 @@ public class SimplePerceptron {
         this.learningRate = learningRate;
         this.inputData = inputData;
         this.outputData = outputData;
-        this.min_error = inputData.length * 2.0;
+        this.min_error = Double.MAX_VALUE;
         this.bias = ThreadLocalRandom.current().nextDouble(-1.0, 1.0);
         this.min_bias = this.bias;
         this.weights = new double[inputData[0].length];
@@ -40,7 +40,6 @@ public class SimplePerceptron {
         double error;
         reset();
         do{
-            error=0.0;
 
             if(n>sameBiasIterations*inputData[0].length){
                 n=0;
