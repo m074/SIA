@@ -21,10 +21,10 @@ public class Ej1 {
             switch(choice){
                 case "teach": AndPerceptron.train(1000000, 1000); break;
                 case "predict": Neuron n = AndPerceptron.getBest();
-                    System.out.println("[-1, 1]: " + n.activation(new double[]{-1.0, 1.0}));
-                    System.out.println("[1, -1]: " + n.activation(new double[]{1.0, -1.0}));
-                    System.out.println("[-1, -1]: " + n.activation(new double[]{-1.0, -1.0}));
-                    System.out.println("[1, 1]: " + n.activation(new double[]{1.0, 1.0}));
+                    System.out.println("[-1, 1]: " + n.predict(new double[]{-1.0, 1.0}));
+                    System.out.println("[1, -1]: " + n.predict(new double[]{1.0, -1.0}));
+                    System.out.println("[-1, -1]: " + n.predict(new double[]{-1.0, -1.0}));
+                    System.out.println("[1, 1]: " + n.predict(new double[]{1.0, 1.0}));
                     break;
                 case "exit": flag=false; break;
             }

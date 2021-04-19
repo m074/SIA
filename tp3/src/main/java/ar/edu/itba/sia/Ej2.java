@@ -59,7 +59,7 @@ public class Ej2 {
             switch(choice){
                 case "teach": linearPerceptron.train(10000, 1000); break;
                 case "predict": Neuron n = linearPerceptron.getBest();
-                    System.out.println("[4.4793,-4.0765,4.4558]: " + n.activation(new double[]{4.4793,-4.0765,4.4558}));
+                    System.out.println("[-4.1793,-4.9218,1.7664]: " + n.predict(new double[]{-4.1793,-4.9218,1.7664}));
                     break;
                 case "exit": flag=false; break;
             }
