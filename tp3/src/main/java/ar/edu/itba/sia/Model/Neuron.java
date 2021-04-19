@@ -5,18 +5,17 @@ import ar.edu.itba.sia.utils.Utils;
 
 public class Neuron {
     double[] weights;
-    double bias;
     ActivationFunction actFunc;
 
-    public Neuron(double[] weights, double bias, ActivationFunction actFunc) {
+    public Neuron(double[] weights, ActivationFunction actFunc) {
         this.weights = weights;
-        this.bias = bias;
         this.actFunc = actFunc;
     }
 
     public double activation(double[] data){
+
         double excitation = Utils.DotProduct(data, weights);
-        return actFunc.evaluate(excitation + bias);
+        return actFunc.evaluate(excitation);
     }
 
     public void correct(double learningRate, double expected, double result, double[] input){
@@ -28,7 +27,6 @@ public class Neuron {
         for(int i = 0; i < weights.length; i++){
             this.weights[i] += weight_correction[i];
         }
-        this.bias += correction;
     }
 
     public double calculateError(double[][] inputData, double[] outputData){
@@ -39,5 +37,14 @@ public class Neuron {
             i++;
         }
         return error;
+    }
+
+    public double predict(double[] data){
+        double[] cl = new double[data.length+1];
+        cl[0] = 1.0;
+        for(int i = 1; i<cl.length; i++){
+            cl[i] = data[i-1];
+        }
+        return activation(cl);
     }
 }

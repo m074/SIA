@@ -13,24 +13,26 @@ public class SimplePerceptron {
     double[] min_weights;
     double learningRate;
     double min_error;
-    double min_bias;
-    double bias;
     double error_eps;
     Neuron neuron;
 
     public SimplePerceptron(double error_eps, double learningRate, double[][] inputData, double[] outputData, ActivationFunction actFunc) {
         this.actFunc = actFunc;
         this.learningRate = learningRate;
-        this.inputData = inputData;
+        this.inputData = new double[inputData.length][inputData[0].length+1];
+        for(int i = 0; i < this.inputData.length; i++){
+            this.inputData[i][0] = 1.0;
+            for(int j = 1; j < this.inputData[0].length; j++){
+                this.inputData[i][j] = inputData[i][j-1];
+            }
+        }
         this.outputData = outputData;
         this.min_error = Double.MAX_VALUE;
-        this.bias = ThreadLocalRandom.current().nextDouble(-1.0, 1.0);
-        this.min_bias = this.bias;
-        this.weights = new double[inputData[0].length];
-        for(int i = 0; i<inputData[0].length; i++){
-            this.weights[i] = 0.0;
+        this.weights = new double[this.inputData[0].length];
+        for(int i = 0; i<this.inputData[0].length; i++){
+            this.weights[i] = ThreadLocalRandom.current().nextDouble(-1.0, 1.0);
         }
-        this.neuron = new Neuron(weights, bias, actFunc);
+        this.neuron = new Neuron(weights, actFunc);
         this.min_weights = weights;
     }
 
@@ -46,7 +48,7 @@ public class SimplePerceptron {
                 reset();
             }
             int random_idx =ThreadLocalRandom.current().nextInt(0, inputData.length);
-            for(int k=random_idx; k<inputData.length; k++){
+            for(int k = 0; k < random_idx; k++) {
                 double[] randInput = inputData[k];
                 double randOutput = outputData[k];
                 double activation = neuron.activation(randInput);
@@ -56,7 +58,6 @@ public class SimplePerceptron {
             if(error < min_error){
                 min_error = error;
                 min_weights = neuron.weights.clone();
-                min_bias = neuron.bias;
             }
             System.out.println("Step " + i + ": " + "error " + error + " weights " + Arrays.toString(weights));
             i++; n++;
@@ -65,11 +66,12 @@ public class SimplePerceptron {
     }
 
     public Neuron getBest(){
-        return new Neuron(min_weights, min_bias, actFunc);
+        return new Neuron(min_weights,  actFunc);
     }
     public void reset(){
-        this.weights = new double[inputData[0].length];
-        this.bias = ThreadLocalRandom.current().nextDouble(-1.0, 1.0);
-        this.neuron = new Neuron(weights, bias, actFunc);
+        for(int i = 0; i<inputData[0].length; i++){
+            this.weights[i] = ThreadLocalRandom.current().nextDouble(-1.0, 1.0);
+        }
+        this.neuron = new Neuron(weights,actFunc);
     }
 }
