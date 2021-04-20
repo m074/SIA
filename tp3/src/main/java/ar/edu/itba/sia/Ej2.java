@@ -6,6 +6,7 @@ import ar.edu.itba.sia.Activation.Sign;
 import ar.edu.itba.sia.Activation.TanH;
 import ar.edu.itba.sia.Model.Neuron;
 import ar.edu.itba.sia.Model.SimplePerceptron;
+import ar.edu.itba.sia.Model.SimplePerceptron2;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -50,6 +51,7 @@ public class Ej2 {
         for(int i=0; i<l2.size(); i++){
             outputData[i] = l2.get(i);
         }
+        /*
         SimplePerceptron linearPerceptron = new SimplePerceptron(0.01 ,0.01, inputData, outputData, new Linear());
         boolean flag=true;
         while(flag){
@@ -64,5 +66,18 @@ public class Ej2 {
                 case "exit": flag=false; break;
             }
         }
+        */
+
+        
+        SimplePerceptron2 sp2 = new SimplePerceptron2(0,0.001, inputData, outputData, new Sigmoid());
+        sp2.train(1000,100);
+        sp2.prediction();
+
+
     }
+
+
+
+
+
 }
