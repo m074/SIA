@@ -2,9 +2,21 @@ package ar.edu.itba.sia.Activation;
 
 public class Sigmoid extends ActivationFunction {
 
+    private double beta = 1;
+
     @Override
     public double evaluate(double value) {
-        double beta = 1.0;
         return 1/(1+Math.exp(-2*beta*value));
     }
+
+    public double evaluateDer(double value) {
+
+        return 2 * beta * evaluate(value) * (1 - evaluate(value));
+    }
+
+    @Override
+    public FUNCTIONTYPE getType() {
+        return FUNCTIONTYPE.NONLINEAER;
+    }
+
 }
