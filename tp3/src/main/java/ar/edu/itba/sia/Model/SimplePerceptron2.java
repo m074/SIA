@@ -2,6 +2,8 @@ package ar.edu.itba.sia.Model;
 
 import ar.edu.itba.sia.Activation.ActivationFunction;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class SimplePerceptron2 {
 
     ActivationFunction actFunc;
@@ -10,11 +12,12 @@ public class SimplePerceptron2 {
     double[] outputData; //y
     double[] weights; //w
     double learningRate; //n
-
+    double error_eps;
     double minErr;
     double[] minWeights;
 
     public SimplePerceptron2(double error_eps, double learningRate, double[][] data, double[] outputData, ActivationFunction actFunc){
+        this.error_eps = error_eps;
         this.actFunc = actFunc;
         this.learningRate = learningRate;
         this.outputData = outputData;
@@ -47,11 +50,14 @@ public class SimplePerceptron2 {
 
     public void train(int limit, int sameBiasIterations){
         int iterations = 0;
-
-        while(iterations < limit){
-
-
-            for(int i=1; i<inputData.length; i++){
+        int n = 0;
+        while(iterations < limit && minErr > error_eps){
+            /*
+            if(n>sameBiasIterations*inputData.length){
+                n=0;
+                reset();
+            }*/
+            for(int i=0; i<inputData.length; i++){
 
                 double exitation = calculateExcitation(inputData[i]);
                 double activation = calculateActivation(exitation);
@@ -84,18 +90,28 @@ public class SimplePerceptron2 {
 
             }
             iterations++;
+            n++;
         }
-        System.out.println("minerr " + minErr + " wheigts " + minWeights[0] + " " + minWeights[1] + " " + minWeights[2] + " " + minWeights[3]);
+        System.out.print("minerr " + minErr + " weights ");
+        for(double d:weights){
+            System.out.print(d + " ");
+        }
+        System.out.println();
 
     }
 
+    public void reset(){
+        for(int i = 0; i<weights.length; i++){
+            this.weights[i] = 0;
+        }
+    }
 
 
     public void prediction(){
 
         for(int i=0; i<outputData.length; i++){
             double n = calculateExcitation(inputData[i]);
-            System.out.println(" output " + actFunc.evaluate(outputData[i]) +" prediction ---> " + actFunc.evaluate(n));
+            System.out.println(" output " + outputData[i] +" prediction ---> " + actFunc.evaluate(n));
         }
     }
 
@@ -134,7 +150,7 @@ public class SimplePerceptron2 {
 
     private double calculateErrorSign() {
         double error = 0;
-        for (int i = 1; i < inputData.length; i++) {
+        for (int i = 0; i < inputData.length; i++) {
             double exitation = calculateExcitation(inputData[i]);
             double activation = calculateActivation(exitation);
             error += activation-outputData[i];
@@ -145,7 +161,7 @@ public class SimplePerceptron2 {
 
     private float calculateErrorLin() {
         float error = 0;
-        for (int i = 1; i < inputData.length; i++) {
+        for (int i = 0; i < inputData.length; i++) {
             double exitation = calculateExcitation(inputData[i]);
             double activation = calculateActivation(exitation);
             error +=  Math.pow(activation-actFunc.evaluate(outputData[i]),2);
