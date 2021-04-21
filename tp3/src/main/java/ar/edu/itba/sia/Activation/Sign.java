@@ -8,4 +8,16 @@ public class Sign extends ActivationFunction {
         else
             return -1;
     }
+
+    @Override
+    public double evaluateDer(double value) {
+        return 0;
+    }
+
+    @Override
+    public FUNCTIONTYPE getType() {
+        return FUNCTIONTYPE.SIGN;
+    }
+
+
 }
