@@ -142,7 +142,7 @@ public class SimplePerceptron2 {
 
         double exitation = calculateExcitation(selected);
         for( int i=0; i< weights.length; i++){
-            weights[i] += learningRate * (actFunc.evaluate(outputData[index]) - activation) * actFunc.evaluateDer(exitation) * inputData[index][i];
+            weights[i] += learningRate * (outputData[index] - activation) * actFunc.evaluateDer(exitation) * inputData[index][i];
         }
 
     }
@@ -164,7 +164,7 @@ public class SimplePerceptron2 {
         for (int i = 0; i < inputData.length; i++) {
             double exitation = calculateExcitation(inputData[i]);
             double activation = calculateActivation(exitation);
-            error +=  Math.pow(activation-actFunc.evaluate(outputData[i]),2);
+            error +=  Math.pow(activation-outputData[i],2);
         }
             error = 0.5f * error;
         return error;
