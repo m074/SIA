@@ -15,10 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Ej2 {
     public static void main(String[] args) throws IOException {
@@ -51,6 +48,15 @@ public class Ej2 {
         for(int i=0; i<l2.size(); i++){
             outputData[i] = l2.get(i);
         }
+        double[] outputDataNormalizedTan = outputData.clone();
+        double[] outputDataNormalizedExp = outputData.clone();
+        double max = Collections.max(l2);
+        double min = Collections.min(l2);
+        for(int i = 0; i < outputDataNormalizedTan.length; i++){
+            outputDataNormalizedTan[i] = 2*((outputDataNormalizedTan[i]-min)/(max-min))-1;
+            outputDataNormalizedExp[i] = (outputDataNormalizedExp[i]-min)/(max-min);
+        }
+
         /*
         SimplePerceptron linearPerceptron = new SimplePerceptron(0.01 ,0.01, inputData, outputData, new Linear());
         boolean flag=true;
@@ -69,8 +75,8 @@ public class Ej2 {
         */
 
         
-        SimplePerceptron2 sp2 = new SimplePerceptron2(0,0.001, inputData, outputData, new Sigmoid());
-        sp2.train(1000,100);
+        SimplePerceptron2 sp2 = new SimplePerceptron2(0.1,0.01, inputData, outputDataNormalizedExp, new Sigmoid());
+        sp2.train(5000,10);
         sp2.prediction();
 
 
