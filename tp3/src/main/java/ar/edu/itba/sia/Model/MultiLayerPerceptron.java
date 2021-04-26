@@ -40,6 +40,8 @@ public class MultiLayerPerceptron {
         entriesSize =1 + data[0].length;
         inputData = new double[data.length][entriesSize];
         this.outputData = outputData;
+        Random r = new Random();
+
 
         for( int i=0; i<inputData.length; i++){
             for( int j=0; j<inputData[0].length; j++){
@@ -60,7 +62,8 @@ public class MultiLayerPerceptron {
                     for (int k = 0; k < layersNumber[l]; k++) {
                         double weights[] = new double[entriesSize];
                         for (int i = 0; i < weights.length; i++) {
-                            weights[i] = 0;
+                            //weights[i] = 0;
+                            weights[i]  = -0.2 + (0.4) * r.nextDouble();
                         }
                         Neuron2 neuron = new Neuron2(weights);
                         lay.add(neuron);
@@ -69,7 +72,8 @@ public class MultiLayerPerceptron {
                     for (int k = 0; k < layersNumber[l]; k++) {
                         double weights[] = new double[layers.get(l - 1).size()];
                         for (int i = 0; i < weights.length; i++) {
-                            weights[i] = 0;
+                            //weights[i] = 0;
+                            weights[i]  = -0.2 + (0.4) * r.nextDouble();
                         }
                         Neuron2 neuron = new Neuron2(weights);
                         lay.add(neuron);
@@ -81,7 +85,8 @@ public class MultiLayerPerceptron {
                     for (int k = 0; k <= layersNumber[l]; k++) {
                         double weights[] = new double[entriesSize];
                         for (int i = 0; i < entriesSize; i++) {
-                            weights[i] = 0;
+                            //weights[i] = 0;
+                            weights[i]  = -0.2 + (0.4) * r.nextDouble();
                         }
                         Neuron2 neuron = new Neuron2(weights);
                         lay.add(neuron);
@@ -90,7 +95,8 @@ public class MultiLayerPerceptron {
                     for (int k = 0; k <= layersNumber[l]; k++) {
                         double weights[] = new double[layers.get(l - 1).size()];
                         for (int i = 0; i < weights.length; i++) {
-                            weights[i] = 0;
+                            //weights[i] = 0;
+                            weights[i]  = -0.2 + (0.4) * r.nextDouble();
                         }
                         Neuron2 neuron = new Neuron2(weights);
                         lay.add(neuron);
@@ -225,6 +231,8 @@ public class MultiLayerPerceptron {
                         Neuron2 supNeuron = layers.get(layer+1).get(sup);
 
                         delta += supNeuron.weights[neuron] * supNeuron.delta;
+
+
 
                     }
 
@@ -362,23 +370,28 @@ public class MultiLayerPerceptron {
 
     public void prediction(){
         for(int i=0; i<outputData.length; i++){
-
+            System.out.println("--------------");
+            propagation(inputData[i]);
 
             int layer = layers.size()-1;
             double pred = 0;
 
             for(int neuron = 0; neuron <layers.get(layer).size(); neuron++) {
                 Neuron2 n = layers.get(layer).get(neuron);
-                System.out.println("wei " + n.weights[0] + " " + n.weights[1] + " " +  n.weights[2]);
+                System.out.println("weights salida " + n.weights[0] + " " + n.weights[1] + " " +  n.weights[2]);
+
+
                 double v[] = new double[layers.get(layer - 1).size()];
                 for (int j = 0; j < layers.get(layer - 1).size(); j++) {
                     v[j] = layers.get(layer - 1).get(j).V;
                     System.out.println(" V " + j +" " + v[j] );
                 }
-                pred = actFunc.evaluate(n.calExcitation(v));
-            }
 
+                pred = actFunc.evaluate(n.calExcitation(v));
+
+            }
             System.out.println(" output " + outputData[i] +" prediction ---> " + pred );
+
         }
     }
 
