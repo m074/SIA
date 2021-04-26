@@ -28,15 +28,11 @@ public class Ej3 {
             l.add(aux);
         }
 
-
         double[][] inputData = new double[l.size()/7][l.get(0).length*7];
-
         int j = 0;
         int py= 0;
         int px= 0;
         for(double[] arr : l){
-;
-
             for (int i = 0; i < arr.length; i++){
                 inputData[px][i+py] = arr[i];
             }
@@ -51,17 +47,19 @@ public class Ej3 {
             }
         }
 
-        System.out.println(" " + inputData.length + " " + inputData[0].length);
 
 
-
-        double[][] inputs = {{-1.0, 1.0}, {1.0, -1.0}, {-1.0, -1.0}, {1.0, 1.0}};
-        //double[] xorOutputs = {1.0, 1.0, -1.0, -1.0};
-        double[] xorOutputs = {1.0, 1.0, 0, 0};
+        // PUNTO 1
 
         /*
-        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.0001,0.01,inputs,xorOutputs, new Sigmoid(), new int[]{2,1});
-        ml.train(200000 ,50);
+        double[][] inputs = {{-1.0, 1.0}, {1.0, -1.0}, {-1.0, -1.0}, {1.0, 1.0}};
+        double[] xorOutputs = {1.0, 1.0, -1.0, -1.0};
+
+        //Sigmoid
+        //double[] xorOutputs = {1.0, 1.0, 0, 0};
+
+        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.01,0.01,inputs,xorOutputs, new Sigmoid(), new int[]{2,1});
+        ml.train(10000 ,50);
         ml.prediction();
 
          */
@@ -70,17 +68,17 @@ public class Ej3 {
 
 
 
-        //double[] pixelsoutputs = {1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0};
+        double[] pixelsoutputs = {1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0};
+        //for Sigmoid
+        //double[] pixelsoutputs = {1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0};
 
-        //double[] pixelsoutputs = {0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5};
-        double[] pixelsoutputs = {1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0};
-
-
-        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.01,0.001,inputData,pixelsoutputs, new Sigmoid(), new int[]{3,1});
-        ml.train(200000 ,50);
+        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.01,0.01,inputData,pixelsoutputs, new TanH(), new int[]{2,1});
+        ml.train(1000 ,50);
         ml.prediction();
 
-        
+
+
+
 
     }
 
