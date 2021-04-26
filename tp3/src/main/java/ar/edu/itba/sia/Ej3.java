@@ -27,72 +27,60 @@ public class Ej3 {
             }
             l.add(aux);
         }
-        double[][] inputData = new double[l.size()][l.get(0).length];
+
+
+        double[][] inputData = new double[l.size()/7][l.get(0).length*7];
+
         int j = 0;
+        int py= 0;
+        int px= 0;
         for(double[] arr : l){
+;
+
             for (int i = 0; i < arr.length; i++){
-                inputData[j][i] = arr[i];
+                inputData[px][i+py] = arr[i];
             }
             j++;
+
+            if(j%7 == 0){
+                py =0;
+                px +=1;
+            }
+            else{
+                py += 5;
+            }
         }
+
+        System.out.println(" " + inputData.length + " " + inputData[0].length);
+
 
 
         double[][] inputs = {{-1.0, 1.0}, {1.0, -1.0}, {-1.0, -1.0}, {1.0, 1.0}};
-        double[] xorOutputs = {1.0, 1.0, -1.0, -1.0};
+        //double[] xorOutputs = {1.0, 1.0, -1.0, -1.0};
+        double[] xorOutputs = {1.0, 1.0, 0, 0};
 
-
-        //System.out.println(inputData[0][0]+" "+inputData[1][0]+" "+inputData[2][0]+" "+inputData[3][0]);
-
-        //double error_eps, double learningRate, double[][] inputData, double[] outputData, ActivationFunction actFunc, int[] layers_qty
-        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.01,0.1,inputs,xorOutputs, new TanH(), new int[]{2,1});
-        ml.train(20000 ,50);
+        /*
+        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.0001,0.01,inputs,xorOutputs, new Sigmoid(), new int[]{2,1});
+        ml.train(200000 ,50);
         ml.prediction();
 
+         */
 
 
 
 
-/*
-        s = new Scanner(Objects.requireNonNull(Ej2.class.getClassLoader().getResourceAsStream("./output.tsv")));
-        ArrayList<Double> l2 = new ArrayList<>();
-        while(s.hasNextLine()){
-            l2.add(Double.parseDouble(s.nextLine()));
-        }
-        double[] outputData = new double[l2.size()];
-        for(int i=0; i<l2.size(); i++){
-            outputData[i] = l2.get(i);
-        }
-        double[] outputDataNormalizedTan = outputData.clone();
-        double[] outputDataNormalizedExp = outputData.clone();
-        double max = Collections.max(l2);
-        double min = Collections.min(l2);
-        for(int i = 0; i < outputDataNormalizedTan.length; i++){
-            outputDataNormalizedTan[i] = 2*((outputDataNormalizedTan[i]-min)/(max-min))-1;
-            outputDataNormalizedExp[i] = (outputDataNormalizedExp[i]-min)/(max-min);
-        }
+
+        //double[] pixelsoutputs = {1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0, 1.0, -1.0};
+
+        //double[] pixelsoutputs = {0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5};
+        double[] pixelsoutputs = {1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0};
 
 
-        SimplePerceptron linearPerceptron = new SimplePerceptron(0.01 ,0.01, inputData, outputData, new Linear());
-        boolean flag=true;
-        while(flag){
-            System.out.println("Teach or predict?");
-            Scanner sc = new Scanner(System.in);
-            String choice = sc.nextLine();
-            switch(choice){
-                case "teach": linearPerceptron.train(10000, 1000); break;
-                case "predict": Neuron n = linearPerceptron.getBest();
-                    System.out.println("[-4.1793,-4.9218,1.7664]: " + n.predict(new double[]{-4.1793,-4.9218,1.7664}));
-                    break;
-                case "exit": flag=false; break;
-            }
-        }
+        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.01,0.001,inputData,pixelsoutputs, new Sigmoid(), new int[]{3,1});
+        ml.train(200000 ,50);
+        ml.prediction();
 
-
-
-        SimplePerceptron2 sp2 = new SimplePerceptron2(0.001,0.01, inputData, outputDataNormalizedExp, new Sigmoid());
-        sp2.train(1000,100);
-        sp2.prediction();
-  */
+        
 
     }
 

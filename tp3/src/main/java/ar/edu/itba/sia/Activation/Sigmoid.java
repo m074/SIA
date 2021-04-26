@@ -2,7 +2,7 @@ package ar.edu.itba.sia.Activation;
 
 public class Sigmoid extends ActivationFunction {
 
-    private double beta = 1;
+    private double beta = 4;
 
     @Override
     public double evaluate(double value) {
