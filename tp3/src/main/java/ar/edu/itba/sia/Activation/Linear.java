@@ -9,7 +9,7 @@ public class Linear extends ActivationFunction{
 
     @Override
     public double evaluateDer(double value) {
-        return 0;
+        return 1;
     }
 
     @Override
