@@ -22,16 +22,24 @@ public class MultiLayerPerceptron {
 
     double[][] inputData;
     double[] outputData;
-
-
+    double minEta = 0.0001;
+    boolean adaptLR;
+    double LRincrement;
+    double LRdecrement;
     double minErr;
+    double lastErr = 0.0;
+    int incErrors=0;
+    int decErrors=0;
+    int updateLRits;
 
-
-
-    public MultiLayerPerceptron(double error_eps, double learningRate, double[][] data, double[] outputData, ActivationFunction actFunc, int[] layersNumber){
+    public MultiLayerPerceptron(double error_eps, double learningRate, double[][] data, double[] outputData, ActivationFunction actFunc, int[] layersNumber, boolean adaptLR, int updateLRits, double LRincrement, double LRdecrement){
         this.error_eps = error_eps;
         this.learningRate = learningRate;
         this.actFunc = actFunc;
+        this.adaptLR = adaptLR;
+        this.LRdecrement = LRdecrement;
+        this.LRincrement= LRincrement;
+        this.updateLRits = updateLRits;
         entriesSize =1 + data[0].length;
         inputData = new double[data.length][entriesSize];
         this.outputData = outputData;
@@ -113,10 +121,11 @@ public class MultiLayerPerceptron {
                 if(minErr > calculateError()){
                     minErr = calculateError();
                 }
-
+            if(adaptLR)
+                adaptLearningRate(calculateError());
             iterations++;
         }
-        System.out.println("MINERR " + minErr);
+        System.out.println("MINERR " + minErr + " epochs: " + iterations);
     }
 
 
@@ -235,6 +244,31 @@ public class MultiLayerPerceptron {
         return error;
     }
 
+    private void adaptLearningRate(double error){
+        if(lastErr == 0.0){
+            lastErr = error;
+        }
+        else if(lastErr < error){
+            decErrors = 0;
+            incErrors++;
+        }else{
+            incErrors = 0;
+            decErrors++;
+        }
+
+        if(decErrors>=updateLRits){
+            learningRate+=LRincrement;
+            decErrors=0;
+        }
+        if(incErrors>=updateLRits){
+            learningRate*=LRdecrement;
+            if(learningRate<=minEta){
+                learningRate=minEta;
+            }
+            incErrors=0;
+        }
+        lastErr=error;
+    }
 
 
     public void prediction(){

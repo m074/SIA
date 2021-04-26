@@ -2,7 +2,7 @@ package ar.edu.itba.sia.Activation;
 
 public class TanH extends ActivationFunction {
 
-    double beta = 1;
+    double beta = 1.5;
 
 
 

@@ -51,18 +51,17 @@ public class Ej3 {
 
         // PUNTO 1
 
-        /*
+
         double[][] inputs = {{-1.0, 1.0}, {1.0, -1.0}, {-1.0, -1.0}, {1.0, 1.0}};
         double[] xorOutputs = {1.0, 1.0, -1.0, -1.0};
 
         //Sigmoid
         //double[] xorOutputs = {1.0, 1.0, 0, 0};
-
-        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.01,0.01,inputs,xorOutputs, new Sigmoid(), new int[]{2,1});
+        /*
+        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.001,0.01,inputs,xorOutputs, new TanH(), new int[]{2,1}, true, 5, 0.01, 0.1);
         ml.train(10000 ,50);
         ml.prediction();
-
-         */
+        */
 
 
 
@@ -72,8 +71,8 @@ public class Ej3 {
         //for Sigmoid
         //double[] pixelsoutputs = {1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0};
 
-        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.01,0.01,inputData,pixelsoutputs, new TanH(), new int[]{2,1});
-        ml.train(1000 ,50);
+        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.001,0.01,inputData,pixelsoutputs, new TanH(), new int[]{2,1}, false, 5, 0.01, 0.1);
+        ml.train(10000 ,50);
         ml.prediction();
 
 
