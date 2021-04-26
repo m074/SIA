@@ -7,6 +7,13 @@ public class TanH extends ActivationFunction {
 
 
 
+
+    public TanH(){}
+
+    public TanH(double beta){
+        this.beta = beta;
+    }
+
     @Override
     public double evaluate(double value) {
         return Math.tanh(beta*value);

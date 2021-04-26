@@ -4,6 +4,12 @@ public class Sigmoid extends ActivationFunction {
 
     private double beta = 4;
 
+    public Sigmoid(){}
+
+    public Sigmoid(double beta){
+        this.beta = beta;
+    }
+
     @Override
     public double evaluate(double value) {
         return 1/(1+Math.exp(-2*beta*value));

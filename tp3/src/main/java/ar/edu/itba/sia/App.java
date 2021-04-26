@@ -2,6 +2,8 @@ package ar.edu.itba.sia;
 
 
 import ar.edu.itba.sia.Activation.Linear;
+import ar.edu.itba.sia.Activation.TanH;
+import ar.edu.itba.sia.Model.MultiLayerPerceptron;
 import ar.edu.itba.sia.Model.SimplePerceptron2;
 import ar.edu.itba.sia.utils.Config;
 import ar.edu.itba.sia.utils.TsvLoader;
@@ -43,10 +45,16 @@ public class App {
                 outputDataNormalizedTan[i] = 2*((outputDataNormalizedTan[i]-min)/(max-min))-1;
                 outputDataNormalizedExp[i] = (outputDataNormalizedExp[i]-min)/(max-min);
             }
-
-            SimplePerceptron2 sp2 = new SimplePerceptron2(config.errorEps, config.learningRate, inputData, outputDataNormalizedExp, config.getActivationFunction());
-            sp2.train(config.numberIterations,config.sameBiasIterations);
-            sp2.prediction();
+            if(config.get_layers().length==1){
+                SimplePerceptron2 sp2 = new SimplePerceptron2(config.errorEps, config.learningRate, inputData, outputDataNormalizedExp, config.getActivationFunction());
+                sp2.train(config.numberIterations,config.sameBiasIterations);
+                sp2.prediction();
+            }else{
+                MultiLayerPerceptron ml = new MultiLayerPerceptron(config.errorEps, config.learningRate, inputData, outputDataNormalizedExp, config.getActivationFunction(), config.get_layers(),
+                        config.adaptLR, config.updateLRits, config.LRincrement, config.LRdecrement);
+                ml.train(config.numberIterations,config.sameBiasIterations);
+                ml.prediction();
+            }
 
 
 
