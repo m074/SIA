@@ -31,7 +31,7 @@ public class Config {
         this.beta =  Double.parseDouble(props.getProperty("beta"));
         this.momentum =  Double.parseDouble(props.getProperty("momentum"));
         this.layers_string = props.getProperty("layers");
-        String adaptLR_string = props.getProperty("adapLR");
+        String adaptLR_string = props.getProperty("adaptLR");
         if(adaptLR_string.equals("true")){
             this.adaptLR = true;
             this.updateLRits = Integer.parseInt(props.getProperty("updateLRits"));
