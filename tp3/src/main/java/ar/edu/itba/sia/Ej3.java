@@ -39,13 +39,13 @@ public class Ej3 {
 
         double[][] inputs = {{-1.0, 1.0}, {1.0, -1.0}, {-1.0, -1.0}, {1.0, 1.0}};
         double[] xorOutputs = {1.0, 1.0, -1.0, -1.0};
-       //double[] andOutputs = {-1.0, -1.0, -1.0, 1.0};
+
 
         //System.out.println(inputData[0][0]+" "+inputData[1][0]+" "+inputData[2][0]+" "+inputData[3][0]);
 
         //double error_eps, double learningRate, double[][] inputData, double[] outputData, ActivationFunction actFunc, int[] layers_qty
-        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.1,0.01,inputs,xorOutputs, new Linear(), new int[]{2,1});
-        ml.train(200 ,50);
+        MultiLayerPerceptron ml = new MultiLayerPerceptron(0.01,0.1,inputs,xorOutputs, new TanH(), new int[]{2,1});
+        ml.train(20000 ,50);
         ml.prediction();
 
 

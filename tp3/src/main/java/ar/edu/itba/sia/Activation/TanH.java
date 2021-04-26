@@ -2,7 +2,10 @@ package ar.edu.itba.sia.Activation;
 
 public class TanH extends ActivationFunction {
 
-    double beta = 0.5;
+    double beta = 1;
+
+
+
 
     @Override
     public double evaluate(double value) {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MultiLayerPerceptron {
 
@@ -41,6 +42,7 @@ public class MultiLayerPerceptron {
         inputData = new double[data.length][entriesSize];
         this.outputData = outputData;
         Random r = new Random();
+        minErr = Double.MAX_VALUE;
 
 
         for( int i=0; i<inputData.length; i++){
@@ -110,10 +112,11 @@ public class MultiLayerPerceptron {
 
     public void train(int limit, int sameBiasIterations){
         int iterations = 0;
-        while(iterations < limit){
+        while(iterations < limit && error_eps<minErr ){
 
 
-            for(int i=0; i<inputData.length; i++){
+            int i = ThreadLocalRandom.current().nextInt(0, 3 + 1);
+            //for(int i=0; i<inputData.length; i++){
 
 
                 System.out.println("---prop---");
@@ -125,12 +128,15 @@ public class MultiLayerPerceptron {
                 System.out.println("---back prop---");
                 backpropagation(i);
 
-              //  System.out.println("ERROR " +calculateError(i));
+                if(minErr > calculateError()){
+                    minErr = calculateError();
+                }
 
-            }
+            //}
 
             iterations++;
         }
+        System.out.println("MINERR " + minErr + " iterations " + iterations);
     }
 
 
@@ -347,19 +353,24 @@ public class MultiLayerPerceptron {
 
 
 
-    public double calculateError(int index){
+    public double calculateError(){
 
         int layer = layers.size()-1;
         double error = 0;
 
-        for(int neuron = 0; neuron <layers.get(layer).size(); neuron++) {
-            Neuron2 n = layers.get(layer).get(neuron);
+        for(int i=0; i<outputData.length; i++) {
 
-            double v[] = new double[layers.get(layer - 1).size()];
-            for (int j = 0; j < layers.get(layer - 1).size(); j++) {
-                v[j] = layers.get(layer - 1).get(j).V;
+            for (int neuron = 0; neuron < layers.get(layer).size(); neuron++) {
+                Neuron2 n = layers.get(layer).get(neuron);
+
+                propagation(inputData[i]);
+
+                double v[] = new double[layers.get(layer - 1).size()];
+                for (int j = 0; j < layers.get(layer - 1).size(); j++) {
+                    v[j] = layers.get(layer - 1).get(j).V;
+                }
+                error += Math.pow(outputData[i] - actFunc.evaluate(n.calExcitation(v)), 2);
             }
-            error += Math.pow(outputData[index] - actFunc.evaluate(n.calExcitation(v)), 2);
         }
         error = 0.5 * error;
 
