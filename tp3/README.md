@@ -38,7 +38,7 @@ Donde:
   * _linear_: Utilizando la funcion linear
   * _sign_: Utilizando la funcion signo
   * _tanh_: Utilizando la funcion tangente hiperbolica
-  * _sigmoid_: Utilizando la funcion sigmoid
+  * _sigmoid_: Utilizando la funcion logística
 
   
 
