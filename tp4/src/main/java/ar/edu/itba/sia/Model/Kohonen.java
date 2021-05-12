@@ -1,15 +1,17 @@
 package ar.edu.itba.sia.Model;
 
+import ar.edu.itba.sia.utils.Utils;
 import org.apache.commons.math3.ml.neuralnet.Neuron;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Kohonen {
     private double radius;
     private int iterations;
-    private double eta = 1.0;
+    private double eta = 0.9;
     private double[][] inputData;
     private KohonenNeuron neuronMatrix[][];
 
@@ -22,9 +24,15 @@ public class Kohonen {
 
     public KohonenNeuron[][] processData(){
         for(int i = 0; i<iterations; i++){
+            double[][] input_aux = inputData.clone();
+            Utils.shuffleArray(input_aux);
+            for(int j=0; j<input_aux.length; j++){
+                processInput(input_aux[j]);
+            }
             updateEta(i);
-            int idx = ThreadLocalRandom.current().nextInt(0, inputData.length-1);
-            processInput(inputData[idx]);
+            //pendiente: actualizar radio?
+            //int idx = ThreadLocalRandom.current().nextInt(0, inputData.length-1);
+
         }
         return this.neuronMatrix;
     }

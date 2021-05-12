@@ -7,7 +7,7 @@ public class KohonenNeuron {
     public int count;
     public KohonenNeuron(double[][] inputData){
         this.count=0;
-        int idx= ThreadLocalRandom.current().nextInt(0,inputData.length-1);
+        int idx= ThreadLocalRandom.current().nextInt(0,inputData.length);
         weights = inputData[idx].clone();
     }
 
