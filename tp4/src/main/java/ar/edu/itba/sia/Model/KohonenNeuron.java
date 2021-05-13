@@ -1,12 +1,18 @@
 package ar.edu.itba.sia.Model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class KohonenNeuron {
     public double weights[];
     public int count;
+    public int lastCount;
+    public List<String> countryHits = new ArrayList<>();
+    public List<String> countryLastHits = new ArrayList<>();
     public KohonenNeuron(double[][] inputData){
         this.count=0;
+        this.lastCount=0;
         int idx= ThreadLocalRandom.current().nextInt(0,inputData.length);
         weights = inputData[idx].clone();
     }
