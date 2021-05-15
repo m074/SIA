@@ -29,11 +29,12 @@ public class Ej2 {
 
 
 
-        int[] letterTruido = {1,1,1,1,1,1,-1,1,-1,-1,-1,1,1,-1,-1,-1,-1,1,-1,-1,1,-1,1,-1,-1};
+        int[] letterTnoise = {1,1,1,-1,1,1,-1,1,-1,-1,-1,1,1,-1,-1,-1,-1,1,-1,-1,1,-1,-1,-1,1};
 
+        int[] letterRnoise = {1,1,1,1,-1,1,-1,-1,-1,1,1,1,-1,1,1,1,1,-1,1,1,1,-1,-1,-1,1};
 
         Hopfield hopfield = new Hopfield(patterns);
-        hopfield.consult(letterTruido);
+        hopfield.consult(letterTnoise);
 
     }
 

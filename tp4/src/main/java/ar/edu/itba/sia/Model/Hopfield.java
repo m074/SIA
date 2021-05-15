@@ -60,21 +60,27 @@ public class Hopfield {
         printLetter(letter);
 
 
-        //iterar
+        int iteration =0;
+        //TODO falta la condicion real de corte
+        while(iteration<4) {
 
-        for(HopfieldNeuron n : neurons){
-            double st=0;
-            for(int z=0; z<size; z++){
-                st+= n.weights[z] * neurons.get(z).state;
+
+            for (HopfieldNeuron n : neurons) {
+                double st = 0;
+                for (int z = 0; z < size; z++) {
+                    st += n.weights[z] * neurons.get(z).state;
+                }
+                n.state = sign(st);
             }
-            n.state = sign(st);
-        }
 
-        //printing
-        for( int n=0; n<neurons.size(); n++){
-            letter[n] = neurons.get(n).state;
+            //printing
+            for (int n = 0; n < neurons.size(); n++) {
+                letter[n] = neurons.get(n).state;
+            }
+            printLetter(letter);
+
+            iteration++;
         }
-        printLetter(letter);
 
 
 
