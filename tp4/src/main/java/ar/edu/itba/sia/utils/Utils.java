@@ -72,7 +72,7 @@ public class Utils {
 
     }
 
-    public static double[][] transposeArray(double[][] A, double[][] B) {
+    public static double[][] transposeArray(double[][] A) {
 
         int aRows = A.length;
         int aColumns = A[0].length;
