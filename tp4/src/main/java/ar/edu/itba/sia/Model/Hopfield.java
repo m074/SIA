@@ -35,14 +35,6 @@ public class Hopfield {
                 }
             }
         }
-
-        //for(HopfieldNeuron n : neurons){
-        //    for(int z=0; z<size; z++){
-        //        System.out.println(n.weights[z]);
-        //    }
-        //    System.out.println("\n");
-        //}
-
     }
 
 
@@ -59,10 +51,11 @@ public class Hopfield {
         }
         printLetter(letter);
 
+        
+        boolean change = true;
+        while(change) {
 
-        int iteration =0;
-        //TODO falta la condicion real de corte
-        while(iteration<4) {
+            change=false;
 
 
             for (HopfieldNeuron n : neurons) {
@@ -70,16 +63,23 @@ public class Hopfield {
                 for (int z = 0; z < size; z++) {
                     st += n.weights[z] * neurons.get(z).state;
                 }
+                if(n.state != sign(st))
+                    change =true;
+
+
+
                 n.state = sign(st);
             }
 
-            //printing
-            for (int n = 0; n < neurons.size(); n++) {
-                letter[n] = neurons.get(n).state;
-            }
-            printLetter(letter);
 
-            iteration++;
+
+            if(change) {
+                for (int n = 0; n < neurons.size(); n++) {
+                    letter[n] = neurons.get(n).state;
+                }
+                printLetter(letter);
+            }
+
         }
 
 
