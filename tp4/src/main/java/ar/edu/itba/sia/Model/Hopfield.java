@@ -3,6 +3,8 @@ package ar.edu.itba.sia.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ar.edu.itba.sia.utils.Utils.printLetter;
+
 public class Hopfield {
 
     List<int[]> patterns;
@@ -50,11 +52,15 @@ public class Hopfield {
             neurons.get(in).state = consult[in];
         }
 
-        //
-        for(HopfieldNeuron n : neurons) {
-            System.out.println(" initial " + n.state);
+        //printing
+        int[] letter = new int[size];
+        for( int n=0; n<neurons.size(); n++){
+            letter[n] = neurons.get(n).state;
         }
-        //
+        printLetter(letter);
+
+
+        //iterar
 
         for(HopfieldNeuron n : neurons){
             double st=0;
@@ -64,11 +70,14 @@ public class Hopfield {
             n.state = sign(st);
         }
 
-        //
-        for(HopfieldNeuron n : neurons) {
-            System.out.println(" 1 iteration " + n.state);
+        //printing
+        for( int n=0; n<neurons.size(); n++){
+            letter[n] = neurons.get(n).state;
         }
-        //
+        printLetter(letter);
+
+
+
     }
 
 
