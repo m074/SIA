@@ -15,4 +15,15 @@ public class Utils {
             array[i] = temp;
         }
     }
+
+    public static void printLetter(int[] letter){
+        String str = "";
+        for (int i=0;i<letter.length;i++){
+            str += letter[i]==1?"*":" ";
+            if((i+1)%5 == 0)
+                str += "\n";
+        }
+        System.out.println(str);
+    }
+
 }
