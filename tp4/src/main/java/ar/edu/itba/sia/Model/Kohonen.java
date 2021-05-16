@@ -40,8 +40,8 @@ public class Kohonen {
         return this.neuronMatrix;
     }
     public void updateRadius(int i){
-        if(radius>0.3)
-            radius-=1.0/i; //probar otra cosa si no
+        if(radius>1)
+            radius-=1; //probar otra cosa si no*/
     }
     public KohonenNeuron[][] getResult(){
         double[][] input_aux = inputData.clone();
@@ -82,20 +82,23 @@ public class Kohonen {
         }
     }
     private List<KohonenNeuron> getNeighbours(int[] i_j){
-        int botLimit = (i_j[0] + radius) < neuronMatrix.length ?  (int) (i_j[0] + radius) : neuronMatrix.length-1;
-        int topLimit = (i_j[0] - radius) > 0 ?  (int) (i_j[0] + radius) : 0;
-        int rightLimit = (i_j[1] + radius) < neuronMatrix.length ?  (int) (i_j[1] + radius) : neuronMatrix.length-1;
-        int leftLimit = (i_j[1] - radius) > 0 ?  (int) (i_j[1] + radius) : 0;
+        int rowMin = Math.max((int) (i_j[0] - radius), 0);
+        int rowMax = Math.min((int) (i_j[0] + radius), neuronMatrix.length);
+        int colMin = Math.max((int) (i_j[1] - radius), 0);
+        int colMax = Math.min((int) (i_j[1] + radius), neuronMatrix.length);
+
+
 
         List<KohonenNeuron> l = new ArrayList<>();
-        for(int i=topLimit; i<=botLimit; i++){
-            for(int j= leftLimit; j<=rightLimit; j++){
+        for(int i=rowMin; i<rowMax; i++){
+            for(int j=colMin; j<colMax; j++){
                 double d = Math.sqrt(Math.pow(i_j[0] - i, 2) + Math.pow(i_j[1] - j, 2));
                 if(d <= radius){
                     l.add(neuronMatrix[i][j]);
                 }
             }
         }
+        System.out.println(l.size());
         return l;
     }
     private int[] findBestNeuron(double[] input){
@@ -111,7 +114,6 @@ public class Kohonen {
                 }
             }
         }
-        System.out.println(dist);
         int[] res = new int[2];
         res[0] = best_i; res[1] = best_j;
         return res;
@@ -127,6 +129,8 @@ public class Kohonen {
     }
 
     void updateEta(int i){
+        if(i==0)
+            return;
         this.eta= 1.0/i;
     }
 
