@@ -129,4 +129,22 @@ public class Kohonen {
     void updateEta(int i){
         this.eta= 1.0/i;
     }
+
+    public double[][] getUMatrix(){
+        int k=this.neuronMatrix.length;
+        double[][] uMatrix = new double[k][k];
+        for(int i =0; i<k; i++){
+            for(int j=0; j<k; j++){
+                int[] i_j = {i, j};
+                List<KohonenNeuron> neighbours = getNeighbours(i_j);
+                int n = neighbours.size();
+                double dist = 0.0;
+                for(KohonenNeuron neu : neighbours){
+                    dist+=calculateDistance(neuronMatrix[i][j], neu.weights);
+                }
+                uMatrix[i][j] = dist/n;
+            }
+        }
+        return uMatrix;
+    }
 }
