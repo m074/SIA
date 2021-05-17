@@ -51,7 +51,7 @@ public class Hopfield {
         }
         printLetter(letter);
 
-        
+
         boolean change = true;
         while(change) {
 
@@ -65,12 +65,8 @@ public class Hopfield {
                 }
                 if(n.state != sign(st))
                     change =true;
-
-
-
                 n.state = sign(st);
             }
-
 
 
             if(change) {
