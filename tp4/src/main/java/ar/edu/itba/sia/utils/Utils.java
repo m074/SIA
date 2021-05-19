@@ -96,6 +96,32 @@ public class Utils {
         System.out.println(str);
     }
 
+    public static int[] addNoise(int[] pattern, double porcentage){
+        int amount = (int)((pattern.length*porcentage)/100);
+
+        int[] noise = new int[pattern.length];
+        System.arraycopy(pattern, 0, noise, 0, pattern.length);
+        int[] indexes = new int[pattern.length];
+        for(int idx=0; idx<indexes.length; idx++)
+            indexes[idx] = idx;
+        Random rnd = ThreadLocalRandom.current();
+        for (int i = indexes.length - 1; i > 0; i--)
+        {
+            int index = rnd.nextInt(i + 1);
+            int a = indexes[index];
+            indexes[index] = indexes[i];
+            indexes[i] = a;
+        }
+        for(int i=0; i<amount; i++){
+            if(noise[indexes[i]] == 1){
+                noise[indexes[i]] = -1;
+            }
+            else{
+                noise[indexes[i]] = 1;
+            }
+        }
+        return noise;
+    }
 
 
 
