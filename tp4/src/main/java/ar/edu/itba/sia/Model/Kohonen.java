@@ -40,7 +40,7 @@ public class Kohonen {
         return this.neuronMatrix;
     }
     public void updateRadius(int i){
-        if(radius>1)
+        if(radius-1>1)
             radius-=1; //probar otra cosa si no*/
     }
     public KohonenNeuron[][] getResult(){
