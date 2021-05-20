@@ -17,7 +17,7 @@ public class Kohonen {
         this.radius = starting_radius;
         this.inputData = inputData.clone();
         this.neuronMatrix = initMatrix(inputData, k);
-        this.iterations = 50*inputData.length;
+        this.iterations = 50*k;
         countryData = new HashMap<>();
         for(int i=0; i<inputData.length;i++){
             countryData.put(inputData[i], names[i]);
@@ -33,14 +33,14 @@ public class Kohonen {
             }
             updateEta(i);
             updateRadius(i);
-            //pendiente: actualizar radio?
+           
             //int idx = ThreadLocalRandom.current().nextInt(0, inputData.length-1);
 
         }
         return this.neuronMatrix;
     }
     public void updateRadius(int i){
-        if(radius>0.3)
+        if(radius>1)
             radius-=1.0/i; //probar otra cosa si no
     }
     public KohonenNeuron[][] getResult(){
