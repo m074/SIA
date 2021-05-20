@@ -64,7 +64,7 @@ public class App {
                     break;
                 case "oja":
                     System.out.println("Area,GDP,Inflation,Life.expect,Military,Pop.growth,Unemployment");
-                    double eta = 0.0001;
+                    double eta = config.eta;
                     Oja oja_network = new Oja(inputData, eta);
                     for (int x = 1; x <= 1000; x = x + 1) {
                         double[] oja_pca = oja_network.train(x);
