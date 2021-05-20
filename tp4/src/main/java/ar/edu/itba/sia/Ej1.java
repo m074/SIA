@@ -33,13 +33,13 @@ public class Ej1 {
             i++;
         }
 
-        Kohonen network = new Kohonen(inputData, 15, 5, countries);
+        Kohonen network = new Kohonen(inputData, 10, 7, countries);
         network.processData();
         double[][] uMatrix = network.getUMatrix();
         KohonenNeuron[][] matrix = network.getResult();
         for(int j=0; j<matrix.length; j++){
             for(int k=0; k<matrix[j].length;k++){
-                System.out.print("Neuron " + j + k + " Countries: ");
+                System.out.print("Neuron " + (j+1) + (k+1) + " Countries: ");
                 for(String c : matrix[j][k].countryLastHits){
                     System.out.print(c + " ");
                 }
@@ -50,7 +50,7 @@ public class Ej1 {
 
         for(int j=0; j<uMatrix.length; j++){
             for(int k=0; k<uMatrix.length; k++){
-                System.out.print(uMatrix[j][k] + " ");
+                System.out.print(uMatrix[j][k] + (k==uMatrix.length-1 ? ";" : ", "));
             }
             System.out.print("\n");
         }

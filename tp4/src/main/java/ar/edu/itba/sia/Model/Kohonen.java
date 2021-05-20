@@ -17,7 +17,7 @@ public class Kohonen {
         this.radius = starting_radius;
         this.inputData = inputData.clone();
         this.neuronMatrix = initMatrix(inputData, k);
-        this.iterations = 50*inputData.length;
+        this.iterations = 50*k;
         countryData = new HashMap<>();
         for(int i=0; i<inputData.length;i++){
             countryData.put(inputData[i], names[i]);
