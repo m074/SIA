@@ -6,18 +6,23 @@ public class Oja {
     double eta;
     double[][] inputData;
     ThreadLocalRandom rand;
+    double[] initial_w;
 
     public Oja(double[][] inputData, double learning_rate){
         this.eta = learning_rate;
         this.inputData = inputData;
         this.rand  = ThreadLocalRandom.current();
+        this.initial_w = new double[inputData[0].length];
+        for(int x=0; x<initial_w.length; x++){
+            initial_w[x] = rand.nextDouble();
+        }
     }
 
     public double[] train(int epochs){
         int dimension = inputData[0].length;
         double[] w = new double[dimension];
         for(int x=0; x<w.length; x++){
-            w[x] = rand.nextDouble();
+            w[x] = initial_w[x];
         }
         for(int ep=0; ep < epochs; ep++){
             for(int i=0; i<inputData.length; i++){

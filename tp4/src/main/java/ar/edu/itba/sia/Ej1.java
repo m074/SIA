@@ -33,7 +33,7 @@ public class Ej1 {
             i++;
         }
 
-        Kohonen network = new Kohonen(inputData, 10, 7, countries);
+        Kohonen network = new Kohonen(inputData, 9.5, 7, countries);
         network.processData();
         double[][] uMatrix = network.getUMatrix();
         KohonenNeuron[][] matrix = network.getResult();

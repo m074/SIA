@@ -33,14 +33,14 @@ public class Kohonen {
             }
             updateEta(i);
             updateRadius(i);
-            //pendiente: actualizar radio?
+           
             //int idx = ThreadLocalRandom.current().nextInt(0, inputData.length-1);
 
         }
         return this.neuronMatrix;
     }
     public void updateRadius(int i){
-        if(radius>1)
+        if(radius-1>1)
             radius-=1; //probar otra cosa si no*/
     }
     public KohonenNeuron[][] getResult(){

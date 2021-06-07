@@ -17,7 +17,7 @@ public class Ej1b {
     public static void main(String[] args) throws IOException {
         double[][] inputData = new double[28][7];
         Reader input;
-        input = new InputStreamReader(new FileInputStream("normalizedCountries.csv"));
+        input = new InputStreamReader(new FileInputStream("D:\\normalizedCountries.csv"));
         CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(input);
         String[] countries = new String[28];
         int i = 0;
@@ -32,11 +32,21 @@ public class Ej1b {
             inputData[i][6] = Double.parseDouble(r.get("Unemployment"));
             i++;
         }
-        double eta=0.0005;
+
+        System.out.println("Area,GDP,Inflation,Life.expect,Military,Pop.growth,Unemployment");
+        double eta=0.0001;
         Oja network = new Oja(inputData, eta);
-        double[] oja_pca = network.train(10000);
-        for(int j=0; j<oja_pca.length; j++){
-            System.out.println(oja_pca[j]);
+        for(int x=1;x<=1000;x=x+1){
+            double[] oja_pca = network.train(x);
+            for(int j=0; j<oja_pca.length; j++){
+                System.out.print(oja_pca[j]);
+                if(j+1!=oja_pca.length){
+                    System.out.print(',');
+
+                }
+            }
+            System.out.println();
         }
+
     }
 }
