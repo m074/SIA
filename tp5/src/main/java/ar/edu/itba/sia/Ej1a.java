@@ -88,10 +88,10 @@ public class Ej1a {
         }
 
         int[][] layerConfigs = { {30, 20, 2, 20, 30}};
-        AutoEncoder AC= new AutoEncoder(0.0015, 35, 35, layerConfigs[0], new TanH());;
+        AutoEncoder AC= new AutoEncoder(0.001, 35, 35, layerConfigs[0], new TanH());;
         for(int[] layerConfig: layerConfigs){
             AC = new AutoEncoder(0.001, 35, 35, layerConfig, new TanH());
-            AC.train(inputData, inputData, 10000, 0.8);
+            AC.train(inputData, inputData, 50000, 0.7);
             System.out.println("Error tras entrenamiento: " + AC.getError(inputData, inputData));
         }
         /*
@@ -101,6 +101,36 @@ public class Ej1a {
             List<Double> layer = AC.evaluateLatentSpace(inputData[i]);
             System.out.println(fontVals.charAt(i) + ", " + layer.get(0) + ", " + layer.get(1));
         }*/
+        int[] nl = {0x0E, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04};
+        //le paso:
+        // 111
+        //  1
+        //  1
+        //  1
+        //  1
+        //  1
+        //  1
 
+        Font newLetter = new Font(nl, 7, 5);
+        double[] entry = new double[35];
+        for(int i =0; i<newLetter.getFontAsArray().length; i++){
+            entry[i] = newLetter.getFontAsArray()[i];
+        }
+
+        List<Double> result = AC.evaluate(entry);
+        //me devuelve:
+        // 111
+        //  1
+        //  1
+        //  1
+        //  1
+        //  1
+        // 111
+        int c = 1;
+        for(int i=0; i<result.size(); i++, c++){
+            System.out.print(result.get(i) + " ");
+            if(c%5 == 0)
+                System.out.print('\n');
+        }
     }
 }
