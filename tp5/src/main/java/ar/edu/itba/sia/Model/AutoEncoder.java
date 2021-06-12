@@ -124,22 +124,21 @@ public class AutoEncoder {
 
                         for(Connection c : n.input) {
                             c.updateDeltaWeight();
-                            if(momentum != 0)
-                                c.updateWeightWithMomentum(momentum);
+                            c.updateWeightWithMomentum(momentum);
                         }
                     }
                 }
             }
         }
-        if(momentum != 0){
-            for(int i = layers.length - 1; i >= 1; i--) {
-                for(int j = 0; j < layers[i].size(); j++) {
-                    Neuron n = layers[i].get(j);
-                    for(Connection c : n.input)
-                        c.updateWeightWithMomentum(momentum);
-                }
+
+        for(int i = layers.length - 1; i >= 1; i--) {
+            for(int j = 0; j < layers[i].size(); j++) {
+                Neuron n = layers[i].get(j);
+                for(Connection c : n.input)
+                    c.updateWeightWithMomentum(momentum);
             }
         }
+
     }
 
 }

@@ -75,11 +75,11 @@ public class Ej1a {
                 {0x04, 0x0a, 0x11, 0x00, 0x00, 0x00, 0x00},   // 0x5e, ^
                 {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1f}   // 0x5f, _
         };
-        Font[] letters = new Font[font1.length];
+        Font[] letters = new Font[font2.length];
         double[][] inputData = new double[32][35];
 
         for(int i = 0; i<letters.length; i++){
-            letters[i] = new Font(font1[i], 7, 5);
+            letters[i] = new Font(font2[i], 7, 5);
         }
         for(int i=0; i<32; i++){
             for(int j=0; j<letters[i].getFontAsArray().length; j++){
@@ -87,19 +87,20 @@ public class Ej1a {
             }
         }
 
-        int[][] layerConfigs = { {30, 18, 2, 18, 30}};
+        int[][] layerConfigs = { {30, 20, 2, 20, 30}};
         AutoEncoder AC= new AutoEncoder(0.0015, 35, 35, layerConfigs[0], new TanH());;
         for(int[] layerConfig: layerConfigs){
-            AC = new AutoEncoder(0.0015, 35, 35, layerConfig, new TanH());
-            AC.train(inputData, inputData, 10000, 0.7);
+            AC = new AutoEncoder(0.001, 35, 35, layerConfig, new TanH());
+            AC.train(inputData, inputData, 10000, 0.8);
             System.out.println("Error tras entrenamiento: " + AC.getError(inputData, inputData));
         }
+        /*
         String fontVals = " !\"#$%&'()*+,-./0123456789:;<=>?";
         System.out.println("char x-coord y-coord");
         for(int i =0; i<fontVals.length(); i++){
             List<Double> layer = AC.evaluateLatentSpace(inputData[i]);
             System.out.println(fontVals.charAt(i) + ", " + layer.get(0) + ", " + layer.get(1));
-        }
+        }*/
 
     }
 }
