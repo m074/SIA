@@ -1,5 +1,6 @@
 package ar.edu.itba.sia.utils;
 
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -121,6 +122,70 @@ public class Utils {
             }
         }
         return noise;
+    }
+
+
+
+    public static double[][] noiseData(double[][] data, double percentage){
+        double[][] noiseData = new double[data.length][data[0].length];
+        for(int i=0; i<data.length; i++){
+            noiseData[i] = addNoise(data[i], percentage);
+        }
+        return noiseData;
+    }
+
+
+    public static double[] addNoise(double[] pattern, double porcentage) {
+        int amount = (int) ((pattern.length * porcentage) / 100);
+        double[] noise = new double[pattern.length];
+        System.arraycopy(pattern, 0, noise, 0, pattern.length);
+        int[] indexes = new int[pattern.length];
+        for (int idx = 0; idx < indexes.length; idx++)
+            indexes[idx] = idx;
+        Random rnd = ThreadLocalRandom.current();
+        for (int i = indexes.length - 1; i > 0; i--) {
+            int index = rnd.nextInt(i + 1);
+            int a = indexes[index];
+            indexes[index] = indexes[i];
+            indexes[i] = a;
+        }
+        for (int i = 0; i < amount; i++) {
+            if (noise[indexes[i]] == 1d) {
+                noise[indexes[i]] = -1d;
+            } else {
+                noise[indexes[i]] = 1d;
+            }
+        }
+        return noise;
+    }
+
+
+    public static void printImage(double[] image, int imgWidth) {
+        for (int i = 0; i < image.length; i++) {
+            if(i!=0 && i%imgWidth==0){
+                System.out.print("\n");
+            }
+            char aux = image[i] == 1 ? '*':' ';
+            System.out.print(aux + " ");
+        }
+        System.out.println();
+        System.out.println();
+    }
+
+    public static void printImage(List<Double> list, int imgSize, int imgWidth) {
+        double [] image = new double[imgSize];
+        for (int i = 0; i < 35 ; i++) {
+            image[i] = list.get(i) > 0.5 ? 1 : 0;
+        }
+        for (int i = 0; i < image.length; i++) {
+            if(i!=0 && i%imgWidth==0){
+                System.out.print("\n");
+            }
+            char aux = image[i] == 1 ? '*':' ';
+            System.out.print(aux + " ");
+        }
+        System.out.println();
+        System.out.println();
     }
 
 

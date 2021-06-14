@@ -1,15 +1,14 @@
 package ar.edu.itba.sia.Model;
 
 import ar.edu.itba.sia.Activation.ActivationFunction;
-import ar.edu.itba.sia.Activation.TanH;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
-public class AutoEncoder {
+import static ar.edu.itba.sia.utils.Utils.addNoise;
+
+public class DenoisingAutoEncoder{
 
     private ActivationFunction actFunc;
     private List<Neuron>[] layers;
@@ -23,10 +22,15 @@ public class AutoEncoder {
     double minEta = 0.00001;
     boolean adaptLR;
 
-    public AutoEncoder(double learningRate, int inputLayerSize, int outputLayerSize, int[] hiddenLayersSizes, ActivationFunction actFunc, boolean adaptLR) {
+    double noisePercentage;
+
+    public DenoisingAutoEncoder(double learningRate, int inputLayerSize, int outputLayerSize, int[] hiddenLayersSizes, ActivationFunction actFunc, boolean adaptLR, double noisePercentage) {
         this.learningRate = learningRate;
         this.adaptLR = adaptLR;
         this.actFunc = actFunc;
+
+        this.noisePercentage = noisePercentage;
+
         int layerAmount = hiddenLayersSizes.length+2;
         layers = new ArrayList[layerAmount];
 
@@ -117,7 +121,7 @@ public class AutoEncoder {
         for(int curr=1; curr<=epochs; curr++){
             Collections.shuffle(trainOrder);
             for(Integer i : trainOrder){
-                double[] entry = input[i];
+                double[] entry = addNoise(input[i],noisePercentage);
                 double[] expectedResult = output[i];
 
                 evaluate(entry);
@@ -179,10 +183,13 @@ public class AutoEncoder {
 
 
 
-    public AutoEncoder(double learningRate, int inputLayerSize, int outputLayerSize, int[] hiddenLayersSizes, ActivationFunction actFunci, ActivationFunction[] activations, ActivationFunction actFunco, boolean adaptLR) {
+    public DenoisingAutoEncoder(double learningRate, int inputLayerSize, int outputLayerSize, int[] hiddenLayersSizes, ActivationFunction actFunci, ActivationFunction[] activations, ActivationFunction actFunco, boolean adaptLR, double noisePercentage) {
         this.learningRate = learningRate;
         this.adaptLR = adaptLR;
         this.actFunc = actFunc;
+
+        this.noisePercentage = noisePercentage;
+
         int layerAmount = hiddenLayersSizes.length+2;
         layers = new ArrayList[layerAmount];
 

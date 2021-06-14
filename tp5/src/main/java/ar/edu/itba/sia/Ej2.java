@@ -9,6 +9,8 @@ import ar.edu.itba.sia.Model.KohonenNeuron;
 
 import java.util.List;
 
+import static ar.edu.itba.sia.utils.Utils.printImage;
+
 public class Ej2 {
     public static void main(String[] args){
 
@@ -94,19 +96,5 @@ public class Ej2 {
         printImage(AC.evaluate(new double[]{x,y}, 3, 6), 35, 5);
     }
 
-    public static void printImage(List<Double> list, int imgSize, int imgWidth) {
-        double [] image = new double[imgSize];
-        for (int i = 0; i < 35 ; i++) {
-            image[i] = list.get(i) > 0.5 ? 1 : 0;
-        }
-        for (int i = 0; i < image.length; i++) {
-            if(i!=0 && i%imgWidth==0){
-                System.out.print("\n");
-            }
-            char aux = image[i] == 1 ? '*':' ';
-            System.out.print(aux + " ");
-        }
-        System.out.println();
-        System.out.println();
-    }
+
 }

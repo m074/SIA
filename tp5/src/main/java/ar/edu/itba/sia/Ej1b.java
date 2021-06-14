@@ -2,14 +2,19 @@ package ar.edu.itba.sia;
 
 import ar.edu.itba.sia.Activation.*;
 import ar.edu.itba.sia.Model.AutoEncoder;
+import ar.edu.itba.sia.Model.DenoisingAutoEncoder;
 import ar.edu.itba.sia.Model.Font;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
+import static ar.edu.itba.sia.utils.Utils.noiseData;
 import static ar.edu.itba.sia.utils.Utils.printImage;
 
-public class Ej1a {
+public class Ej1b {
+
+
     public static void main(String[] args){
         int[][] font1= {{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // 0x20, space
                 {0x04, 0x04, 0x04, 0x04, 0x04, 0x00, 0x04},   // 0x21, !
@@ -79,7 +84,6 @@ public class Ej1a {
                 {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1f}   // 0x5f, _
         };
 
-
         int[][] font3 ={
                 {0x04, 0x04, 0x02, 0x00, 0x00, 0x00, 0x00},   // 0x60, `
                 {0x00, 0x0e, 0x01, 0x0d, 0x13, 0x13, 0x0d},   // 0x61, a
@@ -115,7 +119,6 @@ public class Ej1a {
                 {0x1f, 0x1f, 0x1f, 0x1f, 0x1f, 0x1f, 0x1f}   // 0x7f, DEL
         };
 
-
         Font[] letters = new Font[font2.length];
         double[][] inputData = new double[32][35];
 
@@ -128,14 +131,19 @@ public class Ej1a {
             }
         }
 
-        int[][] layerConfigs = { { 64,16, 2, 16, 64}};
 
-        //ActivationFunction[] hiddenActivations = {new TanH(), new TanH(),new TanH(), new TanH(), new TanH()};
+
+
+        double noisePercentage = 15;
+
+        int[][] layerConfigs = { {64, 16, 8, 16, 64}};
+        ActivationFunction[] hiddenActivations = { new TanH(),new TanH(),new TanH(),new TanH(), new TanH()};
+
         //AutoEncoder AC= new AutoEncoder(0.001, 35, 35, layerConfigs[0], new TanH(), hiddenActivations, new TanH(), true);
-         AutoEncoder AC= new AutoEncoder(0.001, 35, 35, layerConfigs[0], new TanH(), true);
+        DenoisingAutoEncoder AC = new DenoisingAutoEncoder(0.001, 35, 35, layerConfigs[0], new TanH(), hiddenActivations, new TanH(), true, noisePercentage);
 
         for(int[] layerConfig: layerConfigs){
-           // AutoEncoder AC = new AutoEncoder(0.001, 35, 35, layerConfig, new TanH(), true);
+            //AC = new AutoEncoder(0.001, 35, 35, layerConfig, new TanH(), true);
             AC.train(inputData, inputData, 10000, 0.7);
             System.out.println("Error tras entrenamiento: " + AC.getError(inputData, inputData));
         }
@@ -149,19 +157,28 @@ public class Ej1a {
         }
          */
 
-        /*
+        System.out.println("ruido " + noisePercentage + "%");
+        double[][] noiseData = noiseData(inputData, noisePercentage);
+
+
         String fontVals = " !\"#$%&'()*+,-./0123456789:;<=>?";
         System.out.println("char x-coord y-coord");
         for(int i =0; i<fontVals.length(); i++){
-            List<Double> layer = AC.evaluate(inputData[i]);
-            System.out.println(fontVals.charAt(i) + ", " + layer.get(0) + ", " + layer.get(1));
-            printImage(layer,35,5);
+            List<Double> layer = AC.evaluate(noiseData[i]);
+            //System.out.println(fontVals.charAt(i) + ", " + layer.get(0) + ", " + layer.get(1));
+            System.out.println("entra");
+              printImage(noiseData[i],5);
+            System.out.println("sale");
+              printImage(layer,35,5);
+              System.out.println("------------");
         }
-        
-         */
+
 
 
 
     }
+
+
+
 
 }
