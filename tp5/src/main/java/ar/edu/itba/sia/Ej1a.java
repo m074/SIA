@@ -88,10 +88,10 @@ public class Ej1a {
         }
 
         int[][] layerConfigs = { {30, 20, 2, 20, 30}};
-        AutoEncoder AC= new AutoEncoder(0.001, 35, 35, layerConfigs[0], new TanH());;
+        AutoEncoder AC= new AutoEncoder(0.001, 35, 35, layerConfigs[0], new TanH(), true);
         for(int[] layerConfig: layerConfigs){
-            AC = new AutoEncoder(0.001, 35, 35, layerConfig, new TanH());
-            AC.train(inputData, inputData, 50000, 0.7);
+            AC = new AutoEncoder(0.001, 35, 35, layerConfig, new TanH(), true);
+            AC.train(inputData, inputData, 10000, 0.7);
             System.out.println("Error tras entrenamiento: " + AC.getError(inputData, inputData));
         }
 

@@ -13,10 +13,18 @@ public class AutoEncoder {
     private ActivationFunction actFunc;
     private List<Neuron>[] layers;
     private double learningRate;
+    double lastErr = 0.0;
+    int incErrors=0;
+    int decErrors=0;
+    int updateLRits=5;
+    double LRincrement=0.01;
+    double LRdecrement=0.1;
+    double minEta = 0.00001;
+    boolean adaptLR;
 
-
-    public AutoEncoder(double learningRate, int inputLayerSize, int outputLayerSize, int[] hiddenLayersSizes, ActivationFunction actFunc) {
+    public AutoEncoder(double learningRate, int inputLayerSize, int outputLayerSize, int[] hiddenLayersSizes, ActivationFunction actFunc, boolean adaptLR) {
         this.learningRate = learningRate;
+        this.adaptLR = adaptLR;
         this.actFunc = actFunc;
         int layerAmount = hiddenLayersSizes.length+2;
         layers = new ArrayList[layerAmount];
@@ -129,16 +137,43 @@ public class AutoEncoder {
                     }
                 }
             }
-        }
-
-        for(int i = layers.length - 1; i >= 1; i--) {
-            for(int j = 0; j < layers[i].size(); j++) {
-                Neuron n = layers[i].get(j);
-                for(Connection c : n.input)
-                    c.updateWeightWithMomentum(momentum);
+            for(int i = layers.length - 1; i >= 1; i--) {
+                for(int j = 0; j < layers[i].size(); j++) {
+                    Neuron n = layers[i].get(j);
+                    for(Connection c : n.input)
+                        c.updateWeightWithMomentum(momentum);
+                }
             }
+            if(adaptLR)
+                adaptLearningRate(getError(input, output));
         }
 
+    }
+
+    private void adaptLearningRate(double error){
+        if(lastErr == 0.0){
+            lastErr = error;
+        }
+        else if(lastErr < error){
+            decErrors = 0;
+            incErrors++;
+        }else{
+            incErrors = 0;
+            decErrors++;
+        }
+
+        if(decErrors>=updateLRits){
+            learningRate+=LRincrement;
+            decErrors=0;
+        }
+        if(incErrors>=updateLRits){
+            learningRate*=LRdecrement;
+            if(learningRate<=minEta){
+                learningRate=minEta;
+            }
+            incErrors=0;
+        }
+        lastErr=error;
     }
 
 }

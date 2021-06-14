@@ -58,9 +58,9 @@ public class Ej2 {
         }
 
         int[][] layerConfigs = { {30, 20, 2, 20, 30}};
-        AutoEncoder AC= new AutoEncoder(0.001, 35, 35, layerConfigs[0], new TanH());;
+        AutoEncoder AC= new AutoEncoder(0.001, 35, 35, layerConfigs[0], new TanH(), false);;
         for(int[] layerConfig: layerConfigs){
-            AC = new AutoEncoder(0.001, 35, 35, layerConfig, new TanH());
+            AC = new AutoEncoder(0.001, 35, 35, layerConfig, new TanH(), false);
             AC.train(inputData, inputData, 20000, 0.7);
             System.out.println("Error tras entrenamiento: " + AC.getError(inputData, inputData));
         }
