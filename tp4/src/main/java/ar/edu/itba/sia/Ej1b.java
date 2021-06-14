@@ -17,7 +17,7 @@ public class Ej1b {
     public static void main(String[] args) throws IOException {
         double[][] inputData = new double[28][7];
         Reader input;
-        input = new InputStreamReader(new FileInputStream("D:\\normalizedCountries.csv"));
+        input = new InputStreamReader(Objects.requireNonNull(Ej1.class.getClassLoader().getResourceAsStream("normalizedCountries.csv")));
         CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(input);
         String[] countries = new String[28];
         int i = 0;
