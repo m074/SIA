@@ -99,7 +99,6 @@ public class Kohonen {
                 }
             }
         }
-        System.out.println(l.size());
         return l;
     }
     private int[] findBestNeuron(double[] input){
