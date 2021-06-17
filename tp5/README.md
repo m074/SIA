@@ -27,8 +27,8 @@ Donde:
 
 
 * layers: las cantidades de neuronas por capa, separados por una coma. En caso de uno sin multicapas se define como _1_
-* epochs: la cantidad de iteraciones dentro del algoritmo de Oja
-* noise: el nivel de ruido de los caracteres dentro del algoritmo de Hopfield. Siendo este un número natural dentro del 0 a 100.
+* epochs: la cantidad de iteraciones dentro del algoritmo del autoencoder
+* noise: el nivel de ruido de los caracteres dentro del denoiser. Siendo este un número natural dentro del 0 a 100.
 
 
 
