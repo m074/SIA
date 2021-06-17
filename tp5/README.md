@@ -10,18 +10,10 @@ Previo a la ejecución del programa, se debe primero crear un archivo _configura
 #Configuration File
 
 #Paths
-europeFile=normalizedCountries.csv
-
 #Method
-algorithm=oja
-
-#Kohonen
-startingRadius=1
-matrixSize=5
-#Oja
-eta=0.0001
+algorithm=vae
+layers=3,2,3
 epochs=1000
-#Hopfield
 noise=30
 
 ```
