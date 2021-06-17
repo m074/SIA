@@ -5,6 +5,7 @@ import ar.edu.itba.sia.Activation.ActivationFunction;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static ar.edu.itba.sia.utils.Utils.addNoise;
 
@@ -22,9 +23,10 @@ public class DenoisingAutoEncoder{
     double minEta = 0.00001;
     boolean adaptLR;
 
-    double noisePercentage;
+    double[] noisePercentage;
 
-    public DenoisingAutoEncoder(double learningRate, int inputLayerSize, int outputLayerSize, int[] hiddenLayersSizes, ActivationFunction actFunc, boolean adaptLR, double noisePercentage) {
+
+    public DenoisingAutoEncoder(double learningRate, int inputLayerSize, int outputLayerSize, int[] hiddenLayersSizes, ActivationFunction actFunc, boolean adaptLR, double[] noisePercentage) {
         this.learningRate = learningRate;
         this.adaptLR = adaptLR;
         this.actFunc = actFunc;
@@ -121,7 +123,7 @@ public class DenoisingAutoEncoder{
         for(int curr=1; curr<=epochs; curr++){
             Collections.shuffle(trainOrder);
             for(Integer i : trainOrder){
-                double[] entry = addNoise(input[i],noisePercentage);
+                double[] entry = addNoise(input[i],getRandom(noisePercentage));
                 double[] expectedResult = output[i];
 
                 evaluate(entry);
@@ -183,7 +185,7 @@ public class DenoisingAutoEncoder{
 
 
 
-    public DenoisingAutoEncoder(double learningRate, int inputLayerSize, int outputLayerSize, int[] hiddenLayersSizes, ActivationFunction actFunci, ActivationFunction[] activations, ActivationFunction actFunco, boolean adaptLR, double noisePercentage) {
+    public DenoisingAutoEncoder(double learningRate, int inputLayerSize, int outputLayerSize, int[] hiddenLayersSizes, ActivationFunction actFunci, ActivationFunction[] activations, ActivationFunction actFunco, boolean adaptLR, double[] noisePercentage) {
         this.learningRate = learningRate;
         this.adaptLR = adaptLR;
         this.actFunc = actFunc;
@@ -223,6 +225,13 @@ public class DenoisingAutoEncoder{
             layer.add(n);
         }
         return layer;
+    }
+
+
+
+    public static double getRandom(double[] array) {
+        int rnd = new Random().nextInt(array.length);
+        return array[rnd];
     }
 
 
